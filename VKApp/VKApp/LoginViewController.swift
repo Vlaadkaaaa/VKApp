@@ -46,8 +46,9 @@ final class LoginViewController: UIViewController {
     }
 
     private func loginAuthentication(_ login: String, _ password: String) {
-        guard login == Constants.userDataText,
-              password == Constants.userDataText
+        /// УБРАТЬ ПУСТЫЕ СТРОКИ
+        guard login.isEmpty,
+              password.isEmpty
         else {
             showAlertError(title: Constants.errorTitleText, message: Constants.errorMessageText)
             return
