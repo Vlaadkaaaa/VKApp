@@ -7,19 +7,16 @@ import UIKit
 final class LoginViewController: UIViewController {
     // MARK: Private Constants
 
-    private enum Constats {
+    private enum Constants {
         static let friendTabBarSegueIdentifier = "friendTabBarSegue"
-        static let userData = "admin"
-        static let errorTitleText = "Ошибка!"
-        static let errorMessageText = "Логин и/или пароль введены неверно"
-        static let okAlertText = "Ok"
+        static let userDataText = "admin"
     }
 
     // MARK: - Private IBOutlet
 
     @IBOutlet private var scrollView: UIScrollView!
-    @IBOutlet var passwordTextField: UITextField!
-    @IBOutlet var loginTextField: UITextField!
+    @IBOutlet private var passwordTextField: UITextField!
+    @IBOutlet private var loginTextField: UITextField!
 
     // MARK: - Private Property
 
@@ -32,7 +29,7 @@ final class LoginViewController: UIViewController {
         setupGestureRecognizer()
     }
 
-    // MARK: - IBAcrion
+    // MARK: - Private IBAcrion
 
     @IBAction private func logInAction(_ sender: UIButton) {
         guard let loginTextField = loginTextField.text,
@@ -50,26 +47,20 @@ final class LoginViewController: UIViewController {
     }
 
     private func loginAuthentication(_ login: String, _ password: String) {
-        guard login == Constats.userData,
-              password == Constats.userData
+        guard login == Constants.userDataText,
+              password == Constants.userDataText
         else {
             errorAuthentication()
             return
         }
-        performSegue(withIdentifier: Constats.friendTabBarSegueIdentifier, sender: self)
-    }
-
-    private func errorAuthentication() {
-        let alert = UIAlertController(
-            title: Constats.errorTitleText,
-            message: Constats.errorMessageText,
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: Constats.okAlertText, style: .cancel))
-        present(alert, animated: true)
+        performSegue(withIdentifier: Constants.friendTabBarSegueIdentifier, sender: self)
     }
 
     @objc private func hideKeyboardAction() {
         scrollView.endEditing(true)
     }
 }
+
+// MARK: - ErrorAlert
+
+extension LoginViewController {}

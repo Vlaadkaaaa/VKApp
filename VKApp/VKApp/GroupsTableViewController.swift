@@ -4,14 +4,4 @@
 import UIKit
 
 /// Страница групп
-final class GroupsTableViewController: UITableViewController {
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        0
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
-    }
-}
+final class GroupsTableViewController: UITableViewController {}

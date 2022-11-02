@@ -4,14 +4,4 @@
 import UIKit
 
 /// Страница друзей
-final class FriendsTableViewController: UITableViewController {
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        0
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
-    }
-}
+final class FriendsTableViewController: UITableViewController {}
