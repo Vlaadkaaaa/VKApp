@@ -13,7 +13,7 @@ extension UIViewController {
 
     // MARK: - Public Methods
 
-    func showErrorAlert(title: String?, message: String?) {
+    func showAlertError(title: String?, message: String?) {
         let alert = UIAlertController(
             title: title,
             message: message,

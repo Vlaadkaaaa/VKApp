@@ -49,7 +49,7 @@ final class LoginViewController: UIViewController {
         guard login == Constants.userDataText,
               password == Constants.userDataText
         else {
-            showErrorAlert(title: Constants.errorTitleText, message: Constants.errorMessageText)
+            showAlertError(title: Constants.errorTitleText, message: Constants.errorMessageText)
             return
         }
         performSegue(withIdentifier: Constants.friendTabBarSegueIdentifier, sender: self)
