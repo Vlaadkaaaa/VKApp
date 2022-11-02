@@ -18,6 +18,8 @@
 		55C652F5291246A40058ADFB /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C652F4291246A40058ADFB /* UIViewController+Extension.swift */; };
 		55D5C5B72912B94A00D075D7 /* FriendViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5C5B62912B94A00D075D7 /* FriendViewCell.swift */; };
 		55D5C5B92912BD0F00D075D7 /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5C5B82912BD0F00D075D7 /* Friends.swift */; };
+		55D5C5BB2912C75500D075D7 /* FriendDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5C5BA2912C75500D075D7 /* FriendDetailViewCell.swift */; };
+		55D5C5BD2912C88900D075D7 /* FriendDetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5C5BC2912C88900D075D7 /* FriendDetailCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		55C652F4291246A40058ADFB /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		55D5C5B62912B94A00D075D7 /* FriendViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewCell.swift; sourceTree = "<group>"; };
 		55D5C5B82912BD0F00D075D7 /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
+		55D5C5BA2912C75500D075D7 /* FriendDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailViewCell.swift; sourceTree = "<group>"; };
+		55D5C5BC2912C88900D075D7 /* FriendDetailCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,8 @@
 				55A0360B29114E02003F1DB3 /* FriendsTableViewController.swift */,
 				55A0360D29114E1F003F1DB3 /* GroupsTableViewController.swift */,
 				55D5C5B62912B94A00D075D7 /* FriendViewCell.swift */,
+				55D5C5BA2912C75500D075D7 /* FriendDetailViewCell.swift */,
+				55D5C5BC2912C88900D075D7 /* FriendDetailCollectionViewController.swift */,
 				55D5C5B82912BD0F00D075D7 /* Friends.swift */,
 				55C652F6291247430058ADFB /* Extension */,
 				552125E62910EE880058A8F2 /* Main.storyboard */,
@@ -209,7 +215,9 @@
 				55A0360E29114E1F003F1DB3 /* GroupsTableViewController.swift in Sources */,
 				55C652F5291246A40058ADFB /* UIViewController+Extension.swift in Sources */,
 				552125E12910EE880058A8F2 /* AppDelegate.swift in Sources */,
+				55D5C5BD2912C88900D075D7 /* FriendDetailCollectionViewController.swift in Sources */,
 				55A0360C29114E02003F1DB3 /* FriendsTableViewController.swift in Sources */,
+				55D5C5BB2912C75500D075D7 /* FriendDetailViewCell.swift in Sources */,
 				552125E32910EE880058A8F2 /* SceneDelegate.swift in Sources */,
 				55D5C5B92912BD0F00D075D7 /* Friends.swift in Sources */,
 			);

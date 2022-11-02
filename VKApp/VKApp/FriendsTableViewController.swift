@@ -72,6 +72,7 @@ final class FriendsTableViewController: UITableViewController {
         Friends(name: Constants.eightteenNameText, imageName: Constants.eighttennPeopleImageName),
         Friends(name: Constants.nineteenNameText, imageName: Constants.nineteenPeopleImageName)
     ]
+    private var friendDetail: Friends?
 }
 
 // MARK: - UITableViewDataSource
@@ -90,5 +91,12 @@ extension FriendsTableViewController {
         let friend = friends[indexPath.row]
         cell.setupUI(friend)
         return cell
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "friendDetailSegue" else { return }
+        guard let vc = segue.destination as? FriendDetailCollectionViewController,
+              let index = tableView.indexPathForSelectedRow?.row else { return }
+        vc.friend = friends[index]
     }
 }
