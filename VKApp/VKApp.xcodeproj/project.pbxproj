@@ -15,7 +15,7 @@
 		552125F7291117FB0058A8F2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552125F6291117FB0058A8F2 /* LoginViewController.swift */; };
 		55A0360C29114E02003F1DB3 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A0360B29114E02003F1DB3 /* FriendsTableViewController.swift */; };
 		55A0360E29114E1F003F1DB3 /* GroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A0360D29114E1F003F1DB3 /* GroupsTableViewController.swift */; };
-		55C652F5291246A40058ADFB /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C652F4291246A40058ADFB /* UIViewControllerExtension.swift */; };
+		55C652F5291246A40058ADFB /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C652F4291246A40058ADFB /* UIViewController+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +29,7 @@
 		552125F6291117FB0058A8F2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		55A0360B29114E02003F1DB3 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		55A0360D29114E1F003F1DB3 /* GroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsTableViewController.swift; sourceTree = "<group>"; };
-		55C652F4291246A40058ADFB /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		55C652F4291246A40058ADFB /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +79,7 @@
 		55C652F6291247430058ADFB /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				55C652F4291246A40058ADFB /* UIViewControllerExtension.swift */,
+				55C652F4291246A40058ADFB /* UIViewController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -200,7 +200,7 @@
 			files = (
 				552125F7291117FB0058A8F2 /* LoginViewController.swift in Sources */,
 				55A0360E29114E1F003F1DB3 /* GroupsTableViewController.swift in Sources */,
-				55C652F5291246A40058ADFB /* UIViewControllerExtension.swift in Sources */,
+				55C652F5291246A40058ADFB /* UIViewController+Extension.swift in Sources */,
 				552125E12910EE880058A8F2 /* AppDelegate.swift in Sources */,
 				55A0360C29114E02003F1DB3 /* FriendsTableViewController.swift in Sources */,
 				552125E32910EE880058A8F2 /* SceneDelegate.swift in Sources */,

@@ -3,5 +3,5 @@
 
 import UIKit
 
-/// Страница друзей
+/// Экран друзей
 final class FriendsTableViewController: UITableViewController {}

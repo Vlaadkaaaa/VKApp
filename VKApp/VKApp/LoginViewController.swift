@@ -3,13 +3,15 @@
 
 import UIKit
 
-/// Страница авторизации
+/// Экран авторизации
 final class LoginViewController: UIViewController {
     // MARK: Private Constants
 
     private enum Constants {
         static let friendTabBarSegueIdentifier = "friendTabBarSegue"
         static let userDataText = "admin"
+        static let errorTitleText = "Ошибка!"
+        static let errorMessageText = "Логин и/или пароль введены неверно"
     }
 
     // MARK: - Private IBOutlet
@@ -17,10 +19,6 @@ final class LoginViewController: UIViewController {
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var passwordTextField: UITextField!
     @IBOutlet private var loginTextField: UITextField!
-
-    // MARK: - Private Property
-
-    private lazy var gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardAction))
 
     // MARK: - Life Cycle
 
@@ -43,6 +41,7 @@ final class LoginViewController: UIViewController {
     // MARK: - Prviate Methods
 
     private func setupGestureRecognizer() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardAction))
         scrollView.addGestureRecognizer(gesture)
     }
 
@@ -50,7 +49,7 @@ final class LoginViewController: UIViewController {
         guard login == Constants.userDataText,
               password == Constants.userDataText
         else {
-            errorAuthentication()
+            showErrorAlert(title: Constants.errorTitleText, message: Constants.errorMessageText)
             return
         }
         performSegue(withIdentifier: Constants.friendTabBarSegueIdentifier, sender: self)
@@ -60,7 +59,3 @@ final class LoginViewController: UIViewController {
         scrollView.endEditing(true)
     }
 }
-
-// MARK: - ErrorAlert
-
-extension LoginViewController {}

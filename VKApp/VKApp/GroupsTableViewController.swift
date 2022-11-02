@@ -3,5 +3,5 @@
 
 import UIKit
 
-/// Страница групп
+/// Экран групп
 final class GroupsTableViewController: UITableViewController {}
