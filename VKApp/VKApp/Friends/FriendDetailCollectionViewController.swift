@@ -11,10 +11,6 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
         static let friendDetailCellIdentifier = "friendDetailCell"
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
     // MARK: - Public Property
 
     var friend: Friends?

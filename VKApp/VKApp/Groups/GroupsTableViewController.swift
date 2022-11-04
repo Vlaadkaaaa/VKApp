@@ -49,7 +49,7 @@ extension GroupsTableViewController {
             withIdentifier: Constants.groupCellIdentifier,
             for: indexPath
         ) as? GroupsViewCell
-        else { fatalError() }
+        else { return UITableViewCell() }
         let groups = groups[indexPath.row]
         cell.setupUI(groups)
         return cell
@@ -65,8 +65,10 @@ extension GroupsTableViewController {
         forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
+            tableView.beginUpdates()
             groups.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
         }
     }
 }
