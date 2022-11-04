@@ -3,7 +3,7 @@
 
 import UIKit
 
-///
+///  Экран всех фотографий друга
 final class FriendDetailCollectionViewController: UICollectionViewController {
     // MARK: - Private Constants
 

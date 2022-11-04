@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Настройка ячейки группы
+/// Настройка ячейки экрана групп пользователя
 final class GroupsViewCell: UITableViewCell {
     // MARK: - Private IBOutlet
 

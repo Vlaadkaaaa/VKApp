@@ -47,6 +47,7 @@ final class FriendsTableViewController: UITableViewController {
         static let seventeenPeopleImageName = "people-17"
         static let eighttennPeopleImageName = "people-18"
         static let nineteenPeopleImageName = "people-19"
+        static let friendDetailSegueIdentifier = "friendDetailSegue"
     }
 
     // MARK: - Private property
@@ -72,6 +73,7 @@ final class FriendsTableViewController: UITableViewController {
         Friends(name: Constants.eightteenNameText, imageName: Constants.eighttennPeopleImageName),
         Friends(name: Constants.nineteenNameText, imageName: Constants.nineteenPeopleImageName)
     ]
+
     private var friendDetail: Friends?
 }
 
@@ -94,7 +96,7 @@ extension FriendsTableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "friendDetailSegue" else { return }
+        guard segue.identifier == Constants.friendDetailSegueIdentifier else { return }
         guard let vc = segue.destination as? FriendDetailCollectionViewController,
               let index = tableView.indexPathForSelectedRow?.row else { return }
         vc.friend = friends[index]

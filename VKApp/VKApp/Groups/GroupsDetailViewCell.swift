@@ -3,7 +3,7 @@
 
 import UIKit
 
-///
+///  Настройкс ячейки таблицы экрана всех групп
 final class GroupsDetailViewCell: UITableViewCell {
     // MARK: - IBOutlet
 
