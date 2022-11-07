@@ -1,10 +1,10 @@
-// Groups.swift
+// Group.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
 /// Группы
-struct Groups {
+struct Group {
     let name: String
     let imageName: String
 }

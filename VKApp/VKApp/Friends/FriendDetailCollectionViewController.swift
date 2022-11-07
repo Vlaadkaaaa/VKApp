@@ -13,7 +13,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
     // MARK: - Public Property
 
-    var friend: Friends?
+    var friend: Friend?
 }
 
 // MARK: - UICollectionViewDataSource

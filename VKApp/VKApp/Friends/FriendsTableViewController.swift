@@ -53,28 +53,28 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private property
 
     private let friends = [
-        Friends(name: Constants.oneNameText, imageName: Constants.onePeopleImageName),
-        Friends(name: Constants.twoNameText, imageName: Constants.twoPeopleImageName),
-        Friends(name: Constants.threeNameText, imageName: Constants.threePeopleImageName),
-        Friends(name: Constants.fourNameText, imageName: Constants.fourPeopleImageName),
-        Friends(name: Constants.fiveNameText, imageName: Constants.fivePeopleImageName),
-        Friends(name: Constants.sixNameText, imageName: Constants.sixPeopleImageName),
-        Friends(name: Constants.sevenNameText, imageName: Constants.sevenPeopleImageName),
-        Friends(name: Constants.eightNameText, imageName: Constants.eightPeopleImageName),
-        Friends(name: Constants.nineNameText, imageName: Constants.ninePeopleImageName),
-        Friends(name: Constants.tenNameText, imageName: Constants.tenPeopleImageName),
-        Friends(name: Constants.elevenNameText, imageName: Constants.elevenPeopleImageName),
-        Friends(name: Constants.twelveNameText, imageName: Constants.twelvePeopleImageName),
-        Friends(name: Constants.thirteenNameText, imageName: Constants.thirteenPeopleImageName),
-        Friends(name: Constants.fourteenNameText, imageName: Constants.fourteenPeopleImageName),
-        Friends(name: Constants.fiveteenNameText, imageName: Constants.fiveteenPeopleImageName),
-        Friends(name: Constants.sixteenNameText, imageName: Constants.sixteenPeopleImageName),
-        Friends(name: Constants.seventeenNameText, imageName: Constants.seventeenPeopleImageName),
-        Friends(name: Constants.eightteenNameText, imageName: Constants.eighttennPeopleImageName),
-        Friends(name: Constants.nineteenNameText, imageName: Constants.nineteenPeopleImageName)
+        Friend(name: Constants.oneNameText, imageName: Constants.onePeopleImageName),
+        Friend(name: Constants.twoNameText, imageName: Constants.twoPeopleImageName),
+        Friend(name: Constants.threeNameText, imageName: Constants.threePeopleImageName),
+        Friend(name: Constants.fourNameText, imageName: Constants.fourPeopleImageName),
+        Friend(name: Constants.fiveNameText, imageName: Constants.fivePeopleImageName),
+        Friend(name: Constants.sixNameText, imageName: Constants.sixPeopleImageName),
+        Friend(name: Constants.sevenNameText, imageName: Constants.sevenPeopleImageName),
+        Friend(name: Constants.eightNameText, imageName: Constants.eightPeopleImageName),
+        Friend(name: Constants.nineNameText, imageName: Constants.ninePeopleImageName),
+        Friend(name: Constants.tenNameText, imageName: Constants.tenPeopleImageName),
+        Friend(name: Constants.elevenNameText, imageName: Constants.elevenPeopleImageName),
+        Friend(name: Constants.twelveNameText, imageName: Constants.twelvePeopleImageName),
+        Friend(name: Constants.thirteenNameText, imageName: Constants.thirteenPeopleImageName),
+        Friend(name: Constants.fourteenNameText, imageName: Constants.fourteenPeopleImageName),
+        Friend(name: Constants.fiveteenNameText, imageName: Constants.fiveteenPeopleImageName),
+        Friend(name: Constants.sixteenNameText, imageName: Constants.sixteenPeopleImageName),
+        Friend(name: Constants.seventeenNameText, imageName: Constants.seventeenPeopleImageName),
+        Friend(name: Constants.eightteenNameText, imageName: Constants.eighttennPeopleImageName),
+        Friend(name: Constants.nineteenNameText, imageName: Constants.nineteenPeopleImageName)
     ]
 
-    private var friendDetail: Friends?
+    private var friendDetail: Friend?
 }
 
 // MARK: - UITableViewDataSource
@@ -89,16 +89,18 @@ extension FriendsTableViewController {
             withIdentifier: Constants.friendCellIdentifier,
             for: indexPath
         ) as? FriendViewCell
-        else { fatalError() }
+        else { return UITableViewCell() }
         let friend = friends[indexPath.row]
         cell.setupUI(friend)
         return cell
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == Constants.friendDetailSegueIdentifier else { return }
-        guard let vc = segue.destination as? FriendDetailCollectionViewController,
-              let index = tableView.indexPathForSelectedRow?.row else { return }
+        guard
+            segue.identifier == Constants.friendDetailSegueIdentifier,
+            let vc = segue.destination as? FriendDetailCollectionViewController,
+            let index = tableView.indexPathForSelectedRow?.row
+        else { return }
         vc.friend = friends[index]
     }
 }

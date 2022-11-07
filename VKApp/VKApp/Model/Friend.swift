@@ -1,10 +1,10 @@
-// Friends.swift
+// Friend.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
 /// Друзья
-struct Friends {
+struct Friend {
     let name: String
     let imageName: String
 }

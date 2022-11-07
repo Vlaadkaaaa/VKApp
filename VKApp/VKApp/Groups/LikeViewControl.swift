@@ -23,14 +23,14 @@ final class LikeViewControl: UIControl {
 
     private lazy var likesCountLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 30, y: 0, width: 20, height: 20))
-        label.text = "\(countLikes)"
+        label.text = "\(likesCount)"
         return label
     }()
 
     // MARK: - Private Property
 
     private var isLike = false
-    private var countLikes = 0
+    private var likesCount = 0
 
     // MARK: - Init
 
@@ -54,15 +54,15 @@ final class LikeViewControl: UIControl {
     @objc private func likePhoto() {
         if !isLike {
             likeButton.setImage(UIImage(systemName: Constants.heartFillButtonImageName), for: .normal)
-            countLikes += 1
+            likesCount += 1
             likesCountLabel.textColor = .systemBlue
 
         } else {
             likeButton.setImage(UIImage(systemName: Constants.heartButtonImageName), for: .normal)
-            countLikes -= 1
+            likesCount -= 1
             likesCountLabel.textColor = .white
         }
         isLike = !isLike
-        likesCountLabel.text = "\(countLikes)"
+        likesCountLabel.text = "\(likesCount)"
     }
 }

@@ -12,7 +12,7 @@ final class GroupsViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupUI(_ group: Groups) {
+    func setupUI(_ group: Group) {
         nameGroupLabel.text = group.name
         groupImageView.image = UIImage(named: group.imageName)
     }

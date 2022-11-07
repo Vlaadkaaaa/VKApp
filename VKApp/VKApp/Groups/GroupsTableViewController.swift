@@ -21,12 +21,12 @@ final class GroupsTableViewController: UITableViewController {
     // MARK: - Private Property
 
     private var groups = [
-        Groups(name: Constants.oneGroupTitleText, imageName: Constants.imageName),
-        Groups(name: Constants.twoGrroupTitleText, imageName: Constants.twoImageName),
-        Groups(name: Constants.threeGroupTitleText, imageName: Constants.threeImageName),
+        Group(name: Constants.oneGroupTitleText, imageName: Constants.imageName),
+        Group(name: Constants.twoGrroupTitleText, imageName: Constants.twoImageName),
+        Group(name: Constants.threeGroupTitleText, imageName: Constants.threeImageName),
     ]
 
-    // MARK: - Private IBACtion
+    // MARK: - Private IBAction
 
     @IBAction private func addGroupAction(_ sender: UIStoryboardSegue) {
         guard let groupDetail = sender.source as? GroupsDetailTableViewController,

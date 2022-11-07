@@ -11,7 +11,7 @@ final class FriendDetailViewCell: UICollectionViewCell {
 
     // MARK: - Public Methods
 
-    func setupUI(_ friend: Friends) {
+    func setupUI(_ friend: Friend) {
         friendImageView.image = UIImage(named: friend.imageName)
     }
 }

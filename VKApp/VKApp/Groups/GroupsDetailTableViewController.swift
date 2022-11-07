@@ -20,9 +20,9 @@ final class GroupsDetailTableViewController: UITableViewController {
     // MARK: - Public property
 
     let groups = [
-        Groups(name: Constants.fiveGroupTitleText, imageName: Constants.fiveGroupImageName),
-        Groups(name: Constants.sixGroupTitleText, imageName: Constants.sixGroupImageName),
-        Groups(name: Constants.sevenGroupTitleText, imageName: Constants.sevenGroupImageName)
+        Group(name: Constants.fiveGroupTitleText, imageName: Constants.fiveGroupImageName),
+        Group(name: Constants.sixGroupTitleText, imageName: Constants.sixGroupImageName),
+        Group(name: Constants.sevenGroupTitleText, imageName: Constants.sevenGroupImageName)
     ]
 }
 
@@ -38,7 +38,7 @@ extension GroupsDetailTableViewController {
             withIdentifier: Constants.groupsDetailCellIdentifier,
             for: indexPath
         ) as? GroupsDetailViewCell
-        else { fatalError() }
+        else { return UITableViewCell() }
         cell.setupUI(groups[indexPath.row])
         return cell
     }
