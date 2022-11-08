@@ -17,6 +17,10 @@ final class GroupsDetailTableViewController: UITableViewController {
         static let groupsDetailCellIdentifier = "groupsDetailCell"
     }
 
+    // MARK: - Private IBOutlet
+
+    @IBOutlet var searchBar: UISearchBar!
+
     // MARK: - Public property
 
     let groups = [
@@ -24,13 +28,22 @@ final class GroupsDetailTableViewController: UITableViewController {
         Group(name: Constants.sixGroupTitleText, imageName: Constants.sixGroupImageName),
         Group(name: Constants.sevenGroupTitleText, imageName: Constants.sevenGroupImageName)
     ]
+    var filtherGroup: [Group] = []
+
+    // MARK: - Life Cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        filtherGroup = groups
+        searchBar.delegate = self
+    }
 }
 
 // MARK: - UITableViewDataSource
 
 extension GroupsDetailTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        groups.count
+        filtherGroup.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -39,7 +52,21 @@ extension GroupsDetailTableViewController {
             for: indexPath
         ) as? GroupsDetailViewCell
         else { return UITableViewCell() }
-        cell.setupUI(groups[indexPath.row])
+        cell.setupUI(filtherGroup[indexPath.row])
         return cell
+    }
+}
+
+extension GroupsDetailTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filtherGroup = []
+        if searchText.isEmpty {
+            filtherGroup = groups
+        } else {
+            for group in groups where group.name.lowercased().contains(searchText.lowercased()) {
+                filtherGroup.append(group)
+            }
+        }
+        tableView.reloadData()
     }
 }

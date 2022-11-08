@@ -50,6 +50,10 @@ final class FriendsTableViewController: UITableViewController {
         static let friendDetailSegueIdentifier = "friendDetailSegue"
     }
 
+    // MARK: - Private IBOutlet
+
+    @IBOutlet private var searchBar: UISearchBar!
+
     // MARK: - Private property
 
     private let friends = [
@@ -73,27 +77,20 @@ final class FriendsTableViewController: UITableViewController {
         Friend(name: Constants.eightteenNameText, imageName: Constants.eighttennPeopleImageName),
         Friend(name: Constants.nineteenNameText, imageName: Constants.nineteenPeopleImageName)
     ]
+    private var sections: [Character: [Friend]] = [:]
+    private var sectionTitles: [Character] = []
+    private var filteredFriend: [Character: [Friend]] = [:]
 
-    private var friendDetail: Friend?
-}
+    // MARK: - Life cycle
 
-// MARK: - UITableViewDataSource
-
-extension FriendsTableViewController {
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        friends.count
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupCellToSection()
+        filteredFriend = sections
+        searchBar.delegate = self
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: Constants.friendCellIdentifier,
-            for: indexPath
-        ) as? FriendViewCell
-        else { return UITableViewCell() }
-        let friend = friends[indexPath.row]
-        cell.setupUI(friend)
-        return cell
-    }
+    // MARK: - Public Methods
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard
@@ -102,5 +99,72 @@ extension FriendsTableViewController {
             let index = tableView.indexPathForSelectedRow?.row
         else { return }
         vc.friend = friends[index]
+    }
+
+    // MARK: - Private Methods
+
+    private func setupCellToSection() {
+        for friend in friends {
+            guard let firstCharacter = friend.name.first else { return }
+            if sections[firstCharacter] != nil {
+                sections[firstCharacter]?.append(friend)
+            } else {
+                sections[firstCharacter] = [friend]
+            }
+        }
+        sectionTitles = Array(sections.keys).sorted()
+
+        tableView.reloadData()
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension FriendsTableViewController {
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        filteredFriend.keys.count
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        filteredFriend[sectionTitles[section]]?.count ?? 0
+    }
+
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        sectionTitles.compactMap { String($0) }
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        String(sectionTitles[section])
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.friendCellIdentifier,
+                for: indexPath
+            ) as? FriendViewCell,
+            let friend = filteredFriend[sectionTitles[indexPath.section]]?[indexPath.row]
+
+        else { return UITableViewCell() }
+
+        cell.setupUI(friend)
+        return cell
+    }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension FriendsTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredFriend = sections
+        } else if let first = searchText.first, var friendKey = filteredFriend[first] {
+            friendKey = friendKey.filter { friend in
+                friend.name.contains(searchText)
+            }
+            filteredFriend = [:]
+            filteredFriend[first] = friendKey
+        }
+        tableView.reloadData()
     }
 }
