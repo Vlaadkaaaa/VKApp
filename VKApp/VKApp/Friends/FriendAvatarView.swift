@@ -14,8 +14,11 @@ import UIKit
         image.contentMode = .scaleAspectFill
         image.backgroundColor = .white
         image.layer.cornerRadius = bounds.width / 2
+        image.addGestureRecognizer(gesture)
         return image
     }()
+
+    let gesture = UITapGestureRecognizer(target: FriendAvatarView.self, action: #selector(tapGestureAction))
 
     @IBInspectable private var shadowOpacity: Float = 1 {
         didSet {
@@ -58,6 +61,7 @@ import UIKit
     private func setupUI() {
         addSubview(avatarImageView)
         updateShadow()
+        setupGesture()
     }
 
     private func updateShadow() {
@@ -77,5 +81,11 @@ import UIKit
 
     private func updateShadowOpacity() {
         layer.shadowOpacity = shadowOpacity
+    }
+
+    private func setupGesture() {}
+
+    @objc private func tapGestureAction() {
+        print("TapTapTap")
     }
 }

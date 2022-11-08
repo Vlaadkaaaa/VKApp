@@ -92,17 +92,58 @@
                                             </backgroundConfiguration>
                                         </buttonConfiguration>
                                     </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="feT-BS-xz9">
+                                        <rect key="frame" x="134" y="375.66666666666669" width="122" height="46"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4vI-E7-jG0">
+                                                <rect key="frame" x="8" y="8" width="30" height="30"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="30" id="HEG-j7-jJI"/>
+                                                    <constraint firstAttribute="width" secondItem="4vI-E7-jG0" secondAttribute="height" multiplier="1:1" id="T6E-0U-gKA"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="laH-j8-5hX">
+                                                <rect key="frame" x="46" y="8" width="30" height="30"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="laH-j8-5hX" secondAttribute="height" multiplier="1:1" id="Ev5-gp-rnQ"/>
+                                                    <constraint firstAttribute="width" constant="30" id="krh-26-zzT"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9M7-Sf-fOw">
+                                                <rect key="frame" x="84" y="8" width="30" height="30"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="30" id="9DH-h2-X2T"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="9Nl-fG-9KN"/>
+                                            <constraint firstItem="laH-j8-5hX" firstAttribute="centerY" secondItem="feT-BS-xz9" secondAttribute="centerY" id="IIc-wW-sPY"/>
+                                            <constraint firstItem="9M7-Sf-fOw" firstAttribute="centerY" secondItem="feT-BS-xz9" secondAttribute="centerY" id="PfK-tF-3TW"/>
+                                            <constraint firstItem="9M7-Sf-fOw" firstAttribute="leading" secondItem="laH-j8-5hX" secondAttribute="trailing" constant="8" id="Uzs-Ps-xHF"/>
+                                            <constraint firstItem="9M7-Sf-fOw" firstAttribute="width" secondItem="9M7-Sf-fOw" secondAttribute="height" multiplier="1:1" id="mLq-XC-aiW"/>
+                                            <constraint firstItem="laH-j8-5hX" firstAttribute="leading" secondItem="4vI-E7-jG0" secondAttribute="trailing" constant="8" id="rqI-GN-L3n"/>
+                                            <constraint firstAttribute="width" constant="122" id="vRh-j2-i8t"/>
+                                            <constraint firstItem="4vI-E7-jG0" firstAttribute="centerY" secondItem="feT-BS-xz9" secondAttribute="centerY" id="vSV-mJ-rqN"/>
+                                            <constraint firstItem="4vI-E7-jG0" firstAttribute="leading" secondItem="feT-BS-xz9" secondAttribute="leading" constant="8" id="zbW-U8-Ofs"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Pjf-Yi-BZ8" firstAttribute="top" secondItem="VBg-6p-hWy" secondAttribute="bottom" constant="40" id="12E-04-iA0"/>
                                     <constraint firstItem="VBg-6p-hWy" firstAttribute="top" secondItem="TRH-Oh-Mcx" secondAttribute="bottom" constant="20" id="2Wj-40-rPw"/>
                                     <constraint firstItem="VBg-6p-hWy" firstAttribute="centerX" secondItem="TRH-Oh-Mcx" secondAttribute="centerX" id="2hK-8t-wsF"/>
                                     <constraint firstItem="TRH-Oh-Mcx" firstAttribute="centerX" secondItem="JdJ-VP-Dhz" secondAttribute="centerX" id="2sA-bo-fSR"/>
+                                    <constraint firstItem="feT-BS-xz9" firstAttribute="centerX" secondItem="JdJ-VP-Dhz" secondAttribute="centerX" id="8s5-4M-loi"/>
                                     <constraint firstItem="jf3-Cn-IN6" firstAttribute="width" secondItem="pBj-Rg-fnK" secondAttribute="width" id="9Ta-ph-dsQ"/>
                                     <constraint firstItem="jf3-Cn-IN6" firstAttribute="top" secondItem="pBj-Rg-fnK" secondAttribute="bottom" constant="274.66666666666669" id="9Y2-hh-Cpg"/>
                                     <constraint firstItem="TRH-Oh-Mcx" firstAttribute="top" secondItem="JdJ-VP-Dhz" secondAttribute="top" constant="90" id="D1D-6I-tg7"/>
                                     <constraint firstItem="h7J-BU-Ffp" firstAttribute="top" secondItem="JDB-Yc-GOQ" secondAttribute="bottom" constant="5" id="Fo3-X4-JcP"/>
                                     <constraint firstItem="Pjf-Yi-BZ8" firstAttribute="centerX" secondItem="VBg-6p-hWy" secondAttribute="centerX" id="Hsj-OX-IoR"/>
+                                    <constraint firstItem="feT-BS-xz9" firstAttribute="centerY" secondItem="JdJ-VP-Dhz" secondAttribute="centerY" id="JaS-4m-aTz"/>
                                     <constraint firstItem="h7J-BU-Ffp" firstAttribute="centerX" secondItem="JDB-Yc-GOQ" secondAttribute="centerX" id="LcB-fg-JT8"/>
                                     <constraint firstAttribute="bottom" secondItem="jf3-Cn-IN6" secondAttribute="bottom" constant="42" id="MFQ-kp-znO"/>
                                     <constraint firstItem="B5b-A8-dbN" firstAttribute="centerX" secondItem="Pjf-Yi-BZ8" secondAttribute="centerX" id="NVb-CE-s5r"/>
@@ -129,15 +170,19 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="loadIndicatorView" destination="feT-BS-xz9" id="41R-Ig-jxd"/>
                         <outlet property="loginTextField" destination="Pjf-Yi-BZ8" id="SE2-lH-CrH"/>
+                        <outlet property="oneView" destination="4vI-E7-jG0" id="FHe-tl-gwS"/>
                         <outlet property="passwordTextField" destination="B5b-A8-dbN" id="N2e-MD-KD6"/>
                         <outlet property="scrollView" destination="JdJ-VP-Dhz" id="WTO-1I-gYJ"/>
+                        <outlet property="threeView" destination="9M7-Sf-fOw" id="aA6-bt-Lz6"/>
+                        <outlet property="twoView" destination="laH-j8-5hX" id="n4O-yc-hHy"/>
                         <segue destination="TRf-Wv-OBF" kind="presentation" identifier="friendTabBarSegue" modalPresentationStyle="fullScreen" id="0ef-Uq-tla"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BBR-5f-qxA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="28" y="197"/>
+            <point key="canvasLocation" x="27.69230769230769" y="196.91943127962085"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="FeP-e9-fOK">
@@ -253,13 +298,13 @@
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                                    <color key="value" systemColor="systemRedColor"/>
+                                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
                                                     <real key="value" value="1"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
-                                                    <real key="value" value="10"/>
+                                                    <real key="value" value="3"/>
                                                 </userDefinedRuntimeAttribute>
                                                 <userDefinedRuntimeAttribute type="size" keyPath="shadowSize">
                                                     <size key="value" width="1" height="1"/>
@@ -724,9 +769,6 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

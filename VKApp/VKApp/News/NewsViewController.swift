@@ -15,7 +15,7 @@ final class NewsViewController: UIViewController {
             avatarImageName: "logoVk",
             description: "LogoVKLogoVKLogoVKLogoVKLogoVKLogoVKLogoVK" +
                 "LogoVKLogoVKLogoVKLogoVKLogoVKLogoVKLogoVKLogoVKLogoVKLogoVKLogoVKLogoVK"
-        ),      
+        ),
         News(
             name: "Vlad",
             date: "29.03.2323",

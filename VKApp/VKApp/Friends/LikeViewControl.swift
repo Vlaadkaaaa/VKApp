@@ -51,6 +51,14 @@ final class LikeViewControl: UIControl {
         addSubview(likesCountLabel)
     }
 
+    private func animateLike() {
+        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.7) {
+            self.likeButton.frame.origin.y += 5
+        } completion: { _ in
+            self.likeButton.frame.origin.y -= 5
+        }
+    }
+
     @objc private func likePhoto() {
         if !isLike {
             likeButton.setImage(UIImage(systemName: Constants.heartFillButtonImageName), for: .normal)
@@ -62,6 +70,7 @@ final class LikeViewControl: UIControl {
             likesCount -= 1
             likesCountLabel.textColor = .white
         }
+        animateLike()
         isLike = !isLike
         likesCountLabel.text = "\(likesCount)"
     }

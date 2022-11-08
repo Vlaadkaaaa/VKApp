@@ -120,6 +120,7 @@
 				55D5C5BA2912C75500D075D7 /* FriendDetailViewCell.swift */,
 				55D5C5BC2912C88900D075D7 /* FriendDetailCollectionViewController.swift */,
 				55E75D872913AC5200776936 /* FriendAvatarView.swift */,
+				555276FD2913DB7E009504C0 /* LikeViewControl.swift */,
 			);
 			path = Friends;
 			sourceTree = "<group>";
@@ -131,7 +132,6 @@
 				55D5C5C52912D6A000D075D7 /* GroupsDetailTableViewController.swift */,
 				55D5C5C72912D6CD00D075D7 /* GroupsDetailViewCell.swift */,
 				55D5C5C02912D38900D075D7 /* GroupsViewCell.swift */,
-				555276FD2913DB7E009504C0 /* LikeViewControl.swift */,
 			);
 			path = Groups;
 			sourceTree = "<group>";

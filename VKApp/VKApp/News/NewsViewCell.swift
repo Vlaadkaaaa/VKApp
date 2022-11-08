@@ -4,24 +4,15 @@
 import UIKit
 
 final class NewsViewCell: UITableViewCell {
-    @IBOutlet private var avatarImageView: UIImageView!
+    // MARK: - Private IBOutlet
 
+    @IBOutlet private var avatarImageView: UIImageView!
     @IBOutlet private var userNameLabel: UILabel!
     @IBOutlet private var postDateLabel: UILabel!
     @IBOutlet private var postDescriptionLabel: UILabel!
     @IBOutlet private var postImageView: UIImageView!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-//        userNameLabel.text = "userNameLabel"
-//        postDateLabel.text = "24.02.2021"
-//        postDescriptionLabel
-//            .text =
-//            "postDescriptionLabel postDescriptionLabelpostDescriptionLabelpost" +
-//            "DescriptionLabelpostDescriptionLabelpostDescriptionLabelpostDescriptionLabelpostDescriptionLabel"
-//        postImageView.image = UIImage(named: "logoVk")
-//        avatarImageView.image = UIImage(named: "logoVk")
-    }
+    // MARK: - Public Methods
 
     func setupUI(news: News) {
         avatarImageView.image = UIImage(named: news.avatarImageName)
