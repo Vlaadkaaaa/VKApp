@@ -89,6 +89,9 @@ final class LoginViewController: UIViewController {
             self.twoView.alpha = 0.5
             self.threeView.alpha = 0.9
         } completion: { _ in
+            self.oneView.alpha = 0.9
+            self.twoView.alpha = 0.9
+            self.threeView.alpha = 0.9
             self.performSegue(withIdentifier: Constants.friendTabBarSegueIdentifier, sender: self)
         }
     }

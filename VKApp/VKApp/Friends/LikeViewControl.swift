@@ -54,8 +54,10 @@ final class LikeViewControl: UIControl {
     private func animateLike() {
         UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.7) {
             self.likeButton.frame.origin.y += 5
+            self.likesCountLabel.frame.origin.y += 5
         } completion: { _ in
             self.likeButton.frame.origin.y -= 5
+            self.likesCountLabel.frame.origin.y -= 5
         }
     }
 

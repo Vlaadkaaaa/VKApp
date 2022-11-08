@@ -3,6 +3,7 @@
 
 import UIKit
 
+///  Настройка ячейки новостей
 final class NewsViewCell: UITableViewCell {
     // MARK: - Private IBOutlet
 

@@ -8,7 +8,12 @@ final class GroupsViewCell: UITableViewCell {
     // MARK: - Private IBOutlet
 
     @IBOutlet private var nameGroupLabel: UILabel!
-    @IBOutlet private var groupImageView: UIImageView!
+
+    @IBOutlet private var groupImageView: UIImageView! {
+        didSet {
+            groupImageView.isUserInteractionEnabled = true
+        }
+    }
 
     // MARK: - Public Methods
 
