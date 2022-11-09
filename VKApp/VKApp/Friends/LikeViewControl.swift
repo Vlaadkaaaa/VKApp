@@ -17,7 +17,7 @@ final class LikeViewControl: UIControl {
     private lazy var likeButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         button.setImage(UIImage(systemName: Constants.heartButtonImageName), for: .normal)
-        button.addTarget(self, action: #selector(likePhoto), for: .touchUpInside)
+        button.addTarget(self, action: #selector(likePhotoAction), for: .touchUpInside)
         return button
     }()
 
@@ -51,7 +51,17 @@ final class LikeViewControl: UIControl {
         addSubview(likesCountLabel)
     }
 
-    @objc private func likePhoto() {
+    private func animateLike() {
+        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.7) {
+            self.likeButton.frame.origin.y += 5
+            self.likesCountLabel.frame.origin.y += 5
+        } completion: { _ in
+            self.likeButton.frame.origin.y -= 5
+            self.likesCountLabel.frame.origin.y -= 5
+        }
+    }
+
+    @objc private func likePhotoAction() {
         if !isLike {
             likeButton.setImage(UIImage(systemName: Constants.heartFillButtonImageName), for: .normal)
             likesCount += 1
@@ -62,6 +72,7 @@ final class LikeViewControl: UIControl {
             likesCount -= 1
             likesCountLabel.textColor = .white
         }
+        animateLike()
         isLike = !isLike
         likesCountLabel.text = "\(likesCount)"
     }

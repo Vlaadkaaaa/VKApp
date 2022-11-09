@@ -26,6 +26,9 @@
 		55D5C5C62912D6A000D075D7 /* GroupsDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5C5C52912D6A000D075D7 /* GroupsDetailTableViewController.swift */; };
 		55D5C5C82912D6CD00D075D7 /* GroupsDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5C5C72912D6CD00D075D7 /* GroupsDetailViewCell.swift */; };
 		55E75D882913AC5200776936 /* FriendAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E75D872913AC5200776936 /* FriendAvatarView.swift */; };
+		CE135F11291A418C003B8F1A /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE135F10291A418C003B8F1A /* News.swift */; };
+		CEDB3B1C291A3A4D00ED39AC /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB3B1B291A3A4D00ED39AC /* NewsViewController.swift */; };
+		CEEC3159291A353C00B91C89 /* NewsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC3158291A353C00B91C89 /* NewsViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,9 @@
 		55D5C5C52912D6A000D075D7 /* GroupsDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsDetailTableViewController.swift; sourceTree = "<group>"; };
 		55D5C5C72912D6CD00D075D7 /* GroupsDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsDetailViewCell.swift; sourceTree = "<group>"; };
 		55E75D872913AC5200776936 /* FriendAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendAvatarView.swift; sourceTree = "<group>"; };
+		CE135F10291A418C003B8F1A /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
+		CEDB3B1B291A3A4D00ED39AC /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
+		CEEC3158291A353C00B91C89 /* NewsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +91,7 @@
 				552125E02910EE880058A8F2 /* AppDelegate.swift */,
 				552125E22910EE880058A8F2 /* SceneDelegate.swift */,
 				552125F6291117FB0058A8F2 /* LoginViewController.swift */,
+				CE135F14291A5517003B8F1A /* News */,
 				55D5C5C42912D4CA00D075D7 /* Model */,
 				55D5C5BE2912D35D00D075D7 /* Friends */,
 				55D5C5BF2912D36B00D075D7 /* Groups */,
@@ -113,6 +120,7 @@
 				55D5C5BA2912C75500D075D7 /* FriendDetailViewCell.swift */,
 				55D5C5BC2912C88900D075D7 /* FriendDetailCollectionViewController.swift */,
 				55E75D872913AC5200776936 /* FriendAvatarView.swift */,
+				555276FD2913DB7E009504C0 /* LikeViewControl.swift */,
 			);
 			path = Friends;
 			sourceTree = "<group>";
@@ -124,7 +132,6 @@
 				55D5C5C52912D6A000D075D7 /* GroupsDetailTableViewController.swift */,
 				55D5C5C72912D6CD00D075D7 /* GroupsDetailViewCell.swift */,
 				55D5C5C02912D38900D075D7 /* GroupsViewCell.swift */,
-				555276FD2913DB7E009504C0 /* LikeViewControl.swift */,
 			);
 			path = Groups;
 			sourceTree = "<group>";
@@ -134,8 +141,18 @@
 			children = (
 				55D5C5B82912BD0F00D075D7 /* Friend.swift */,
 				55D5C5C22912D40400D075D7 /* Group.swift */,
+				CE135F10291A418C003B8F1A /* News.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		CE135F14291A5517003B8F1A /* News */ = {
+			isa = PBXGroup;
+			children = (
+				CEEC3158291A353C00B91C89 /* NewsViewCell.swift */,
+				CEDB3B1B291A3A4D00ED39AC /* NewsViewController.swift */,
+			);
+			path = News;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,9 +271,11 @@
 			files = (
 				552125F7291117FB0058A8F2 /* LoginViewController.swift in Sources */,
 				55D5C5B72912B94A00D075D7 /* FriendViewCell.swift in Sources */,
+				CEEC3159291A353C00B91C89 /* NewsViewCell.swift in Sources */,
 				55E75D882913AC5200776936 /* FriendAvatarView.swift in Sources */,
 				55A0360E29114E1F003F1DB3 /* GroupsTableViewController.swift in Sources */,
 				55C652F5291246A40058ADFB /* UIViewController+Extension.swift in Sources */,
+				CE135F11291A418C003B8F1A /* News.swift in Sources */,
 				555276FE2913DB7E009504C0 /* LikeViewControl.swift in Sources */,
 				55D5C5C12912D38900D075D7 /* GroupsViewCell.swift in Sources */,
 				552125E12910EE880058A8F2 /* AppDelegate.swift in Sources */,
@@ -266,6 +285,7 @@
 				55D5C5BB2912C75500D075D7 /* FriendDetailViewCell.swift in Sources */,
 				552125E32910EE880058A8F2 /* SceneDelegate.swift in Sources */,
 				55D5C5C82912D6CD00D075D7 /* GroupsDetailViewCell.swift in Sources */,
+				CEDB3B1C291A3A4D00ED39AC /* NewsViewController.swift in Sources */,
 				55D5C5B92912BD0F00D075D7 /* Friend.swift in Sources */,
 				55D5C5C32912D40400D075D7 /* Group.swift in Sources */,
 			);
@@ -422,6 +442,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -453,6 +474,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
