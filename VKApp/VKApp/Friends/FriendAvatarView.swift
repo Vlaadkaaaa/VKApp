@@ -9,6 +9,7 @@ import UIKit
 
     private lazy var avatarImageView: UIImageView = {
         let image = UIImageView()
+        image.isUserInteractionEnabled = true
         image.layer.masksToBounds = true
         image.frame = bounds
         image.contentMode = .scaleAspectFill
@@ -45,6 +46,7 @@ import UIKit
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
+        setupGesture()
     }
 
     // MARK: - Public Methods
@@ -77,5 +79,28 @@ import UIKit
 
     private func updateShadowOpacity() {
         layer.shadowOpacity = shadowOpacity
+    }
+
+    private func setupGesture() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapGestureAction))
+        avatarImageView.addGestureRecognizer(gesture)
+    }
+
+    @objc private func tapGestureAction() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1) {
+            self.avatarImageView.bounds = CGRect(
+                x: self.avatarImageView.center.x,
+                y: self.avatarImageView.center.y,
+                width: 60,
+                height: 60
+            )
+        } completion: { _ in
+            self.avatarImageView.bounds = CGRect(
+                x: self.avatarImageView.center.x,
+                y: self.avatarImageView.center.y,
+                width: 50,
+                height: 50
+            )
+        }
     }
 }

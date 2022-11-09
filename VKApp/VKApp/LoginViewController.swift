@@ -9,7 +9,7 @@ final class LoginViewController: UIViewController {
 
     private enum Constants {
         static let friendTabBarSegueIdentifier = "friendTabBarSegue"
-        static let userDataText = ""
+        static let userDataText = "admin"
         static let errorTitleText = "Ошибка!"
         static let errorMessageText = "Логин и/или пароль введены неверно"
     }

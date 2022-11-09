@@ -85,9 +85,7 @@ final class FriendsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCellToSection()
-        filteredFriend = sections
-        searchBar.delegate = self
+        configureFilther()
     }
 
     // MARK: - Public Methods
@@ -102,6 +100,12 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     // MARK: - Private Methods
+
+    private func configureFilther() {
+        setupCellToSection()
+        filteredFriend = sections
+        searchBar.delegate = self
+    }
 
     private func setupCellToSection() {
         for friend in friends {

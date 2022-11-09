@@ -28,12 +28,21 @@ final class GroupsDetailTableViewController: UITableViewController {
         Group(name: Constants.sixGroupTitleText, imageName: Constants.sixGroupImageName),
         Group(name: Constants.sevenGroupTitleText, imageName: Constants.sevenGroupImageName)
     ]
-    var filtherGroup: [Group] = []
+
+    // MARK: - Private Property
+
+    private var filtherGroup: [Group] = []
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureFilther()
+    }
+
+    // MARK: - Private Methods
+
+    private func configureFilther() {
         filtherGroup = groups
         searchBar.delegate = self
     }
@@ -56,6 +65,8 @@ extension GroupsDetailTableViewController {
         return cell
     }
 }
+
+// MARK: - UISearchBarDelegate
 
 extension GroupsDetailTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

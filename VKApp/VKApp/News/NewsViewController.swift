@@ -24,6 +24,8 @@ final class NewsViewController: UIViewController {
     private let news = NewsPosts.getNews()
 }
 
+// MARK: - UITableViewDataSource
+
 extension NewsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         news.count
