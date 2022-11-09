@@ -17,7 +17,7 @@ final class LikeViewControl: UIControl {
     private lazy var likeButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         button.setImage(UIImage(systemName: Constants.heartButtonImageName), for: .normal)
-        button.addTarget(self, action: #selector(likePhoto), for: .touchUpInside)
+        button.addTarget(self, action: #selector(likePhotoAction), for: .touchUpInside)
         return button
     }()
 
@@ -61,7 +61,7 @@ final class LikeViewControl: UIControl {
         }
     }
 
-    @objc private func likePhoto() {
+    @objc private func likePhotoAction() {
         if !isLike {
             likeButton.setImage(UIImage(systemName: Constants.heartFillButtonImageName), for: .normal)
             likesCount += 1

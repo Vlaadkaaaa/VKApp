@@ -19,7 +19,7 @@ final class GroupsDetailTableViewController: UITableViewController {
 
     // MARK: - Private IBOutlet
 
-    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet private var searchBar: UISearchBar!
 
     // MARK: - Public property
 
@@ -31,7 +31,7 @@ final class GroupsDetailTableViewController: UITableViewController {
 
     // MARK: - Private Property
 
-    private var filtherGroup: [Group] = []
+    private var filterGroup: [Group] = []
 
     // MARK: - Life Cycle
 
@@ -43,7 +43,7 @@ final class GroupsDetailTableViewController: UITableViewController {
     // MARK: - Private Methods
 
     private func configureFilther() {
-        filtherGroup = groups
+        filterGroup = groups
         searchBar.delegate = self
     }
 }
@@ -52,7 +52,7 @@ final class GroupsDetailTableViewController: UITableViewController {
 
 extension GroupsDetailTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        filtherGroup.count
+        filterGroup.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -61,7 +61,7 @@ extension GroupsDetailTableViewController {
             for: indexPath
         ) as? GroupsDetailViewCell
         else { return UITableViewCell() }
-        cell.setupUI(filtherGroup[indexPath.row])
+        cell.setupUI(filterGroup[indexPath.row])
         return cell
     }
 }
@@ -70,12 +70,12 @@ extension GroupsDetailTableViewController {
 
 extension GroupsDetailTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filtherGroup = []
+        filterGroup = []
         if searchText.isEmpty {
-            filtherGroup = groups
+            filterGroup = groups
         } else {
             for group in groups where group.name.lowercased().contains(searchText.lowercased()) {
-                filtherGroup.append(group)
+                filterGroup.append(group)
             }
         }
         tableView.reloadData()

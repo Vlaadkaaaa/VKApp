@@ -25,21 +25,21 @@ final class LoginViewController: UIViewController {
         }
     }
 
-    @IBOutlet private var threeView: UIView! {
+    @IBOutlet private var thirdPointView: UIView! {
         didSet {
-            threeView.layer.cornerRadius = threeView.frame.width / 2
+            thirdPointView.layer.cornerRadius = thirdPointView.frame.width / 2
         }
     }
 
-    @IBOutlet private var twoView: UIView! {
+    @IBOutlet private var secondPointView: UIView! {
         didSet {
-            twoView.layer.cornerRadius = twoView.frame.width / 2
+            secondPointView.layer.cornerRadius = secondPointView.frame.width / 2
         }
     }
 
-    @IBOutlet private var oneView: UIView! {
+    @IBOutlet private var firstPointView: UIView! {
         didSet {
-            oneView.layer.cornerRadius = oneView.frame.width / 2
+            firstPointView.layer.cornerRadius = firstPointView.frame.width / 2
         }
     }
 
@@ -82,16 +82,16 @@ final class LoginViewController: UIViewController {
 
     private func animateView() {
         UIView.animate(withDuration: 1.0, delay: 0, options: [.autoreverse]) {
-            self.oneView.alpha = 0.5
-            self.twoView.alpha = 0.9
-            self.threeView.alpha = 0.5
-            self.oneView.alpha = 0.1
-            self.twoView.alpha = 0.5
-            self.threeView.alpha = 0.9
+            self.firstPointView.alpha = 0.5
+            self.secondPointView.alpha = 0.9
+            self.thirdPointView.alpha = 0.5
+            self.firstPointView.alpha = 0.1
+            self.secondPointView.alpha = 0.5
+            self.thirdPointView.alpha = 0.9
         } completion: { _ in
-            self.oneView.alpha = 0.9
-            self.twoView.alpha = 0.9
-            self.threeView.alpha = 0.9
+            self.firstPointView.alpha = 0.9
+            self.secondPointView.alpha = 0.9
+            self.thirdPointView.alpha = 0.9
             self.performSegue(withIdentifier: Constants.friendTabBarSegueIdentifier, sender: self)
         }
     }
