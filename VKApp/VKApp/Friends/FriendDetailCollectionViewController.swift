@@ -9,18 +9,33 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
     private enum Constants {
         static let friendDetailCellIdentifier = "friendDetailCell"
+        static let allFriendPhotoSegueIdentifier = "allFriendPhotoSegue"
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print(frindIndex)
     }
 
     // MARK: - Public Property
 
-    var friend: Friend?
+    var friend: FriendKey?
+    var frindIndex = Int()
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == Constants.allFriendPhotoSegueIdentifier,
+              let destination = segue.destination as? DetailFriendViewController
+        else { return }
+        destination.index = frindIndex
+        destination.friend = friend
+    }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension FriendDetailCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        friend?.profileImagesName?.count ?? 0
+        friend?.dictionary.count ?? 0
     }
 
     override func collectionView(
@@ -32,8 +47,8 @@ extension FriendDetailCollectionViewController {
                 withReuseIdentifier: Constants.friendDetailCellIdentifier,
                 for: indexPath
             ) as? FriendDetailViewCell,
-            let friend = friend?.profileImagesName?[indexPath.row] else { return UICollectionViewCell() }
-        cell.setupUI(friend)
+            let friend = friend else { return UICollectionViewCell() }
+        cell.setupUI(friend, index: frindIndex)
         return cell
     }
 }

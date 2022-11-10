@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PfY-df-3Xr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TRf-Wv-OBF">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
@@ -364,7 +364,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c5t-n2-mqN">
-                                <rect key="frame" x="1" y="231" width="390" height="390"/>
+                                <rect key="frame" x="1.6666666666666572" y="231" width="390" height="390"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="390" id="HEk-ha-bu5"/>
                                     <constraint firstAttribute="width" secondItem="c5t-n2-mqN" secondAttribute="height" multiplier="1:1" id="Svj-RZ-MCx"/>
@@ -378,13 +378,14 @@
                             <constraint firstItem="c5t-n2-mqN" firstAttribute="centerY" secondItem="k5k-rd-edY" secondAttribute="centerY" id="uUc-Ex-PGu"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="vPz-d8-0n5"/>
                     <connections>
                         <outlet property="imageView" destination="c5t-n2-mqN" id="nEU-4j-rsp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KYF-jr-E2u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3475.5725190839694" y="-227.46478873239437"/>
+            <point key="canvasLocation" x="4273" y="-256"/>
         </scene>
         <!--Groups Detail Table View Controller-->
         <scene sceneID="8e5-s4-xVk">
@@ -475,21 +476,21 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="friendDetailCell" id="Feu-fa-hgy" customClass="FriendDetailViewCell" customModule="VKApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                <rect key="frame" x="1.6666666666666667" y="0.0" width="390" height="390"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="EnA-J0-bb5">
-                                    <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="390"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a7h-nw-K4a">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="390"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="128" id="Jrb-qw-l2e"/>
-                                                <constraint firstAttribute="height" constant="128" id="wlD-u9-GgD"/>
+                                                <constraint firstAttribute="width" constant="390" id="Jrb-qw-l2e"/>
+                                                <constraint firstAttribute="height" constant="390" id="wlD-u9-GgD"/>
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhi-Fp-h1D" customClass="LikeViewControl" customModule="VKApp" customModuleProvider="target">
-                                            <rect key="frame" x="78" y="108" width="50" height="20"/>
+                                            <rect key="frame" x="340" y="370" width="50" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="Nyi-Yp-UI7"/>
                                                 <constraint firstAttribute="width" constant="50" id="Pz0-gb-k81"/>
@@ -501,7 +502,9 @@
                                         <constraint firstItem="a7h-nw-K4a" firstAttribute="top" secondItem="EnA-J0-bb5" secondAttribute="top" id="B12-5a-VDO"/>
                                         <constraint firstAttribute="trailing" secondItem="a7h-nw-K4a" secondAttribute="trailing" id="T0U-Kh-hQ3"/>
                                         <constraint firstAttribute="trailing" secondItem="dhi-Fp-h1D" secondAttribute="trailing" id="YLn-Pm-Pky"/>
+                                        <constraint firstItem="a7h-nw-K4a" firstAttribute="centerX" secondItem="EnA-J0-bb5" secondAttribute="centerX" id="cgK-mt-0b7"/>
                                         <constraint firstAttribute="bottom" secondItem="dhi-Fp-h1D" secondAttribute="bottom" id="feo-Vv-1ak"/>
+                                        <constraint firstItem="a7h-nw-K4a" firstAttribute="centerY" secondItem="EnA-J0-bb5" secondAttribute="centerY" id="nAi-xN-hKO"/>
                                         <constraint firstAttribute="bottom" secondItem="a7h-nw-K4a" secondAttribute="bottom" id="ubZ-TK-nuE"/>
                                     </constraints>
                                 </collectionViewCellContentView>
@@ -515,11 +518,17 @@
                             <outlet property="delegate" destination="OlQ-pF-LkI" id="qfc-Xz-Ru9"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Фото друга" id="bXa-dV-hn0"/>
+                    <navigationItem key="navigationItem" title="Фото друга" id="bXa-dV-hn0">
+                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="Efm-Qf-AgR">
+                            <connections>
+                                <segue destination="PfY-df-3Xr" kind="show" identifier="allFriendPhotoSegue" id="Ru7-VQ-lzV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5JE-FR-l18" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3367" y="-904"/>
+            <point key="canvasLocation" x="3402" y="-256"/>
         </scene>
         <!--Friends-->
         <scene sceneID="Ofh-EU-X4f">

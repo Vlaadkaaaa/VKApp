@@ -3,6 +3,7 @@
 
 import UIKit
 
+/// Экран всех фотографий друга
 final class DetailFriendViewController: UIViewController {
     @IBOutlet private var imageView: UIImageView! {
         didSet {
@@ -24,11 +25,14 @@ final class DetailFriendViewController: UIViewController {
         return swipe
     }()
 
-    let images = Friends.getFriends()
+    // MARK: - Public Property
+
+    var index = Int()
+    var friend: FriendKey?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = UIImage(named: images.first?.profileImagesName?.randomElement() ?? "")
+        imageView.image = UIImage(named: friend?.dictionary[index]?.profileImagesName?.randomElement() ?? "")
         view.addGestureRecognizer(swipeLeft)
         view.addGestureRecognizer(swipeRight)
     }
@@ -52,7 +56,11 @@ final class DetailFriendViewController: UIViewController {
             self.imageView.alpha = 0
         }, completion: { _ in
             UIView.animate(withDuration: 0.3, animations: {
-                self.imageView.image = UIImage(named: self.images.first?.profileImagesName?.randomElement() ?? "")
+                self.imageView
+                    .image = UIImage(
+                        named: self.friend?.dictionary[self.index]?.profileImagesName?
+                            .randomElement() ?? ""
+                    )
             }, completion: { _ in
                 self.imageView.frame.origin.x += self.imageView.frame.width
                 self.imageView.transform = .identity
@@ -68,7 +76,11 @@ final class DetailFriendViewController: UIViewController {
             self.imageView.alpha = 0
         }, completion: { _ in
             UIView.animate(withDuration: 0.3, animations: {
-                self.imageView.image = UIImage(named: self.images.first?.profileImagesName?.randomElement() ?? "")
+                self.imageView
+                    .image = UIImage(
+                        named: self.friend?.dictionary[self.index]?.profileImagesName?
+                            .randomElement() ?? ""
+                    )
             }, completion: { _ in
                 self.imageView.frame.origin.x -= self.imageView.frame.width
                 self.imageView.transform = .identity
