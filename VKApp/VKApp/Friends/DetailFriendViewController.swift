@@ -4,9 +4,11 @@
 import UIKit
 
 final class DetailFriendViewController: UIViewController {
-    @IBOutlet var imageView: UIImageView!
-    private var peopleName = "people-"
-    private var peopleCount = 2
+    @IBOutlet private var imageView: UIImageView! {
+        didSet {
+            imageView.contentMode = .scaleAspectFit
+        }
+    }
 
     lazy var swipeRight: UISwipeGestureRecognizer = {
         let swipe = UISwipeGestureRecognizer()
@@ -22,9 +24,11 @@ final class DetailFriendViewController: UIViewController {
         return swipe
     }()
 
+    let images = Friends.getFriends()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = UIImage(named: "\(peopleName)\(peopleCount)")
+        imageView.image = UIImage(named: images.first?.profileImagesName?.randomElement() ?? "")
         view.addGestureRecognizer(swipeLeft)
         view.addGestureRecognizer(swipeRight)
     }
@@ -42,12 +46,34 @@ final class DetailFriendViewController: UIViewController {
     }
 
     private func swipeRight1() {
-        peopleCount += 1
-        imageView.image = UIImage(named: "\(peopleName)\(peopleCount)")
+        UIView.animate(withDuration: 0.3, animations: {
+            self.imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            self.imageView.frame.origin.x -= self.imageView.frame.width
+            self.imageView.alpha = 0
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.3, animations: {
+                self.imageView.image = UIImage(named: self.images.first?.profileImagesName?.randomElement() ?? "")
+            }, completion: { _ in
+                self.imageView.frame.origin.x += self.imageView.frame.width
+                self.imageView.transform = .identity
+                self.imageView.alpha = 1
+            })
+        })
     }
 
     private func swipeLeft1() {
-        peopleCount -= 1
-        imageView.image = UIImage(named: "\(peopleName)\(peopleCount)")
+        UIView.animate(withDuration: 0.3, animations: {
+            self.imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            self.imageView.frame.origin.x += self.imageView.frame.width
+            self.imageView.alpha = 0
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.3, animations: {
+                self.imageView.image = UIImage(named: self.images.first?.profileImagesName?.randomElement() ?? "")
+            }, completion: { _ in
+                self.imageView.frame.origin.x -= self.imageView.frame.width
+                self.imageView.transform = .identity
+                self.imageView.alpha = 1
+            })
+        })
     }
 }

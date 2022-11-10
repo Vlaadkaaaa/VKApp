@@ -363,23 +363,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="u57-Xg-3sd">
-                                <rect key="frame" x="76.666666666666686" y="318.66666666666669" width="240" height="240.00000000000006"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c5t-n2-mqN">
+                                <rect key="frame" x="1" y="231" width="390" height="390"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="55a-FL-7Vt"/>
-                                    <constraint firstAttribute="width" secondItem="u57-Xg-3sd" secondAttribute="height" multiplier="1:1" id="ubc-pA-YHy"/>
+                                    <constraint firstAttribute="width" constant="390" id="HEk-ha-bu5"/>
+                                    <constraint firstAttribute="width" secondItem="c5t-n2-mqN" secondAttribute="height" multiplier="1:1" id="Svj-RZ-MCx"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vvJ-SO-e5c"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="u57-Xg-3sd" firstAttribute="centerX" secondItem="vvJ-SO-e5c" secondAttribute="centerX" id="Npp-wh-tdu"/>
-                            <constraint firstItem="u57-Xg-3sd" firstAttribute="centerY" secondItem="vvJ-SO-e5c" secondAttribute="centerY" id="hZi-6u-cG1"/>
+                            <constraint firstItem="c5t-n2-mqN" firstAttribute="centerX" secondItem="k5k-rd-edY" secondAttribute="centerX" id="0IA-D4-iEU"/>
+                            <constraint firstItem="c5t-n2-mqN" firstAttribute="centerY" secondItem="k5k-rd-edY" secondAttribute="centerY" id="uUc-Ex-PGu"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="u57-Xg-3sd" id="N24-Vx-9sX"/>
+                        <outlet property="imageView" destination="c5t-n2-mqN" id="nEU-4j-rsp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KYF-jr-E2u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

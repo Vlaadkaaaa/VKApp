@@ -56,27 +56,7 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
-    private let friends = [
-        Friend(name: Constants.oneNameText, imageName: Constants.onePeopleImageName),
-        Friend(name: Constants.twoNameText, imageName: Constants.twoPeopleImageName),
-        Friend(name: Constants.threeNameText, imageName: Constants.threePeopleImageName),
-        Friend(name: Constants.fourNameText, imageName: Constants.fourPeopleImageName),
-        Friend(name: Constants.fiveNameText, imageName: Constants.fivePeopleImageName),
-        Friend(name: Constants.sixNameText, imageName: Constants.sixPeopleImageName),
-        Friend(name: Constants.sevenNameText, imageName: Constants.sevenPeopleImageName),
-        Friend(name: Constants.eightNameText, imageName: Constants.eightPeopleImageName),
-        Friend(name: Constants.nineNameText, imageName: Constants.ninePeopleImageName),
-        Friend(name: Constants.tenNameText, imageName: Constants.tenPeopleImageName),
-        Friend(name: Constants.elevenNameText, imageName: Constants.elevenPeopleImageName),
-        Friend(name: Constants.twelveNameText, imageName: Constants.twelvePeopleImageName),
-        Friend(name: Constants.thirteenNameText, imageName: Constants.thirteenPeopleImageName),
-        Friend(name: Constants.fourteenNameText, imageName: Constants.fourteenPeopleImageName),
-        Friend(name: Constants.fiveteenNameText, imageName: Constants.fiveteenPeopleImageName),
-        Friend(name: Constants.sixteenNameText, imageName: Constants.sixteenPeopleImageName),
-        Friend(name: Constants.seventeenNameText, imageName: Constants.seventeenPeopleImageName),
-        Friend(name: Constants.eightteenNameText, imageName: Constants.eighttennPeopleImageName),
-        Friend(name: Constants.nineteenNameText, imageName: Constants.nineteenPeopleImageName)
-    ]
+    private let friends = Friends.getFriends()
     private var sections: [Character: [Friend]] = [:]
     private var sectionTitles: [Character] = []
     private var filteredFriend: [Character: [Friend]] = [:]
@@ -117,7 +97,6 @@ final class FriendsTableViewController: UITableViewController {
             }
         }
         sectionTitles = Array(sections.keys).sorted()
-
         tableView.reloadData()
     }
 }
