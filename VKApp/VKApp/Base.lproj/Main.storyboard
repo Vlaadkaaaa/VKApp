@@ -533,7 +533,7 @@
         <!--Friends-->
         <scene sceneID="Ofh-EU-X4f">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mOm-mu-ZOd" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mOm-mu-ZOd" customClass="CustomNavigationController" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Friends" image="person" catalog="system" selectedImage="person.fill" id="MHy-06-03C"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="577-oA-nwt">
@@ -552,7 +552,7 @@
         <!--Group-->
         <scene sceneID="SfR-Ky-CFd">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="hPq-CY-Gfe" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="hPq-CY-Gfe" customClass="CustomNavigationController" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Group" image="rectangle.3.group" catalog="system" selectedImage="rectangle.3.group.fill" id="VgA-ss-HVm"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="jcn-9N-a57">
