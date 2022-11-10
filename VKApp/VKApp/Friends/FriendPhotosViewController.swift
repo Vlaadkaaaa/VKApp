@@ -1,10 +1,10 @@
-// DetailFriendViewController.swift
+// FriendPhotosViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
 /// Экран всех фотографий друга
-final class DetailFriendViewController: UIViewController {
+final class FriendPhotosViewController: UIViewController {
     @IBOutlet private var imageView: UIImageView! {
         didSet {
             imageView.contentMode = .scaleAspectFit
@@ -28,7 +28,7 @@ final class DetailFriendViewController: UIViewController {
     // MARK: - Public Property
 
     var index = Int()
-    var friend: FriendKey?
+    var friend: FriendDictionary?
 
     override func viewDidLoad() {
         super.viewDidLoad()

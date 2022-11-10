@@ -11,7 +11,7 @@ final class FriendDetailViewCell: UICollectionViewCell {
 
     // MARK: - Public Methods
 
-    func setupUI(_ friend: FriendKey, index: Int) {
+    func setupUI(_ friend: FriendDictionary, index: Int) {
         friendImageView.image = UIImage(named: friend.dictionary[index]?.profileImagesName?.randomElement() ?? "")
     }
 }

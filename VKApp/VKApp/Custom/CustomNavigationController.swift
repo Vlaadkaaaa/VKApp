@@ -4,13 +4,19 @@
 import UIKit
 
 final class CustomNavigationController: UINavigationController {
+    // MARK: - Private Property
+
     private let interactiveTransition = CustomInteractiveTrasmition()
+
+    // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
     }
 }
+
+// MARK: - UINavigationControllerDelegate
 
 extension CustomNavigationController: UINavigationControllerDelegate {
     func navigationController(

@@ -3,6 +3,7 @@
 
 import UIKit
 
+/// Кастомизация сигвея
 final class CustomSegueTransition: UIStoryboardSegue {
     override func perform() {
         guard let containerView = source.view.superview else { return }
@@ -14,11 +15,9 @@ final class CustomSegueTransition: UIStoryboardSegue {
             height: 0
         )
         destination.modalPresentationStyle = .overFullScreen
-
         UIView.animate(withDuration: 1) {
             self.source.navigationController?.navigationBar.alpha = 0
             self.source.tabBarController?.tabBar.alpha = 0
-
             self.destination.view.frame = CGRect(
                 x: 0,
                 y: 0,
@@ -27,8 +26,8 @@ final class CustomSegueTransition: UIStoryboardSegue {
             )
         } completion: { _ in
             self.source.present(self.destination, animated: false)
-//            self.source.navigationController?.navigationBar.alpha = 1
-//            self.source.tabBarController?.tabBar.alpha = 1
+            self.source.navigationController?.navigationBar.alpha = 1
+            self.source.tabBarController?.tabBar.alpha = 1
         }
     }
 }

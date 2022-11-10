@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TRf-Wv-OBF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4HX-Ex-Fc2">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
@@ -355,10 +355,10 @@
             </objects>
             <point key="canvasLocation" x="2549.2307692307691" y="-255.21327014218008"/>
         </scene>
-        <!--Detail Friend View Controller-->
+        <!--Friend Photos View Controller-->
         <scene sceneID="F9l-Ur-LfW">
             <objects>
-                <viewController id="PfY-df-3Xr" customClass="DetailFriendViewController" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="PfY-df-3Xr" customClass="FriendPhotosViewController" customModule="VKApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="k5k-rd-edY">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

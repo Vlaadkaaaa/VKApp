@@ -2,7 +2,12 @@
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
+
+/// Кастомизация жеста
 final class CustomInteractiveTrasmition: UIPercentDrivenInteractiveTransition {
+    // MARK: - Public Property
+
+    var hasStarted = false
     var viewController: UIViewController? {
         didSet {
             let recognizer = UIScreenEdgePanGestureRecognizer(
@@ -14,10 +19,13 @@ final class CustomInteractiveTrasmition: UIPercentDrivenInteractiveTransition {
         }
     }
 
-    var hasStarted = false
+    // MARK: - Private Property
+
     private var shouldFinish = false
 
-    @objc func handleScreenEdgeGesture(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+    // MARK: - Private Methods
+
+    @objc private func handleScreenEdgeGesture(_ recognizer: UIScreenEdgePanGestureRecognizer) {
         switch recognizer.state {
         case .began:
             hasStarted = true

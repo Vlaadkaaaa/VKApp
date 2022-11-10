@@ -12,19 +12,14 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
         static let allFriendPhotoSegueIdentifier = "allFriendPhotoSegue"
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print(frindIndex)
-    }
-
     // MARK: - Public Property
 
-    var friend: FriendKey?
+    var friend: FriendDictionary?
     var frindIndex = Int()
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == Constants.allFriendPhotoSegueIdentifier,
-              let destination = segue.destination as? DetailFriendViewController
+              let destination = segue.destination as? FriendPhotosViewController
         else { return }
         destination.index = frindIndex
         destination.friend = friend
