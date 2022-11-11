@@ -18,8 +18,7 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
-    private let friends = Friends.getFriends()
-    private var friendDictionary = Friends.friends
+    private var friends = Friends.friends
     private var sections: [Character: [Friend]] = [:]
     private var sectionTitles: [Character] = []
 
@@ -36,10 +35,10 @@ final class FriendsTableViewController: UITableViewController {
         guard
             segue.identifier == Constants.friendDetailSegueIdentifier,
             let vc = segue.destination as? FriendDetailCollectionViewController,
-            let index = tableView.indexPathForSelectedRow?.row
+            let index = tableView.indexPathForSelectedRow,
+            let photos = sections[sectionTitles[index.section]]?[index.row].profileImagesName
         else { return }
-        vc.friend = friendDictionary[index]
-        vc.frindIndex = index
+        vc.friendPhotos = photos
     }
 
     // MARK: - Private Methods
@@ -77,7 +76,7 @@ extension FriendsTableViewController {
             ) as? FriendViewCell,
             let friend = sections[sectionTitles[indexPath.section]]?[indexPath.row]
         else { return UITableViewCell() }
-        cell.setupUI(friend)
+        cell.configurateCell(friend)
         return cell
     }
 }

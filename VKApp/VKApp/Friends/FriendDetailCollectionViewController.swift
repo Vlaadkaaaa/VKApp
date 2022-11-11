@@ -14,15 +14,15 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
     // MARK: - Public Property
 
-    var friend: FriendDictionary?
-    var frindIndex = Int()
+    var friendPhotos: [String] = []
+
+    // MARK: - Public Methods
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == Constants.allFriendPhotoSegueIdentifier,
               let destination = segue.destination as? FriendPhotosViewController
         else { return }
-        destination.index = frindIndex
-        destination.friend = friend
+        destination.friendPhotos = friendPhotos
     }
 }
 
@@ -30,7 +30,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
 extension FriendDetailCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        friend?.dictionary.count ?? 0
+        friendPhotos.count
     }
 
     override func collectionView(
@@ -41,9 +41,9 @@ extension FriendDetailCollectionViewController {
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: Constants.friendDetailCellIdentifier,
                 for: indexPath
-            ) as? FriendDetailViewCell,
-            let friend = friend else { return UICollectionViewCell() }
-        cell.setupUI(friend, index: frindIndex)
+            ) as? FriendDetailViewCell else { return UICollectionViewCell() }
+        let friend = friendPhotos[indexPath.row]
+        cell.configurateCell(friend)
         return cell
     }
 }

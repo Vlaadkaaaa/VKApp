@@ -3,10 +3,11 @@
 
 import UIKit
 
+/// Кастомизация переходов NavigationController
 final class CustomNavigationController: UINavigationController {
     // MARK: - Private Property
 
-    private let interactiveTransition = CustomInteractiveTrasmition()
+    private let interactiveTransition = CustomInteractiveTransition()
 
     // MARK: - Life Cycle
 
@@ -43,6 +44,6 @@ extension CustomNavigationController: UINavigationControllerDelegate {
         _ navigationController: UINavigationController,
         interactionControllerFor animationController: UIViewControllerAnimatedTransitioning
     ) -> UIViewControllerInteractiveTransitioning? {
-        interactiveTransition.hasStarted ? interactiveTransition : nil
+        interactiveTransition.isStarted ? interactiveTransition : nil
     }
 }

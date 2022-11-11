@@ -27,14 +27,17 @@ final class FriendPhotosViewController: UIViewController {
 
     // MARK: - Public Property
 
-    var index = Int()
-    var friend: FriendDictionary?
+    var friendPhotos: [String] = []
+
+    // MARK: - Private Property
+
+    private var currentIndex = 0
+
+    // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = UIImage(named: friend?.dictionary[index]?.profileImagesName?.randomElement() ?? "")
-        view.addGestureRecognizer(swipeLeft)
-        view.addGestureRecognizer(swipeRight)
+        setupUI()
     }
 
     // MARK: - Private Methods
@@ -42,50 +45,65 @@ final class FriendPhotosViewController: UIViewController {
     @objc private func swipeAction(_ sender: UISwipeGestureRecognizer) {
         switch sender.direction {
         case .right:
-            swipeRight1()
+            prepareAnimationRightSwipe()
+
         case .left:
-            swipeLeft1()
+            prepareAnimationLeftSwipe()
         default: break
         }
     }
 
-    private func swipeRight1() {
+    private func setupUI() {
+        imageView.image = UIImage(named: friendPhotos[currentIndex])
+        view.addGestureRecognizer(swipeLeft)
+        view.addGestureRecognizer(swipeRight)
+    }
+
+    private func prepareAnimationRightSwipe() {
+        guard
+            currentIndex < friendPhotos.count,
+            currentIndex > 0
+        else { return }
         UIView.animate(withDuration: 0.3, animations: {
             self.imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             self.imageView.frame.origin.x -= self.imageView.frame.width
             self.imageView.alpha = 0
         }, completion: { _ in
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.3) {
                 self.imageView
                     .image = UIImage(
-                        named: self.friend?.dictionary[self.index]?.profileImagesName?
-                            .randomElement() ?? ""
+                        named: self.friendPhotos[self.currentIndex]
                     )
-            }, completion: { _ in
+            } completion: { _ in
                 self.imageView.frame.origin.x += self.imageView.frame.width
                 self.imageView.transform = .identity
                 self.imageView.alpha = 1
-            })
+            }
         })
+        currentIndex -= 1
     }
 
-    private func swipeLeft1() {
+    private func prepareAnimationLeftSwipe() {
+        guard
+            currentIndex < friendPhotos.count - 1,
+            currentIndex >= 0
+        else { return }
         UIView.animate(withDuration: 0.3, animations: {
             self.imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             self.imageView.frame.origin.x += self.imageView.frame.width
             self.imageView.alpha = 0
         }, completion: { _ in
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.3) {
                 self.imageView
                     .image = UIImage(
-                        named: self.friend?.dictionary[self.index]?.profileImagesName?
-                            .randomElement() ?? ""
+                        named: self.friendPhotos[self.currentIndex]
                     )
-            }, completion: { _ in
+            } completion: { _ in
                 self.imageView.frame.origin.x -= self.imageView.frame.width
                 self.imageView.transform = .identity
                 self.imageView.alpha = 1
-            })
+            }
         })
+        currentIndex += 1
     }
 }
