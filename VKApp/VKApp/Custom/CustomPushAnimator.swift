@@ -5,8 +5,20 @@ import UIKit
 
 ///  Настройка анимации перехода вперед
 final class CustomPushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+    // MARK: - Private Constants
+
+    private enum Constants {
+        static let pushAnimationDuration = 0.7
+        static let pushAnimationRotation = 270 * Double.pi / 180
+        static let transitionXPoints = -200.0
+        static let startDefaultScale = 0.8
+        static let finishDefaultScale = 1.2
+    }
+
+    // MARK: - Public Methods
+
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        0.7
+        Constants.pushAnimationDuration
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -22,30 +34,39 @@ final class CustomPushAnimator: NSObject, UIViewControllerAnimatedTransitioning 
             y: -source.view.frame.width / 2
         )
 
-        let rotation = CGAffineTransform(rotationAngle: 270 * .pi / 180)
+        let rotation = CGAffineTransform(rotationAngle: Constants.pushAnimationRotation)
         destination.view.transform = rotation.concatenating(transition)
+        animateTransition(from: source, to: destination, transitionContext: transitionContext)
+    }
 
+    // MARK: - Private Methods
+
+    private func animateTransition(
+        from: UIViewController,
+        to: UIViewController,
+        transitionContext: UIViewControllerContextTransitioning
+    ) {
         UIView.animateKeyframes(
             withDuration: transitionDuration(using: transitionContext),
             delay: 0,
             options: .calculationModePaced
         ) {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.75) {
-                let transition = CGAffineTransform(translationX: -200, y: 0)
-                let scale = CGAffineTransform(scaleX: 0.8, y: 0.8)
-                source.view.transform = scale.concatenating(transition)
+                let transition = CGAffineTransform(translationX: Constants.transitionXPoints, y: 0)
+                let scale = CGAffineTransform(scaleX: Constants.startDefaultScale, y: Constants.startDefaultScale)
+                from.view.transform = scale.concatenating(transition)
             }
             UIView.addKeyframe(withRelativeStartTime: 0.2, relativeDuration: 0.4) {
-                let transition = CGAffineTransform(translationX: source.view.frame.width / 2, y: 0)
-                let scale = CGAffineTransform(scaleX: 1.2, y: 1.2)
-                source.view.transform = transition.concatenating(scale)
+                let transition = CGAffineTransform(translationX: from.view.frame.width / 2, y: 0)
+                let scale = CGAffineTransform(scaleX: Constants.finishDefaultScale, y: Constants.finishDefaultScale)
+                from.view.transform = transition.concatenating(scale)
             }
             UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.4) {
-                destination.view.transform = .identity
+                to.view.transform = .identity
             }
         } completion: { result in
             if result, !transitionContext.transitionWasCancelled {
-                source.view.transform = .identity
+                from.view.transform = .identity
             }
             transitionContext.completeTransition(result && !transitionContext.transitionWasCancelled)
         }

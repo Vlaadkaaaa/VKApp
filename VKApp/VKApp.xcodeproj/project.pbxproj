@@ -31,7 +31,6 @@
 		CE1A96B8291D147400E60A61 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A96B7291D147400E60A61 /* CustomNavigationController.swift */; };
 		CE1A96BA291D16A900E60A61 /* CustomInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A96B9291D16A900E60A61 /* CustomInteractiveTransition.swift */; };
 		CE1A96BC291D18C000E60A61 /* CustomPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A96BB291D18C000E60A61 /* CustomPopAnimator.swift */; };
-		CE1A96BE291D1C0400E60A61 /* CustomSegueTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A96BD291D1C0400E60A61 /* CustomSegueTransition.swift */; };
 		CE242105291C191B00281C4C /* FriendPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE242104291C191B00281C4C /* FriendPhotosViewController.swift */; };
 		CEDB3B1C291A3A4D00ED39AC /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB3B1B291A3A4D00ED39AC /* NewsViewController.swift */; };
 		CEEC3159291A353C00B91C89 /* NewsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC3158291A353C00B91C89 /* NewsViewCell.swift */; };
@@ -64,7 +63,6 @@
 		CE1A96B7291D147400E60A61 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		CE1A96B9291D16A900E60A61 /* CustomInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInteractiveTransition.swift; sourceTree = "<group>"; };
 		CE1A96BB291D18C000E60A61 /* CustomPopAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopAnimator.swift; sourceTree = "<group>"; };
-		CE1A96BD291D1C0400E60A61 /* CustomSegueTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegueTransition.swift; sourceTree = "<group>"; };
 		CE242104291C191B00281C4C /* FriendPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendPhotosViewController.swift; sourceTree = "<group>"; };
 		CEDB3B1B291A3A4D00ED39AC /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		CEEC3158291A353C00B91C89 /* NewsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewCell.swift; sourceTree = "<group>"; };
@@ -175,7 +173,6 @@
 				CE1A96B5291D0E4E00E60A61 /* CustomPushAnimator.swift */,
 				CE1A96BB291D18C000E60A61 /* CustomPopAnimator.swift */,
 				CE1A96B7291D147400E60A61 /* CustomNavigationController.swift */,
-				CE1A96BD291D1C0400E60A61 /* CustomSegueTransition.swift */,
 				CE1A96B9291D16A900E60A61 /* CustomInteractiveTransition.swift */,
 			);
 			path = Custom;
@@ -298,7 +295,6 @@
 				CE1A96B8291D147400E60A61 /* CustomNavigationController.swift in Sources */,
 				552125F7291117FB0058A8F2 /* LoginViewController.swift in Sources */,
 				55D5C5B72912B94A00D075D7 /* FriendViewCell.swift in Sources */,
-				CE1A96BE291D1C0400E60A61 /* CustomSegueTransition.swift in Sources */,
 				CE242105291C191B00281C4C /* FriendPhotosViewController.swift in Sources */,
 				CEEC3159291A353C00B91C89 /* NewsViewCell.swift in Sources */,
 				55E75D882913AC5200776936 /* FriendAvatarView.swift in Sources */,

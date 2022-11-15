@@ -5,6 +5,14 @@ import UIKit
 
 /// Кастомизация жеста
 final class CustomInteractiveTransition: UIPercentDrivenInteractiveTransition {
+    // MARK: - Private Constants
+
+    private enum Constants {
+        static let progressValue = 0.33
+        static let maxProgressValue = 1.0
+        static let minProgressValue = 0.0
+    }
+
     // MARK: - Public Property
 
     var isStarted = false
@@ -33,8 +41,8 @@ final class CustomInteractiveTransition: UIPercentDrivenInteractiveTransition {
         case .changed:
             let translation = recognizer.translation(in: recognizer.view)
             let relativeTranslation = translation.x / (recognizer.view?.bounds.width ?? 1)
-            let progress = max(0, min(1, relativeTranslation))
-            isFinish = progress > 0.33
+            let progress = max(Constants.minProgressValue, min(Constants.maxProgressValue, relativeTranslation))
+            isFinish = progress > Constants.progressValue
             update(progress)
         case .ended:
             isStarted = false

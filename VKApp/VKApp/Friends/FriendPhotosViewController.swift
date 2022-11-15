@@ -5,24 +5,32 @@ import UIKit
 
 /// Экран всех фотографий друга
 final class FriendPhotosViewController: UIViewController {
+    // MARK: - Private Constants
+    private enum Constants {
+        static let duration = 0.3
+        static let scale = 0.9
+        static let imageAlpha = 1.0
+    }
+    // MARK: - Private @IBOutlet
+
     @IBOutlet private var imageView: UIImageView! {
         didSet {
             imageView.contentMode = .scaleAspectFit
         }
     }
 
-    lazy var swipeRight: UISwipeGestureRecognizer = {
-        let swipe = UISwipeGestureRecognizer()
-        swipe.direction = .right
-        swipe.addTarget(self, action: #selector(swipeAction))
-        return swipe
+    private lazy var swipeRightGestureRecognizer: UISwipeGestureRecognizer = {
+        let swipeGesture = UISwipeGestureRecognizer()
+        swipeGesture.direction = .right
+        swipeGesture.addTarget(self, action: #selector(swipeAction))
+        return swipeGesture
     }()
 
-    lazy var swipeLeft: UISwipeGestureRecognizer = {
-        let swipe = UISwipeGestureRecognizer()
-        swipe.direction = .left
-        swipe.addTarget(self, action: #selector(swipeAction))
-        return swipe
+    private lazy var swipeLeftGestureRecognizer: UISwipeGestureRecognizer = {
+        let swipeGesture = UISwipeGestureRecognizer()
+        swipeGesture.direction = .left
+        swipeGesture.addTarget(self, action: #selector(swipeAction))
+        return swipeGesture
     }()
 
     // MARK: - Public Property
@@ -46,7 +54,6 @@ final class FriendPhotosViewController: UIViewController {
         switch sender.direction {
         case .right:
             prepareAnimationRightSwipe()
-
         case .left:
             prepareAnimationLeftSwipe()
         default: break
@@ -55,8 +62,8 @@ final class FriendPhotosViewController: UIViewController {
 
     private func setupUI() {
         imageView.image = UIImage(named: friendPhotos[currentIndex])
-        view.addGestureRecognizer(swipeLeft)
-        view.addGestureRecognizer(swipeRight)
+        view.addGestureRecognizer(swipeLeftGestureRecognizer)
+        view.addGestureRecognizer(swipeRightGestureRecognizer)
     }
 
     private func prepareAnimationRightSwipe() {
@@ -64,12 +71,12 @@ final class FriendPhotosViewController: UIViewController {
             currentIndex < friendPhotos.count,
             currentIndex > 0
         else { return }
-        UIView.animate(withDuration: 0.3, animations: {
-            self.imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        UIView.animate(withDuration: Constants.duration, animations: {
+            self.imageView.transform = CGAffineTransform(scaleX: Constants.scale, y: Constants.scale)
             self.imageView.frame.origin.x -= self.imageView.frame.width
             self.imageView.alpha = 0
         }, completion: { _ in
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: Constants.duration) {
                 self.imageView
                     .image = UIImage(
                         named: self.friendPhotos[self.currentIndex]
@@ -77,7 +84,7 @@ final class FriendPhotosViewController: UIViewController {
             } completion: { _ in
                 self.imageView.frame.origin.x += self.imageView.frame.width
                 self.imageView.transform = .identity
-                self.imageView.alpha = 1
+                self.imageView.alpha = Constants.imageAlpha
             }
         })
         currentIndex -= 1
@@ -88,12 +95,12 @@ final class FriendPhotosViewController: UIViewController {
             currentIndex < friendPhotos.count - 1,
             currentIndex >= 0
         else { return }
-        UIView.animate(withDuration: 0.3, animations: {
-            self.imageView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        UIView.animate(withDuration: Constants.duration, animations: {
+            self.imageView.transform = CGAffineTransform(scaleX: Constants.scale, y: Constants.scale)
             self.imageView.frame.origin.x += self.imageView.frame.width
             self.imageView.alpha = 0
         }, completion: { _ in
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: Constants.duration) {
                 self.imageView
                     .image = UIImage(
                         named: self.friendPhotos[self.currentIndex]
@@ -101,7 +108,7 @@ final class FriendPhotosViewController: UIViewController {
             } completion: { _ in
                 self.imageView.frame.origin.x -= self.imageView.frame.width
                 self.imageView.transform = .identity
-                self.imageView.alpha = 1
+                self.imageView.alpha = Constants.imageAlpha
             }
         })
         currentIndex += 1
