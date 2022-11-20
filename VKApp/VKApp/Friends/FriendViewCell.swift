@@ -12,7 +12,7 @@ final class FriendViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupUI(_ friend: Friend) {
+    func configurateCell(_ friend: Friend) {
         nameFriendLabel.text = friend.name
         friendImageView.setupAvatarImage(friend.imageName)
     }

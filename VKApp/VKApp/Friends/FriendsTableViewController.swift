@@ -9,44 +9,6 @@ final class FriendsTableViewController: UITableViewController {
 
     private enum Constants {
         static let friendCellIdentifier = "friendCell"
-        static let oneNameText = "Liana Anderson"
-        static let twoNameText = "Callie Spencer"
-        static let threeNameText = "Arely Jacobs"
-        static let fourNameText = "Paige Poole"
-        static let fiveNameText = "Khloe Dominguez"
-        static let sixNameText = "Asia Simon"
-        static let sevenNameText = "Mitchell Salas"
-        static let eightNameText = "Nicholas Ferrell"
-        static let nineNameText = "Carson Gonzalez"
-        static let tenNameText = "Andres Randolph"
-        static let elevenNameText = "Tyrese Dominguez"
-        static let twelveNameText = "Atticus Barnes"
-        static let thirteenNameText = "Aliana Ellis"
-        static let fourteenNameText = "Kaeden Espinoza"
-        static let fiveteenNameText = "Lauryn Macias"
-        static let sixteenNameText = "Muhammad Guerrero"
-        static let seventeenNameText = "Yasmine Donaldson"
-        static let eightteenNameText = "Yair Ruiz"
-        static let nineteenNameText = "Maliyah Golden"
-        static let onePeopleImageName = "people-1"
-        static let twoPeopleImageName = "people-2"
-        static let threePeopleImageName = "people-3"
-        static let fourPeopleImageName = "people-4"
-        static let fivePeopleImageName = "people-5"
-        static let sixPeopleImageName = "people-6"
-        static let sevenPeopleImageName = "people-7"
-        static let eightPeopleImageName = "people-8"
-        static let ninePeopleImageName = "people-9"
-        static let tenPeopleImageName = "people-10"
-        static let elevenPeopleImageName = "people-11"
-        static let twelvePeopleImageName = "people-12"
-        static let thirteenPeopleImageName = "people-13"
-        static let fourteenPeopleImageName = "people-14"
-        static let fiveteenPeopleImageName = "people-15"
-        static let sixteenPeopleImageName = "people-16"
-        static let seventeenPeopleImageName = "people-17"
-        static let eighttennPeopleImageName = "people-18"
-        static let nineteenPeopleImageName = "people-19"
         static let friendDetailSegueIdentifier = "friendDetailSegue"
     }
 
@@ -56,36 +18,15 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
-    private let friends = [
-        Friend(name: Constants.oneNameText, imageName: Constants.onePeopleImageName),
-        Friend(name: Constants.twoNameText, imageName: Constants.twoPeopleImageName),
-        Friend(name: Constants.threeNameText, imageName: Constants.threePeopleImageName),
-        Friend(name: Constants.fourNameText, imageName: Constants.fourPeopleImageName),
-        Friend(name: Constants.fiveNameText, imageName: Constants.fivePeopleImageName),
-        Friend(name: Constants.sixNameText, imageName: Constants.sixPeopleImageName),
-        Friend(name: Constants.sevenNameText, imageName: Constants.sevenPeopleImageName),
-        Friend(name: Constants.eightNameText, imageName: Constants.eightPeopleImageName),
-        Friend(name: Constants.nineNameText, imageName: Constants.ninePeopleImageName),
-        Friend(name: Constants.tenNameText, imageName: Constants.tenPeopleImageName),
-        Friend(name: Constants.elevenNameText, imageName: Constants.elevenPeopleImageName),
-        Friend(name: Constants.twelveNameText, imageName: Constants.twelvePeopleImageName),
-        Friend(name: Constants.thirteenNameText, imageName: Constants.thirteenPeopleImageName),
-        Friend(name: Constants.fourteenNameText, imageName: Constants.fourteenPeopleImageName),
-        Friend(name: Constants.fiveteenNameText, imageName: Constants.fiveteenPeopleImageName),
-        Friend(name: Constants.sixteenNameText, imageName: Constants.sixteenPeopleImageName),
-        Friend(name: Constants.seventeenNameText, imageName: Constants.seventeenPeopleImageName),
-        Friend(name: Constants.eightteenNameText, imageName: Constants.eighttennPeopleImageName),
-        Friend(name: Constants.nineteenNameText, imageName: Constants.nineteenPeopleImageName)
-    ]
+    private var friends = Friends.friends
     private var sections: [Character: [Friend]] = [:]
     private var sectionTitles: [Character] = []
-    private var filteredFriend: [Character: [Friend]] = [:]
 
-    // MARK: - Life cycle
+    // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureFilther()
+        setupCellToSections()
     }
 
     // MARK: - Public Methods
@@ -94,20 +35,15 @@ final class FriendsTableViewController: UITableViewController {
         guard
             segue.identifier == Constants.friendDetailSegueIdentifier,
             let vc = segue.destination as? FriendDetailCollectionViewController,
-            let index = tableView.indexPathForSelectedRow?.row
+            let index = tableView.indexPathForSelectedRow,
+            let photos = sections[sectionTitles[index.section]]?[index.row].profileImagesName
         else { return }
-        vc.friend = friends[index]
+        vc.friendPhotos = photos
     }
 
     // MARK: - Private Methods
 
-    private func configureFilther() {
-        setupCellToSection()
-        filteredFriend = sections
-        searchBar.delegate = self
-    }
-
-    private func setupCellToSection() {
+    private func setupCellToSections() {
         for friend in friends {
             guard let firstCharacter = friend.name.first else { return }
             if sections[firstCharacter] != nil {
@@ -115,10 +51,9 @@ final class FriendsTableViewController: UITableViewController {
             } else {
                 sections[firstCharacter] = [friend]
             }
+            sectionTitles = Array(sections.keys).sorted()
+            tableView.reloadData()
         }
-        sectionTitles = Array(sections.keys).sorted()
-
-        tableView.reloadData()
     }
 }
 
@@ -126,19 +61,11 @@ final class FriendsTableViewController: UITableViewController {
 
 extension FriendsTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        filteredFriend.keys.count
+        sectionTitles.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        filteredFriend[sectionTitles[section]]?.count ?? 0
-    }
-
-    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        sectionTitles.compactMap { String($0) }
-    }
-
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        String(sectionTitles[section])
+        sections[sectionTitles[section]]?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -147,28 +74,21 @@ extension FriendsTableViewController {
                 withIdentifier: Constants.friendCellIdentifier,
                 for: indexPath
             ) as? FriendViewCell,
-            let friend = filteredFriend[sectionTitles[indexPath.section]]?[indexPath.row]
-
+            let friend = sections[sectionTitles[indexPath.section]]?[indexPath.row]
         else { return UITableViewCell() }
-
-        cell.setupUI(friend)
+        cell.configurateCell(friend)
         return cell
     }
 }
 
-// MARK: - UISearchBarDelegate
+// MARK: - UITableViewDelegate
 
-extension FriendsTableViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            filteredFriend = sections
-        } else if let first = searchText.first, var friendKey = filteredFriend[first] {
-            friendKey = friendKey.filter { friend in
-                friend.name.contains(searchText)
-            }
-            filteredFriend = [:]
-            filteredFriend[first] = friendKey
-        }
-        tableView.reloadData()
+extension FriendsTableViewController {
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        sectionTitles.compactMap { String($0) }
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        String(sectionTitles[section])
     }
 }
