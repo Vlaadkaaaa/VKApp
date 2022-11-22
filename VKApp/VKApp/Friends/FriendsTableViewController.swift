@@ -27,6 +27,7 @@ final class FriendsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCellToSections()
+        NetworkService().getFriends()
     }
 
     // MARK: - Public Methods

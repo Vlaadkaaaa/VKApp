@@ -16,6 +16,15 @@ final class GroupsTableViewController: UITableViewController {
         static let twoGrroupTitleText = "groupTwo"
         static let threeImageName = "people-3"
         static let threeGroupTitleText = "groupThree"
+        static let groupReqestText = "Fifa"
+    }
+
+    // MARK: Life Cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NetworkService().getGroups()
+        NetworkService().getGroups(group: Constants.groupReqestText)
     }
 
     // MARK: - Private Property

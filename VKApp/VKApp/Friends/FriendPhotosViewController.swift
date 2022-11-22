@@ -6,11 +6,13 @@ import UIKit
 /// Экран всех фотографий друга
 final class FriendPhotosViewController: UIViewController {
     // MARK: - Private Constants
+
     private enum Constants {
         static let duration = 0.3
         static let scale = 0.9
         static let imageAlpha = 1.0
     }
+
     // MARK: - Private @IBOutlet
 
     @IBOutlet private var imageView: UIImageView! {
@@ -46,6 +48,7 @@ final class FriendPhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        NetworkService().getUserPhotos()
     }
 
     // MARK: - Private Methods
