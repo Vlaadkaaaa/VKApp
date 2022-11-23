@@ -13,19 +13,22 @@ final class LoginWebViewController: UIViewController {
         static let hostUrlComponent = "oauth.vk.com"
         static let pathUrlComponent = "/authorize"
         static let loginWebGegieIdentifier = "LoginWebSegue"
-        static let queryItems = [
-            URLQueryItem(name: "client_id", value: Session.shared.userId),
-            URLQueryItem(name: "display", value: "mobile"),
-            URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-            URLQueryItem(name: "scope", value: "262150"),
-            URLQueryItem(name: "response_type", value: "token"),
-            URLQueryItem(name: "v", value: "5.68")
-        ]
         static let blankPath = "/blank.html"
         static let ampersant = "&"
         static let equals = "="
         static let accessTokenName = "access_token"
         static let userIdName = "user_id"
+        static let clientIdIext = "client_id"
+        static let displayText = "display"
+        static let mobileText = "mobile"
+        static let redirectUriText = "redirect_uri"
+        static let httpsText = "https://oauth.vk.com/blank.html"
+        static let scopeText = "scope"
+        static let numberText = "262150"
+        static let responseTypeText = "response_type"
+        static let tokenText = "token"
+        static let vText = "v"
+        static let versionText = "5.68"
     }
 
     // MARK: - Private @IBOutlet
@@ -54,7 +57,14 @@ final class LoginWebViewController: UIViewController {
         urlComponents.scheme = Constants.shemeUrlComponent
         urlComponents.host = Constants.hostUrlComponent
         urlComponents.path = Constants.pathUrlComponent
-        urlComponents.queryItems = Constants.queryItems
+        urlComponents.queryItems = [
+            URLQueryItem(name: Constants.clientIdIext, value: Session.shared.userId),
+            URLQueryItem(name: Constants.displayText, value: Constants.mobileText),
+            URLQueryItem(name: Constants.redirectUriText, value: Constants.httpsText),
+            URLQueryItem(name: Constants.scopeText, value: Constants.numberText),
+            URLQueryItem(name: Constants.responseTypeText, value: Constants.tokenText),
+            URLQueryItem(name: Constants.vText, value: Constants.versionText)
+        ]
         guard let url = urlComponents.url else { return }
         let request = URLRequest(url: url)
         webView.load(request)
