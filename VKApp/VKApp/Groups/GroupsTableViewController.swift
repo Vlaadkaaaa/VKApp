@@ -16,6 +16,14 @@ final class GroupsTableViewController: UITableViewController {
         static let twoGrroupTitleText = "groupTwo"
         static let threeImageName = "people-3"
         static let threeGroupTitleText = "groupThree"
+        static let groupReqestText = "Fifa"
+    }
+
+    // MARK: Life Cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        fetchGroups()
     }
 
     // MARK: - Private Property
@@ -25,6 +33,13 @@ final class GroupsTableViewController: UITableViewController {
         Group(name: Constants.twoGrroupTitleText, imageName: Constants.twoImageName),
         Group(name: Constants.threeGroupTitleText, imageName: Constants.threeImageName),
     ]
+
+    // MARK: - Private Methods
+
+    private func fetchGroups() {
+        NetworkService().fetchGroups()
+        NetworkService().fetchGroups(group: Constants.groupReqestText)
+    }
 
     // MARK: - Private IBAction
 
