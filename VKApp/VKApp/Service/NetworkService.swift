@@ -4,7 +4,7 @@
 import Alamofire
 import Foundation
 
-/// NetworkService
+/// Сетевой слой на Alamofire
 struct NetworkService {
     // MARK: - Private Constants
 
@@ -24,7 +24,7 @@ struct NetworkService {
 
     func getFriends() {
         let path = "\(Constants.getFriendRequest)\(Constants.acessToken)\(Constants.friendFields)\(Constants.version)"
-        let url = Constants.baseURL + path
+        let url = "\(Constants.baseURL)\(path)"
         AF.request(url).responseJSON { response in
             guard let value = response.value else { return }
             print(value)
@@ -34,7 +34,7 @@ struct NetworkService {
     func getUserPhotos() {
         let path =
             "\(Constants.getUserPhotoRequest)\(Constants.acessToken)\(Constants.friendFields)\(Constants.version)"
-        let url = Constants.baseURL + path
+        let url = "\(Constants.baseURL)\(path)"
         AF.request(url).responseJSON { response in
             guard let value = response.value else { return }
             print(value)
@@ -43,7 +43,7 @@ struct NetworkService {
 
     func getGroups() {
         let path = "\(Constants.getGroupsRequest)\(Constants.acessToken)\(Constants.friendFields)\(Constants.version)"
-        let url = Constants.baseURL + path
+        let url = "\(Constants.baseURL)\(path)"
         AF.request(url).responseJSON { response in
             guard let value = response.value else { return }
             print(value)
@@ -54,7 +54,7 @@ struct NetworkService {
         let path =
             "\(Constants.getSearchGroupRequest)\(Constants.acessToken)" +
             "\(Constants.friendFields)\(Constants.searchQueryText)\(group)\(Constants.version)"
-        let url = Constants.baseURL + path
+        let url = "\(Constants.baseURL)\(path)"
         AF.request(url).responseJSON { response in
             guard let value = response.value else { return }
             print(value)

@@ -3,18 +3,18 @@
 
 import Foundation
 
-/// Session
+///  Singleton для хранения данных сессии 
 struct Session {
-    // MARK: - Private init
-
-    private init() {}
-
     // MARK: - Static Property
 
-    static var shared = Session()
+    static let shared = Session()
 
     // MARK: - Public Property
 
     var token = String()
     var userId = "51483575"
+
+    // MARK: - Private init
+
+    private init() {}
 }
