@@ -48,7 +48,7 @@ final class FriendPhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        NetworkService().getUserPhotos()
+        fetchPhotos()
     }
 
     // MARK: - Private Methods
@@ -61,6 +61,10 @@ final class FriendPhotosViewController: UIViewController {
             prepareAnimationLeftSwipe()
         default: break
         }
+    }
+
+    private func fetchPhotos() {
+        NetworkService().fetchUserPhotos()
     }
 
     private func setupUI() {

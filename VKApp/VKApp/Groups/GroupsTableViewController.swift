@@ -23,8 +23,7 @@ final class GroupsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NetworkService().getGroups()
-        NetworkService().getGroups(group: Constants.groupReqestText)
+        fetchGroups()
     }
 
     // MARK: - Private Property
@@ -34,6 +33,13 @@ final class GroupsTableViewController: UITableViewController {
         Group(name: Constants.twoGrroupTitleText, imageName: Constants.twoImageName),
         Group(name: Constants.threeGroupTitleText, imageName: Constants.threeImageName),
     ]
+
+    // MARK: - Private Methods
+
+    private func fetchGroups() {
+        NetworkService().fetchGroups()
+        NetworkService().fetchGroups(group: Constants.groupReqestText)
+    }
 
     // MARK: - Private IBAction
 

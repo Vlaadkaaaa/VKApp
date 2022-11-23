@@ -12,18 +12,18 @@ struct NetworkService {
         static let baseURL = "https://api.vk.com/method/"
         static let acessToken = "?&access_token=\(Session.shared.token)"
         static let friendFields = "&fields=first_name"
-        static let getFriendRequest = "friends.get"
-        static let getUserPhotoRequest = "photos.getAll"
-        static let getGroupsRequest = "groups.get"
-        static let getSearchGroupRequest = "groups.search"
+        static let getFriendText = "friends.get"
+        static let getUserPhotoText = "photos.getAll"
+        static let getGroupsText = "groups.get"
+        static let getSearchGroupText = "groups.search"
         static let searchQueryText = "&q="
         static let version = "&v=5.81"
     }
 
     // MARK: - Public Methods
 
-    func getFriends() {
-        let path = "\(Constants.getFriendRequest)\(Constants.acessToken)\(Constants.friendFields)\(Constants.version)"
+    func fetchFriends() {
+        let path = "\(Constants.getFriendText)\(Constants.acessToken)\(Constants.friendFields)\(Constants.version)"
         let url = "\(Constants.baseURL)\(path)"
         AF.request(url).responseJSON { response in
             guard let value = response.value else { return }
@@ -31,9 +31,9 @@ struct NetworkService {
         }
     }
 
-    func getUserPhotos() {
+    func fetchUserPhotos() {
         let path =
-            "\(Constants.getUserPhotoRequest)\(Constants.acessToken)\(Constants.friendFields)\(Constants.version)"
+            "\(Constants.getUserPhotoText)\(Constants.acessToken)\(Constants.friendFields)\(Constants.version)"
         let url = "\(Constants.baseURL)\(path)"
         AF.request(url).responseJSON { response in
             guard let value = response.value else { return }
@@ -41,8 +41,8 @@ struct NetworkService {
         }
     }
 
-    func getGroups() {
-        let path = "\(Constants.getGroupsRequest)\(Constants.acessToken)\(Constants.friendFields)\(Constants.version)"
+    func fetchGroups() {
+        let path = "\(Constants.getGroupsText)\(Constants.acessToken)\(Constants.friendFields)\(Constants.version)"
         let url = "\(Constants.baseURL)\(path)"
         AF.request(url).responseJSON { response in
             guard let value = response.value else { return }
@@ -50,9 +50,9 @@ struct NetworkService {
         }
     }
 
-    func getGroups(group: String) {
+    func fetchGroups(group: String) {
         let path =
-            "\(Constants.getSearchGroupRequest)\(Constants.acessToken)" +
+            "\(Constants.getSearchGroupText)\(Constants.acessToken)" +
             "\(Constants.friendFields)\(Constants.searchQueryText)\(group)\(Constants.version)"
         let url = "\(Constants.baseURL)\(path)"
         AF.request(url).responseJSON { response in

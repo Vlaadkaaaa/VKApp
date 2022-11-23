@@ -3,8 +3,14 @@
 
 import Foundation
 
-///  Singleton для хранения данных сессии 
+///  Singleton для хранения данных сессии
 struct Session {
+    // MARK: - Private Constants
+
+    private enum Constants {
+        static let userIdText = "51483575"
+    }
+
     // MARK: - Static Property
 
     static let shared = Session()
@@ -12,7 +18,7 @@ struct Session {
     // MARK: - Public Property
 
     var token = String()
-    var userId = "51483575"
+    var userId = Constants.userIdText
 
     // MARK: - Private init
 

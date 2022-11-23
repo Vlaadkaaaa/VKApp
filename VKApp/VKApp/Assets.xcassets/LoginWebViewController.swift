@@ -7,7 +7,7 @@ import WebKit
 /// Экран авторизациии в браузере
 final class LoginWebViewController: UIViewController {
     // MARK: - Private Constants
-    
+
     private enum Constants {
         static let shemeUrlComponent = "https"
         static let hostUrlComponent = "oauth.vk.com"
@@ -27,29 +27,29 @@ final class LoginWebViewController: UIViewController {
         static let accessTokenName = "access_token"
         static let userIdName = "user_id"
     }
-    
+
     // MARK: - Private @IBOutlet
-    
+
     @IBOutlet private var webView: WKWebView! {
         didSet {
             webView.navigationDelegate = self
         }
     }
-    
+
     // MARK: - Private Property
-    
+
     private var session = Session.shared
-    
+
     // MARK: - Life Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        getURl()
+        loadWebView()
     }
-    
+
     // MARK: - Private Methods
-    
-    private func getURl() {
+
+    private func loadWebView() {
         var urlComponents = URLComponents()
         urlComponents.scheme = Constants.shemeUrlComponent
         urlComponents.host = Constants.hostUrlComponent
@@ -57,10 +57,11 @@ final class LoginWebViewController: UIViewController {
         urlComponents.queryItems = Constants.queryItems
         guard let url = urlComponents.url else { return }
         let request = URLRequest(url: url)
-        print(url)
         webView.load(request)
     }
 }
+
+// MARK: - LoginWebViewController
 
 extension LoginWebViewController: WKNavigationDelegate {
     func webView(
@@ -68,7 +69,9 @@ extension LoginWebViewController: WKNavigationDelegate {
         decidePolicyFor navigationResponse: WKNavigationResponse,
         decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void
     ) {
-        guard let url = navigationResponse.response.url, url.path == Constants.blankPath, let fragment = url.fragment else {
+        guard let url = navigationResponse.response.url, url.path == Constants.blankPath,
+              let fragment = url.fragment
+        else {
             decisionHandler(.allow)
             return
         }
@@ -84,7 +87,7 @@ extension LoginWebViewController: WKNavigationDelegate {
         guard let token = params[Constants.accessTokenName] else { return }
         decisionHandler(.cancel)
         session.token = token
-        
+
         guard webView.isLoading else { return }
         performSegue(withIdentifier: Constants.loginWebGegieIdentifier, sender: self)
     }
