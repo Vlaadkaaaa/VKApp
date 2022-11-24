@@ -52,10 +52,9 @@ struct NetworkService {
                 print(error)
             }
         }
-        print(url)
     }
 
-    func fetchGroups(completion: @escaping (GroupWelcome) -> Void) {
+    func fetchGroups(completion: @escaping (Group) -> Void) {
         let path =
             "\(Constants.getGroupsText)\(Constants.acessToken)\(Constants.friendFields)" +
             "\(Constants.extendedText)\(Constants.version)"
@@ -63,30 +62,27 @@ struct NetworkService {
         AF.request(url).responseData { response in
             guard let data = response.data else { return }
             do {
-                let groupResponse = try JSONDecoder().decode(GroupWelcome.self, from: data)
+                let groupResponse = try JSONDecoder().decode(Group.self, from: data)
                 completion(groupResponse)
             } catch {
                 print(error)
             }
         }
-        print(url)
     }
 
-    func fetchGroups(group: String) {
+    func fetchGroups(group: String, completion: @escaping (Group) -> Void) {
         let path =
             "\(Constants.getSearchGroupText)\(Constants.acessToken)" +
             "\(Constants.friendFields)\(Constants.searchQueryText)\(group)\(Constants.version)"
-        sendRequest(path: path)
-    }
-
-    // MARK: - Private Methods
-
-    private func sendRequest(path: String) {
         let url = "\(Constants.baseURL)\(path)"
-
-        AF.request(url).responseJSON { response in
-            guard let value = response.value else { return }
-            print(url)
+        AF.request(url).responseData { response in
+            guard let data = response.data else { return }
+            do {
+                let groupResponse = try JSONDecoder().decode(Group.self, from: data)
+                completion(groupResponse)
+            } catch {
+                print(error)
+            }
         }
     }
 }

@@ -14,27 +14,18 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
     // MARK: - Public Property
 
-    var friendPhotos: [String] = []
     var friendIdebtifier = Int()
-    var responsePhoto: Photo?
-    var photos: [PhotoItem] = []
+
+    // MARK: - Private Property
+
+    private var photos: [PhotoItem]? = []
+    private var allPhotos: [UIImage] = []
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NetworkService().fetchUserPhotos(ownerId: friendIdebtifier) { [weak self] response in
-            self?.responsePhoto = response
-            self?.photos = response.response?.items ?? [PhotoItem(
-                albumID: 0,
-                date: 0,
-                id: 0,
-                ownerID: 0,
-                text: "",
-                sizes: [Size(height: 0, width: 0, url: "")]
-            )]
-            self?.collectionView.reloadData()
-        }
+        fetchAllPhotos()
     }
 
     // MARK: - Public Methods
@@ -43,7 +34,32 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
         guard segue.identifier == Constants.allFriendPhotoSegueIdentifier,
               let destination = segue.destination as? FriendPhotosViewController
         else { return }
-        destination.friendPhotos = friendPhotos
+        destination.images = allPhotos
+    }
+
+    // MARK: - Private Methods
+
+    private func fetchAllPhotos() {
+        NetworkService().fetchUserPhotos(ownerId: friendIdebtifier) { [weak self] response in
+            self?.photos = response.response?.items
+            self?.changeDataToImage()
+            self?.collectionView.reloadData()
+        }
+    }
+
+    private func changeDataToImage() {
+        guard let photos = photos else { return }
+        for photo in photos {
+            guard let photo = photo.sizes.last?.url,
+                  let url = URL(string: photo) else { return }
+            let data = try? Data(contentsOf: url)
+            if let imageData = data {
+                DispatchQueue.main.async {
+                    self.allPhotos.append(UIImage(data: imageData) ?? UIImage())
+                }
+            }
+        }
+        self.photos = photos
     }
 }
 
@@ -51,7 +67,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
 extension FriendDetailCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        photos.count
+        photos?.count ?? 0
     }
 
     override func collectionView(
@@ -62,8 +78,9 @@ extension FriendDetailCollectionViewController {
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: Constants.friendDetailCellIdentifier,
                 for: indexPath
-            ) as? FriendDetailViewCell else { return UICollectionViewCell() }
-        let photo = photos[indexPath.row].sizes.last?.url ?? ""
+            ) as? FriendDetailViewCell,
+            let photo = photos?[indexPath.row].sizes.last?.url
+        else { return UICollectionViewCell() }
         cell.configurateCell(photo)
         return cell
     }

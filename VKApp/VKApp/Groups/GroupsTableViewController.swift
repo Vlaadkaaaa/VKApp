@@ -28,12 +28,7 @@ final class GroupsTableViewController: UITableViewController {
 
     // MARK: - Private Property
 
-    private var groups = [
-        Group(name: Constants.oneGroupTitleText, imageName: Constants.imageName),
-        Group(name: Constants.twoGrroupTitleText, imageName: Constants.twoImageName),
-        Group(name: Constants.threeGroupTitleText, imageName: Constants.threeImageName),
-    ]
-    private var groupsResponse: GroupWelcome?
+    private var groupsResponse: Group?
     private var groupsTwo: [GroupItem] = []
 
     // MARK: - Private Methods
@@ -52,7 +47,7 @@ final class GroupsTableViewController: UITableViewController {
         guard let groupDetail = sender.source as? GroupsDetailTableViewController,
               let index = groupDetail.tableView.indexPathForSelectedRow
         else { return }
-        groups.append(groupDetail.groups[index.row])
+        groupsTwo.append(groupDetail.groupItems[index.row])
         tableView.reloadData()
     }
 }

@@ -8,7 +8,6 @@ final class GroupsViewCell: UITableViewCell {
     // MARK: - Private IBOutlet
 
     @IBOutlet private var nameGroupLabel: UILabel!
-
     @IBOutlet private var groupImageView: UIImageView! {
         didSet {
             groupImageView.isUserInteractionEnabled = true
@@ -26,7 +25,7 @@ final class GroupsViewCell: UITableViewCell {
 
     func setupUI(_ group: GroupItem) {
         nameGroupLabel.text = group.name
-        groupImageView.loadURL(group.photo100)
+        groupImageView.loadURL(group.photo)
     }
 
     // MARK: - Private Methods

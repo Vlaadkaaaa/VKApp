@@ -18,9 +18,8 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
-    private var user: User?
-    private var friends: [Item] = []
-    private var sections: [Character: [Item]] = [:]
+    private var friends: [UserItem] = []
+    private var sections: [Character: [UserItem]] = [:]
     private var sectionTitles: [Character] = []
 
     // MARK: - Life Cycle
@@ -46,7 +45,6 @@ final class FriendsTableViewController: UITableViewController {
 
     private func fetchFriends() {
         NetworkService().fetchFriends { [weak self] user in
-            self?.user = user
             self?.friends = user.response.items
             self?.setupCellToSections()
         }
@@ -99,6 +97,6 @@ extension FriendsTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        String(sectionTitles[section])
+        "\(sectionTitles[section])"
     }
 }

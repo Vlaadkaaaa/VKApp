@@ -13,111 +13,137 @@ final class FriendPhotosViewController: UIViewController {
         static let imageAlpha = 1.0
     }
 
-    // MARK: - Private @IBOutlet
+    // MARK: - Private Visual Component
 
-    @IBOutlet private var imageView: UIImageView! {
-        didSet {
-            imageView.contentMode = .scaleAspectFit
-        }
-    }
-
-    private lazy var swipeRightGestureRecognizer: UISwipeGestureRecognizer = {
-        let swipeGesture = UISwipeGestureRecognizer()
-        swipeGesture.direction = .right
-        swipeGesture.addTarget(self, action: #selector(swipeAction))
-        return swipeGesture
+    private let imageView: UIImageView = {
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.isUserInteractionEnabled = true
+        return image
     }()
 
-    private lazy var swipeLeftGestureRecognizer: UISwipeGestureRecognizer = {
-        let swipeGesture = UISwipeGestureRecognizer()
-        swipeGesture.direction = .left
-        swipeGesture.addTarget(self, action: #selector(swipeAction))
-        return swipeGesture
+    private let backgroundImageView: UIImageView = {
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
     }()
 
     // MARK: - Public Property
 
-    var friendPhotos: [String] = []
+    var images: [UIImage] = []
 
     // MARK: - Private Property
 
     private var currentIndex = 0
-
-    // MARK: - Life Cycle
+    private var currentSign = 0
+    private var percent: CGFloat = 0
+    private var interactiveAnimator: UIViewPropertyAnimator?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        fetchPhotos()
     }
 
     // MARK: - Private Methods
 
-    @objc private func swipeAction(_ sender: UISwipeGestureRecognizer) {
-        switch sender.direction {
-        case .right:
-            prepareAnimationRightSwipe()
-        case .left:
-            prepareAnimationLeftSwipe()
-        default: break
-        }
-    }
-
-    private func fetchPhotos() {
-//        NetworkService().fetchUserPhotos()
-    }
-
     private func setupUI() {
-        imageView.image = UIImage(named: friendPhotos[currentIndex])
-        view.addGestureRecognizer(swipeLeftGestureRecognizer)
-        view.addGestureRecognizer(swipeRightGestureRecognizer)
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(onPan))
+        setupLayout(imageView: backgroundImageView)
+        setupLayout(imageView: imageView)
+        setImages()
+        imageView.addGestureRecognizer(gesture)
     }
 
-    private func prepareAnimationRightSwipe() {
-        guard
-            currentIndex < friendPhotos.count,
-            currentIndex > 0
-        else { return }
-        UIView.animate(withDuration: Constants.duration, animations: {
-            self.imageView.transform = CGAffineTransform(scaleX: Constants.scale, y: Constants.scale)
-            self.imageView.frame.origin.x -= self.imageView.frame.width
-            self.imageView.alpha = 0
-        }, completion: { _ in
-            UIView.animate(withDuration: Constants.duration) {
-                self.imageView
-                    .image = UIImage(
-                        named: self.friendPhotos[self.currentIndex]
-                    )
-            } completion: { _ in
-                self.imageView.frame.origin.x += self.imageView.frame.width
-                self.imageView.transform = .identity
-                self.imageView.alpha = Constants.imageAlpha
-            }
-        })
-        currentIndex -= 1
+    private func setupLayout(imageView: UIImageView) {
+        view.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            imageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+            imageView.heightAnchor.constraint(equalTo: view.widthAnchor)
+        ])
     }
 
-    private func prepareAnimationLeftSwipe() {
-        guard
-            currentIndex < friendPhotos.count - 1,
-            currentIndex >= 0
-        else { return }
-        UIView.animate(withDuration: Constants.duration, animations: {
-            self.imageView.transform = CGAffineTransform(scaleX: Constants.scale, y: Constants.scale)
-            self.imageView.frame.origin.x += self.imageView.frame.width
-            self.imageView.alpha = 0
-        }, completion: { _ in
-            UIView.animate(withDuration: Constants.duration) {
-                self.imageView
-                    .image = UIImage(
-                        named: self.friendPhotos[self.currentIndex]
-                    )
-            } completion: { _ in
-                self.imageView.frame.origin.x -= self.imageView.frame.width
-                self.imageView.transform = .identity
-                self.imageView.alpha = Constants.imageAlpha
-            }
+    private func setImages() {
+        backgroundImageView.alpha = 0.0
+        backgroundImageView.transform = .init(scaleX: 0.8, y: 0.8)
+        let firstImage = images[currentIndex]
+        var nextIndex = currentIndex + 1
+        var bacgroundImage: UIImage?
+
+        if currentSign > 0 {
+            nextIndex = currentIndex - 1
+        }
+        if nextIndex < images.count - 1, nextIndex >= 0 {
+            bacgroundImage = images[nextIndex]
+        }
+        imageView.image = firstImage
+        backgroundImageView.image = bacgroundImage
+    }
+
+    private func initAnimator() {
+        interactiveAnimator?.stopAnimation(true)
+        interactiveAnimator = UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut, animations: {
+            let width = CGFloat(self.currentSign) * self.view.frame.width
+            let translationTransform = CGAffineTransform(translationX: width, y: 0)
+            let angle = CGFloat(self.currentSign) * 0.8
+            let angleTransform = CGAffineTransform(rotationAngle: angle)
+            self.imageView.transform = angleTransform.concatenating(translationTransform)
+            self.backgroundImageView.alpha = 1.0
+            self.backgroundImageView.transform = .identity
         })
-        currentIndex += 1
+        interactiveAnimator?.startAnimation()
+        interactiveAnimator?.pauseAnimation()
+    }
+
+    private func resetImageView() {
+        backgroundImageView.alpha = 0.0
+        backgroundImageView.transform = .init(scaleX: 0.8, y: 0.8)
+        imageView.transform = .identity
+        setImages()
+        view.layoutIfNeeded()
+        currentSign = 0
+        interactiveAnimator = nil
+    }
+
+    @objc private func onPan(_ gesture: UIPanGestureRecognizer) {
+        switch gesture.state {
+        case .changed:
+            let translation = gesture.translation(in: view)
+            percent = abs(translation.x) / view.frame.width
+            let translationX = Int(translation.x)
+            let sign = translationX == 0 ? 1 : translationX / abs(translationX)
+
+            if interactiveAnimator == nil || sign != currentSign {
+                interactiveAnimator?.stopAnimation(true)
+                resetImageView()
+                interactiveAnimator = nil
+                if sign > 0 && currentIndex > 0 || sign < 0 && currentIndex < images.count - 1 {
+                    currentSign = sign
+                    setImages()
+                    initAnimator()
+                }
+                interactiveAnimator?.fractionComplete = abs(translation.x) / (view.frame.width / 2)
+            }
+        case .ended:
+            interactiveAnimator?.addCompletion { _ in
+                self.resetImageView()
+            }
+            if percent < 0.33 {
+                interactiveAnimator?.stopAnimation(true)
+                UIView.animate(withDuration: 0.3) {
+                    self.resetImageView()
+                }
+            } else {
+                currentIndex += currentSign * -1
+                interactiveAnimator?.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+            }
+        default:
+            break
+        }
     }
 }

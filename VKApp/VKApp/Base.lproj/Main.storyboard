@@ -241,26 +241,10 @@
                     <view key="view" contentMode="scaleToFill" id="k5k-rd-edY">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c5t-n2-mqN">
-                                <rect key="frame" x="1.6666666666666572" y="231" width="390" height="390"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="390" id="HEk-ha-bu5"/>
-                                    <constraint firstAttribute="width" secondItem="c5t-n2-mqN" secondAttribute="height" multiplier="1:1" id="Svj-RZ-MCx"/>
-                                </constraints>
-                            </imageView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vvJ-SO-e5c"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="c5t-n2-mqN" firstAttribute="centerX" secondItem="k5k-rd-edY" secondAttribute="centerX" id="0IA-D4-iEU"/>
-                            <constraint firstItem="c5t-n2-mqN" firstAttribute="centerY" secondItem="k5k-rd-edY" secondAttribute="centerY" id="uUc-Ex-PGu"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vPz-d8-0n5"/>
-                    <connections>
-                        <outlet property="imageView" destination="c5t-n2-mqN" id="nEU-4j-rsp"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KYF-jr-E2u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

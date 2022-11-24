@@ -5,21 +5,17 @@ import Foundation
 
 /// User
 struct User: Codable {
-    let response: Response
+    let response: UserResponse
 }
 
-// MARK: - Response
-
-///
-struct Response: Codable {
+/// UserResponse
+struct UserResponse: Codable {
     let count: Int
-    let items: [Item]
+    let items: [UserItem]
 }
 
-// MARK: - Item
-
-///
-struct Item: Codable {
+/// UserItem
+struct UserItem: Codable {
     let id: Int
     let firstName: String
     let lastName: String
