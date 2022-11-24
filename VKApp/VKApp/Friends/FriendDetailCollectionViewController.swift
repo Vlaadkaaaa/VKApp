@@ -15,6 +15,27 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
     // MARK: - Public Property
 
     var friendPhotos: [String] = []
+    var friendIdebtifier = Int()
+    var responsePhoto: Photo?
+    var photos: [PhotoItem] = []
+
+    // MARK: - Life Cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NetworkService().fetchUserPhotos(ownerId: friendIdebtifier) { [weak self] response in
+            self?.responsePhoto = response
+            self?.photos = response.response?.items ?? [PhotoItem(
+                albumID: 0,
+                date: 0,
+                id: 0,
+                ownerID: 0,
+                text: "",
+                sizes: [Size(height: 0, width: 0, url: "")]
+            )]
+            self?.collectionView.reloadData()
+        }
+    }
 
     // MARK: - Public Methods
 
@@ -30,7 +51,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
 extension FriendDetailCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        friendPhotos.count
+        photos.count
     }
 
     override func collectionView(
@@ -42,8 +63,8 @@ extension FriendDetailCollectionViewController {
                 withReuseIdentifier: Constants.friendDetailCellIdentifier,
                 for: indexPath
             ) as? FriendDetailViewCell else { return UICollectionViewCell() }
-        let friend = friendPhotos[indexPath.row]
-        cell.configurateCell(friend)
+        let photo = photos[indexPath.row].sizes.last?.url ?? ""
+        cell.configurateCell(photo)
         return cell
     }
 }

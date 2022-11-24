@@ -4,7 +4,7 @@
 import Foundation
 
 ///  Singleton для хранения данных сессии
-struct Session {
+class Session {
     // MARK: - Private Constants
 
     private enum Constants {

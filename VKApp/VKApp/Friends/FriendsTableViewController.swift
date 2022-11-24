@@ -18,15 +18,15 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
-    private var friends = Friends.friends
-    private var sections: [Character: [Friend]] = [:]
+    private var user: User?
+    private var friends: [Item] = []
+    private var sections: [Character: [Item]] = [:]
     private var sectionTitles: [Character] = []
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCellToSections()
         fetchFriends()
     }
 
@@ -37,20 +37,24 @@ final class FriendsTableViewController: UITableViewController {
             segue.identifier == Constants.friendDetailSegueIdentifier,
             let vc = segue.destination as? FriendDetailCollectionViewController,
             let index = tableView.indexPathForSelectedRow,
-            let photos = sections[sectionTitles[index.section]]?[index.row].profileImagesName
+            let id = sections[sectionTitles[index.section]]?[index.row].id
         else { return }
-        vc.friendPhotos = photos
+        vc.friendIdebtifier = id
     }
 
     // MARK: - Private Methods
 
     private func fetchFriends() {
-        NetworkService().fetchFriends()
+        NetworkService().fetchFriends { [weak self] user in
+            self?.user = user
+            self?.friends = user.response.items
+            self?.setupCellToSections()
+        }
     }
 
     private func setupCellToSections() {
         for friend in friends {
-            guard let firstCharacter = friend.name.first else { return }
+            guard let firstCharacter = friend.firstName.first else { return }
             if sections[firstCharacter] != nil {
                 sections[firstCharacter]?.append(friend)
             } else {
@@ -82,6 +86,7 @@ extension FriendsTableViewController {
             let friend = sections[sectionTitles[indexPath.section]]?[indexPath.row]
         else { return UITableViewCell() }
         cell.configurateCell(friend)
+
         return cell
     }
 }

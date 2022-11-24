@@ -24,9 +24,9 @@ final class GroupsViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupUI(_ group: Group) {
+    func setupUI(_ group: GroupItem) {
         nameGroupLabel.text = group.name
-        groupImageView.image = UIImage(named: group.imageName)
+        groupImageView.loadURL(group.photo100)
     }
 
     // MARK: - Private Methods

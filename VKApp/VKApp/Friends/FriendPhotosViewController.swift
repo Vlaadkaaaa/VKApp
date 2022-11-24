@@ -64,7 +64,7 @@ final class FriendPhotosViewController: UIViewController {
     }
 
     private func fetchPhotos() {
-        NetworkService().fetchUserPhotos()
+//        NetworkService().fetchUserPhotos()
     }
 
     private func setupUI() {

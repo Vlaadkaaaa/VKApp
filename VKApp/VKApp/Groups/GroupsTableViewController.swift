@@ -33,12 +33,17 @@ final class GroupsTableViewController: UITableViewController {
         Group(name: Constants.twoGrroupTitleText, imageName: Constants.twoImageName),
         Group(name: Constants.threeGroupTitleText, imageName: Constants.threeImageName),
     ]
+    private var groupsResponse: GroupWelcome?
+    private var groupsTwo: [GroupItem] = []
 
     // MARK: - Private Methods
 
     private func fetchGroups() {
-        NetworkService().fetchGroups()
-        NetworkService().fetchGroups(group: Constants.groupReqestText)
+        NetworkService().fetchGroups { [weak self] response in
+            self?.groupsResponse = response
+            self?.groupsTwo = response.response.items
+            self?.tableView.reloadData()
+        }
     }
 
     // MARK: - Private IBAction
@@ -56,7 +61,7 @@ final class GroupsTableViewController: UITableViewController {
 
 extension GroupsTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        groups.count
+        groupsTwo.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -65,8 +70,8 @@ extension GroupsTableViewController {
             for: indexPath
         ) as? GroupsViewCell
         else { return UITableViewCell() }
-        let groups = groups[indexPath.row]
-        cell.setupUI(groups)
+        let group = groupsTwo[indexPath.row]
+        cell.setupUI(group)
         return cell
     }
 }
@@ -81,7 +86,7 @@ extension GroupsTableViewController {
     ) {
         if editingStyle == .delete {
             tableView.beginUpdates()
-            groups.remove(at: indexPath.row)
+            groupsTwo.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
         }
