@@ -54,8 +54,13 @@ extension GroupsDetailTableViewController {
 
 extension GroupsDetailTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        NetworkService().fetchGroups(group: searchBar.text ?? "") { [weak self] group in
-            self?.groupItems = group.response.items
+        NetworkService().fetchGroups(group: searchBar.text ?? "") { [weak self] result in
+            switch result {
+            case let .success(group):
+                self?.groupItems = group.response.items
+            case let .failure(error):
+                print(error)
+            }
         }
         tableView.reloadData()
     }

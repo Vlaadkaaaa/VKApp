@@ -3,6 +3,7 @@
 
 import Alamofire
 import Foundation
+import RealmSwift
 
 /// Сетевой слой на Alamofire
 struct NetworkService {
@@ -24,21 +25,21 @@ struct NetworkService {
 
     // MARK: - Public Methods
 
-    func fetchFriends(completion: @escaping (User) -> Void) {
+    func fetchFriends(completion: @escaping (Result<User, Error>) -> Void) {
         let path = "\(Constants.getFriendText)\(Constants.acessToken)\(Constants.friendFields)\(Constants.version)"
         let url = "\(Constants.baseURL)\(path)"
         AF.request(url).responseData { response in
             guard let data = response.data else { return }
             do {
                 let userResponse = try JSONDecoder().decode(User.self, from: data)
-                completion(userResponse)
+                completion(.success(userResponse))
             } catch {
-                print(error)
+                completion(.failure(error))
             }
         }
     }
 
-    func fetchUserPhotos(ownerId: Int, completion: @escaping (Photo) -> Void) {
+    func fetchUserPhotos(ownerId: Int, completion: @escaping (Result<Photo, Error>) -> Void) {
         let path =
             "\(Constants.getUserPhotoText)\(Constants.acessToken)" +
             "\(Constants.friendFields)\(Constants.ownerIdText)\(ownerId)\(Constants.version)"
@@ -47,14 +48,14 @@ struct NetworkService {
             guard let data = response.data else { return }
             do {
                 let photoResponse = try JSONDecoder().decode(Photo.self, from: data)
-                completion(photoResponse)
+                completion(.success(photoResponse))
             } catch {
-                print(error)
+                completion(.failure(error))
             }
         }
     }
 
-    func fetchGroups(completion: @escaping (Group) -> Void) {
+    func fetchGroups(completion: @escaping (Result<Group, Error>) -> Void) {
         let path =
             "\(Constants.getGroupsText)\(Constants.acessToken)\(Constants.friendFields)" +
             "\(Constants.extendedText)\(Constants.version)"
@@ -63,14 +64,14 @@ struct NetworkService {
             guard let data = response.data else { return }
             do {
                 let groupResponse = try JSONDecoder().decode(Group.self, from: data)
-                completion(groupResponse)
+                completion(.success(groupResponse))
             } catch {
-                print(error)
+                completion(.failure(error))
             }
         }
     }
 
-    func fetchGroups(group: String, completion: @escaping (Group) -> Void) {
+    func fetchGroups(group: String, completion: @escaping (Result<Group, Error>) -> Void) {
         let path =
             "\(Constants.getSearchGroupText)\(Constants.acessToken)" +
             "\(Constants.friendFields)\(Constants.searchQueryText)\(group)\(Constants.version)"
@@ -79,10 +80,36 @@ struct NetworkService {
             guard let data = response.data else { return }
             do {
                 let groupResponse = try JSONDecoder().decode(Group.self, from: data)
-                completion(groupResponse)
+                completion(.success(groupResponse))
             } catch {
-                print(error)
+                completion(.failure(error))
             }
+        }
+    }
+
+    // MARK: - Private Methods
+
+    private func fetchData<T: Decodable>(path: String, completion: @escaping (Result<T, Error>) -> Void) {
+        let url = "\(Constants.baseURL)\(path)"
+        AF.request(url).responseData { response in
+            guard let data = response.data else { return }
+            do {
+                let result = try JSONDecoder().decode(T.self, from: data)
+                completion(.success(result))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
+
+    private func saveDataToRealm<T: Object>(_ items: T) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(items)
+            }
+        } catch {
+            print(error)
         }
     }
 }

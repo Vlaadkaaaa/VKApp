@@ -44,9 +44,14 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private Methods
 
     private func fetchFriends() {
-        NetworkService().fetchFriends { [weak self] user in
-            self?.friends = user.response.items
-            self?.setupCellToSections()
+        NetworkService().fetchFriends { [weak self] result in
+            switch result {
+            case let .success(friend):
+                self?.friends = friend.response.items
+                self?.setupCellToSections()
+            case let .failure(error):
+                print(error)
+            }
         }
     }
 

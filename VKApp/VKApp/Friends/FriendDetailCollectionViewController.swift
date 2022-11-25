@@ -40,10 +40,15 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
     // MARK: - Private Methods
 
     private func fetchAllPhotos() {
-        NetworkService().fetchUserPhotos(ownerId: friendIdebtifier) { [weak self] response in
-            self?.photos = response.response?.items
-            self?.changeDataToImage()
-            self?.collectionView.reloadData()
+        NetworkService().fetchUserPhotos(ownerId: friendIdebtifier) { [weak self] result in
+            switch result {
+            case let .success(photo):
+                self?.photos = photo.response?.items
+                self?.changeDataToImage()
+                self?.collectionView.reloadData()
+            case let .failure(error):
+                print(error)
+            }
         }
     }
 

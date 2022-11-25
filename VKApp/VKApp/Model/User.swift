@@ -2,7 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
-
+import RealmSwift
 /// User
 struct User: Codable {
     let response: UserResponse
@@ -15,11 +15,11 @@ struct UserResponse: Codable {
 }
 
 /// UserItem
-struct UserItem: Codable {
-    let id: Int
-    let firstName: String
-    let lastName: String
-    let friendPhotoImageName: String?
+final class UserItem: Object, Codable {
+    @objc dynamic var id: Int
+    @objc dynamic var firstName: String
+    @objc dynamic var lastName: String
+    @objc dynamic var friendPhotoImageName: String?
 
     enum CodingKeys: String, CodingKey {
         case id

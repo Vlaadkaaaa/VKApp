@@ -2,6 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
+import RealmSwift
 
 /// Группы
 struct Group: Codable {
@@ -15,10 +16,10 @@ struct GroupResponse: Codable {
 }
 
 /// GroupItem
-struct GroupItem: Codable {
-    let id: Int
-    let name: String
-    let photo: String
+final class GroupItem: Object, Codable {
+    @objc dynamic var id: Int
+    @objc dynamic var name: String
+    @objc dynamic var photo: String
 
     enum CodingKeys: String, CodingKey {
         case id

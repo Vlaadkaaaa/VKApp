@@ -34,10 +34,15 @@ final class GroupsTableViewController: UITableViewController {
     // MARK: - Private Methods
 
     private func fetchGroups() {
-        NetworkService().fetchGroups { [weak self] response in
-            self?.groupsResponse = response
-            self?.groupsTwo = response.response.items
-            self?.tableView.reloadData()
+        NetworkService().fetchGroups { [weak self] result in
+            switch result {
+            case let .success(group):
+                self?.groupsResponse = group
+                self?.groupsTwo = group.response.items
+                self?.tableView.reloadData()
+            case let .failure(error):
+                print(error)
+            }
         }
     }
 

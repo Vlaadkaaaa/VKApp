@@ -2,6 +2,7 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
+import RealmSwift
 
 /// Photo
 struct Photo: Decodable {
@@ -20,6 +21,6 @@ struct PhotoItem: Decodable {
 }
 
 /// Size
-struct Size: Decodable {
-    let url: String
+final class Size: Object, Decodable {
+    @objc dynamic var url: String
 }
