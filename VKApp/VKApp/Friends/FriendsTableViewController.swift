@@ -38,17 +38,18 @@ final class FriendsTableViewController: UITableViewController {
             let index = tableView.indexPathForSelectedRow,
             let id = sections[sectionTitles[index.section]]?[index.row].id
         else { return }
-        vc.friendIdebtifier = id
+        vc.friendId = id
     }
 
     // MARK: - Private Methods
 
     private func fetchFriends() {
         NetworkService().fetchFriends { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case let .success(friend):
-                self?.friends = friend.response.items
-                self?.setupCellToSections()
+                self.friends = friend.response.items
+                self.setupCellToSections()
             case let .failure(error):
                 print(error)
             }

@@ -11,6 +11,7 @@ final class FriendPhotosViewController: UIViewController {
         static let duration = 0.3
         static let scale = 0.9
         static let imageAlpha = 1.0
+        static let minPercent = 0.33
     }
 
     // MARK: - Private Visual Component
@@ -51,7 +52,7 @@ final class FriendPhotosViewController: UIViewController {
     // MARK: - Private Methods
 
     private func setupUI() {
-        let gesture = UIPanGestureRecognizer(target: self, action: #selector(onPan))
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(onPanAction))
         setupLayout(imageView: backgroundImageView)
         setupLayout(imageView: imageView)
         setImages()
@@ -110,7 +111,7 @@ final class FriendPhotosViewController: UIViewController {
         interactiveAnimator = nil
     }
 
-    @objc private func onPan(_ gesture: UIPanGestureRecognizer) {
+    @objc private func onPanAction(_ gesture: UIPanGestureRecognizer) {
         switch gesture.state {
         case .changed:
             let translation = gesture.translation(in: view)
@@ -133,7 +134,7 @@ final class FriendPhotosViewController: UIViewController {
             interactiveAnimator?.addCompletion { _ in
                 self.resetImageView()
             }
-            if percent < 0.33 {
+            if percent < Constants.minPercent {
                 interactiveAnimator?.stopAnimation(true)
                 UIView.animate(withDuration: 0.3) {
                     self.resetImageView()

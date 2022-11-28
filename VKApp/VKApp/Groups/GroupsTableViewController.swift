@@ -29,17 +29,18 @@ final class GroupsTableViewController: UITableViewController {
     // MARK: - Private Property
 
     private var groupsResponse: Group?
-    private var groupsTwo: [GroupItem] = []
+    private var groups: [GroupItem] = []
 
     // MARK: - Private Methods
 
     private func fetchGroups() {
         NetworkService().fetchGroups { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case let .success(group):
-                self?.groupsResponse = group
-                self?.groupsTwo = group.response.items
-                self?.tableView.reloadData()
+                self.groupsResponse = group
+                self.groups = group.response.items
+                self.tableView.reloadData()
             case let .failure(error):
                 print(error)
             }
@@ -52,7 +53,7 @@ final class GroupsTableViewController: UITableViewController {
         guard let groupDetail = sender.source as? GroupsDetailTableViewController,
               let index = groupDetail.tableView.indexPathForSelectedRow
         else { return }
-        groupsTwo.append(groupDetail.groupItems[index.row])
+        groups.append(groupDetail.groupItems[index.row])
         tableView.reloadData()
     }
 }
@@ -61,7 +62,7 @@ final class GroupsTableViewController: UITableViewController {
 
 extension GroupsTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        groupsTwo.count
+        groups.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,7 +71,7 @@ extension GroupsTableViewController {
             for: indexPath
         ) as? GroupsViewCell
         else { return UITableViewCell() }
-        let group = groupsTwo[indexPath.row]
+        let group = groups[indexPath.row]
         cell.setupUI(group)
         return cell
     }
@@ -86,7 +87,7 @@ extension GroupsTableViewController {
     ) {
         if editingStyle == .delete {
             tableView.beginUpdates()
-            groupsTwo.remove(at: indexPath.row)
+            groups.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
         }

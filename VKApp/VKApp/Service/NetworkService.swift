@@ -64,7 +64,7 @@ struct NetworkService {
             guard let data = response.data else { return }
             do {
                 let groupResponse = try JSONDecoder().decode(Group.self, from: data)
-                self.saveDataToRealm(groupResponse.response.items)
+                RealmDB().saveDataToRealm(groupResponse.response.items)
                 completion(.success(groupResponse))
             } catch {
                 completion(.failure(error))
@@ -100,17 +100,6 @@ struct NetworkService {
             } catch {
                 completion(.failure(error))
             }
-        }
-    }
-
-    private func saveDataToRealm(_ items: [GroupItem]) {
-        do {
-            let realm = try Realm()
-            try realm.write {
-                realm.add(items)
-            }
-        } catch {
-            print(error)
         }
     }
 }

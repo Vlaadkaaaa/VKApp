@@ -14,18 +14,18 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
     // MARK: - Public Property
 
-    var friendIdebtifier = Int()
+    var friendId = Int()
 
     // MARK: - Private Property
 
     private var photos: [PhotoItem]? = []
-    private var allPhotos: [UIImage] = []
+    private var allPhotosImage: [UIImage] = []
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchAllPhotos()
+        fetchUserPhotos()
     }
 
     // MARK: - Public Methods
@@ -34,18 +34,19 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
         guard segue.identifier == Constants.allFriendPhotoSegueIdentifier,
               let destination = segue.destination as? FriendPhotosViewController
         else { return }
-        destination.images = allPhotos
+        destination.images = allPhotosImage
     }
 
     // MARK: - Private Methods
 
-    private func fetchAllPhotos() {
-        NetworkService().fetchUserPhotos(ownerId: friendIdebtifier) { [weak self] result in
+    private func fetchUserPhotos() {
+        NetworkService().fetchUserPhotos(ownerId: friendId) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case let .success(photo):
-                self?.photos = photo.response?.items
-                self?.changeDataToImage()
-                self?.collectionView.reloadData()
+                self.photos = photo.response?.items
+                self.changeDataToImage()
+                self.collectionView.reloadData()
             case let .failure(error):
                 print(error)
             }
@@ -55,14 +56,10 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
     private func changeDataToImage() {
         guard let photos = photos else { return }
         for photo in photos {
-            guard let photo = photo.sizes.last?.url,
-                  let url = URL(string: photo) else { return }
-            let data = try? Data(contentsOf: url)
-            if let imageData = data {
-                DispatchQueue.main.async {
-                    self.allPhotos.append(UIImage(data: imageData) ?? UIImage())
-                }
-            }
+            guard let photo = photo.sizes.last?.url else { return }
+            let imageData = UIImageView()
+            imageData.loadURL(photo)
+            allPhotosImage.append(imageData.image ?? UIImage())
         }
         self.photos = photos
     }
