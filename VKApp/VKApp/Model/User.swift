@@ -1,7 +1,8 @@
 // User.swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
-
+import RealmSwift
 /// User
-struct User {}
+struct User: Codable {
+    let response: UserResponse
+}

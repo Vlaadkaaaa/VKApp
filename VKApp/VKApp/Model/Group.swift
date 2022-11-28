@@ -1,10 +1,9 @@
 // Group.swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
+import RealmSwift
 
 /// Группы
-struct Group {
-    let name: String
-    let imageName: String
+struct Group: Codable {
+    let response: GroupResponse
 }

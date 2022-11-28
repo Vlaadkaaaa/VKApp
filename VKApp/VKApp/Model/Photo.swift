@@ -1,7 +1,9 @@
 // Photo.swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
+import RealmSwift
 
 /// Photo
-struct Photo {}
+struct Photo: Decodable {
+    let response: PhotoResponse?
+}

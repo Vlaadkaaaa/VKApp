@@ -19,40 +19,22 @@ final class GroupsDetailTableViewController: UITableViewController {
 
     // MARK: - Private IBOutlet
 
-    @IBOutlet private var searchBar: UISearchBar!
-
-    // MARK: - Public property
-
-    let groups = [
-        Group(name: Constants.fiveGroupTitleText, imageName: Constants.fiveGroupImageName),
-        Group(name: Constants.sixGroupTitleText, imageName: Constants.sixGroupImageName),
-        Group(name: Constants.sevenGroupTitleText, imageName: Constants.sevenGroupImageName)
-    ]
+    @IBOutlet private var searchBar: UISearchBar! {
+        didSet {
+            searchBar.delegate = self
+        }
+    }
 
     // MARK: - Private Property
 
-    private var filterGroup: [Group] = []
-
-    // MARK: - Life Cycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureFilther()
-    }
-
-    // MARK: - Private Methods
-
-    private func configureFilther() {
-        filterGroup = groups
-        searchBar.delegate = self
-    }
+    var groupItems: [GroupItem] = []
 }
 
 // MARK: - UITableViewDataSource
 
 extension GroupsDetailTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        filterGroup.count
+        groupItems.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -61,7 +43,9 @@ extension GroupsDetailTableViewController {
             for: indexPath
         ) as? GroupsDetailViewCell
         else { return UITableViewCell() }
-        cell.setupUI(filterGroup[indexPath.row])
+        DispatchQueue.main.async {
+            cell.setupUI(self.groupItems[indexPath.row])
+        }
         return cell
     }
 }
@@ -70,12 +54,12 @@ extension GroupsDetailTableViewController {
 
 extension GroupsDetailTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filterGroup = []
-        if searchText.isEmpty {
-            filterGroup = groups
-        } else {
-            for group in groups where group.name.lowercased().contains(searchText.lowercased()) {
-                filterGroup.append(group)
+        NetworkService().fetchGroups(group: searchBar.text ?? "") { [weak self] result in
+            switch result {
+            case let .success(group):
+                self?.groupItems = group.response.items
+            case let .failure(error):
+                print(error)
             }
         }
         tableView.reloadData()

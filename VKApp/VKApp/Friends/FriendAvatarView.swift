@@ -51,8 +51,8 @@ import UIKit
 
     // MARK: - Public Methods
 
-    func setupAvatarImage(_ imageName: String) {
-        avatarImageView.image = UIImage(named: imageName)
+    func setupAvatarImage(_ image: String) {
+        avatarImageView.loadURL(image)
     }
 
     // MARK: - Private Methods

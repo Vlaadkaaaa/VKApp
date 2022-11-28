@@ -14,7 +14,19 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
     // MARK: - Public Property
 
-    var friendPhotos: [String] = []
+    var friendId = Int()
+
+    // MARK: - Private Property
+
+    private var photos: [PhotoItem]? = []
+    private var allPhotosImage: [UIImage] = []
+
+    // MARK: - Life Cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        fetchUserPhotos()
+    }
 
     // MARK: - Public Methods
 
@@ -22,7 +34,34 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
         guard segue.identifier == Constants.allFriendPhotoSegueIdentifier,
               let destination = segue.destination as? FriendPhotosViewController
         else { return }
-        destination.friendPhotos = friendPhotos
+        destination.images = allPhotosImage
+    }
+
+    // MARK: - Private Methods
+
+    private func fetchUserPhotos() {
+        NetworkService().fetchUserPhotos(ownerId: friendId) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(photo):
+                self.photos = photo.response?.items
+                self.changeDataToImage()
+                self.collectionView.reloadData()
+            case let .failure(error):
+                print(error)
+            }
+        }
+    }
+
+    private func changeDataToImage() {
+        guard let photos = photos else { return }
+        for photo in photos {
+            guard let photo = photo.sizes.last?.url else { return }
+            let imageData = UIImageView()
+            imageData.loadURL(photo)
+            allPhotosImage.append(imageData.image ?? UIImage())
+        }
+        self.photos = photos
     }
 }
 
@@ -30,7 +69,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
 extension FriendDetailCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        friendPhotos.count
+        photos?.count ?? 0
     }
 
     override func collectionView(
@@ -41,9 +80,10 @@ extension FriendDetailCollectionViewController {
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: Constants.friendDetailCellIdentifier,
                 for: indexPath
-            ) as? FriendDetailViewCell else { return UICollectionViewCell() }
-        let friend = friendPhotos[indexPath.row]
-        cell.configurateCell(friend)
+            ) as? FriendDetailViewCell,
+            let photo = photos?[indexPath.row].sizes.last?.url
+        else { return UICollectionViewCell() }
+        cell.configurateCell(photo)
         return cell
     }
 }

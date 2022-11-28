@@ -11,7 +11,7 @@ final class FriendDetailViewCell: UICollectionViewCell {
 
     // MARK: - Public Methods
 
-    func configurateCell(_ photoName: String) {
-        friendImageView.image = UIImage(named: photoName)
+    func configurateCell(_ photo: String) {
+        friendImageView.loadURL(photo)
     }
 }

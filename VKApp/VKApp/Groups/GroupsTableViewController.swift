@@ -28,17 +28,23 @@ final class GroupsTableViewController: UITableViewController {
 
     // MARK: - Private Property
 
-    private var groups = [
-        Group(name: Constants.oneGroupTitleText, imageName: Constants.imageName),
-        Group(name: Constants.twoGrroupTitleText, imageName: Constants.twoImageName),
-        Group(name: Constants.threeGroupTitleText, imageName: Constants.threeImageName),
-    ]
+    private var groupsResponse: Group?
+    private var groups: [GroupItem] = []
 
     // MARK: - Private Methods
 
     private func fetchGroups() {
-        NetworkService().fetchGroups()
-        NetworkService().fetchGroups(group: Constants.groupReqestText)
+        NetworkService().fetchGroups { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(group):
+                self.groupsResponse = group
+                self.groups = group.response.items
+                self.tableView.reloadData()
+            case let .failure(error):
+                print(error)
+            }
+        }
     }
 
     // MARK: - Private IBAction
@@ -47,7 +53,7 @@ final class GroupsTableViewController: UITableViewController {
         guard let groupDetail = sender.source as? GroupsDetailTableViewController,
               let index = groupDetail.tableView.indexPathForSelectedRow
         else { return }
-        groups.append(groupDetail.groups[index.row])
+        groups.append(groupDetail.groupItems[index.row])
         tableView.reloadData()
     }
 }
@@ -65,8 +71,8 @@ extension GroupsTableViewController {
             for: indexPath
         ) as? GroupsViewCell
         else { return UITableViewCell() }
-        let groups = groups[indexPath.row]
-        cell.setupUI(groups)
+        let group = groups[indexPath.row]
+        cell.setupUI(group)
         return cell
     }
 }

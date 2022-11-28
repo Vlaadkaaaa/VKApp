@@ -18,15 +18,14 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
-    private var friends = Friends.friends
-    private var sections: [Character: [Friend]] = [:]
+    private var friends: [UserItem] = []
+    private var sections: [Character: [UserItem]] = [:]
     private var sectionTitles: [Character] = []
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCellToSections()
         fetchFriends()
     }
 
@@ -37,20 +36,29 @@ final class FriendsTableViewController: UITableViewController {
             segue.identifier == Constants.friendDetailSegueIdentifier,
             let vc = segue.destination as? FriendDetailCollectionViewController,
             let index = tableView.indexPathForSelectedRow,
-            let photos = sections[sectionTitles[index.section]]?[index.row].profileImagesName
+            let id = sections[sectionTitles[index.section]]?[index.row].id
         else { return }
-        vc.friendPhotos = photos
+        vc.friendId = id
     }
 
     // MARK: - Private Methods
 
     private func fetchFriends() {
-        NetworkService().fetchFriends()
+        NetworkService().fetchFriends { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(friend):
+                self.friends = friend.response.items
+                self.setupCellToSections()
+            case let .failure(error):
+                print(error)
+            }
+        }
     }
 
     private func setupCellToSections() {
         for friend in friends {
-            guard let firstCharacter = friend.name.first else { return }
+            guard let firstCharacter = friend.firstName.first else { return }
             if sections[firstCharacter] != nil {
                 sections[firstCharacter]?.append(friend)
             } else {
@@ -82,6 +90,7 @@ extension FriendsTableViewController {
             let friend = sections[sectionTitles[indexPath.section]]?[indexPath.row]
         else { return UITableViewCell() }
         cell.configurateCell(friend)
+
         return cell
     }
 }
@@ -94,6 +103,6 @@ extension FriendsTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        String(sectionTitles[section])
+        "\(sectionTitles[section])"
     }
 }
