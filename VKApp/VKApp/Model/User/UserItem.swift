@@ -4,11 +4,16 @@
 import RealmSwift
 
 /// UserItem
+@objcMembers
 final class UserItem: Object, Codable {
-    @objc dynamic var id: Int
-    @objc dynamic var firstName: String
-    @objc dynamic var lastName: String
-    @objc dynamic var friendPhotoImageName: String?
+    dynamic var id: Int
+    dynamic var firstName: String
+    dynamic var lastName: String
+    dynamic var friendPhotoImageName: String?
+
+    override static func primaryKey() -> String? {
+        "id"
+    }
 
     enum CodingKeys: String, CodingKey {
         case id

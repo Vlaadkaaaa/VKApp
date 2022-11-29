@@ -25,17 +25,15 @@ struct NetworkService {
 
     // MARK: - Public Methods
 
-    func fetchFriends(completion: @escaping (Result<User, Error>) -> Void) {
+    func fetchFriends(completion: @escaping () -> ()) {
         let path = "\(Constants.getFriendText)\(Constants.acessToken)\(Constants.friendFields)\(Constants.version)"
         let url = "\(Constants.baseURL)\(path)"
         AF.request(url).responseData { response in
             guard let data = response.data else { return }
             do {
                 let userResponse = try JSONDecoder().decode(User.self, from: data)
-                completion(.success(userResponse))
-            } catch {
-                completion(.failure(error))
-            }
+                RealmService().saveDataToRealm(userResponse.response.items)
+            } catch {}
         }
     }
 
@@ -64,7 +62,7 @@ struct NetworkService {
             guard let data = response.data else { return }
             do {
                 let groupResponse = try JSONDecoder().decode(Group.self, from: data)
-                RealmDB().saveDataToRealm(groupResponse.response.items)
+                RealmService().saveDataToRealm(groupResponse.response.items)
                 completion(.success(groupResponse))
             } catch {
                 completion(.failure(error))

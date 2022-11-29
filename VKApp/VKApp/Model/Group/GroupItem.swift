@@ -4,10 +4,15 @@
 import RealmSwift
 
 /// GroupItem
+@objcMembers
 final class GroupItem: Object, Codable {
-    @objc dynamic var id: Int
-    @objc dynamic var name: String
-    @objc dynamic var photo: String
+    dynamic var id: Int
+    dynamic var name: String
+    dynamic var photo: String
+
+    override static func primaryKey() -> String? {
+        "id"
+    }
 
     enum CodingKeys: String, CodingKey {
         case id

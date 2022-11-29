@@ -1,6 +1,7 @@
 // GroupsTableViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 /// Экран групп пользователя
@@ -23,6 +24,7 @@ final class GroupsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadDataFromRealm()
         fetchGroups()
     }
 
@@ -34,16 +36,20 @@ final class GroupsTableViewController: UITableViewController {
     // MARK: - Private Methods
 
     private func fetchGroups() {
-        NetworkService().fetchGroups { [weak self] result in
+        NetworkService().fetchGroups { [weak self] _ in
             guard let self = self else { return }
-            switch result {
-            case let .success(group):
-                self.groupsResponse = group
-                self.groups = group.response.items
-                self.tableView.reloadData()
-            case let .failure(error):
-                print(error)
-            }
+            self.loadDataFromRealm()
+            self.tableView.reloadData()
+        }
+    }
+
+    private func loadDataFromRealm() {
+        do {
+            let realm = try Realm()
+            let objects = realm.objects(GroupItem.self)
+            groups = Array(objects)
+        } catch {
+            print(error)
         }
     }
 

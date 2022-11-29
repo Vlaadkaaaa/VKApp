@@ -1,6 +1,7 @@
 // FriendsTableViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 /// Экран друзей
@@ -18,7 +19,8 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
-    private var friends: [UserItem] = []
+    private var token: NotificationToken?
+    private var friends: Results<UserItem>?
     private var sections: [Character: [UserItem]] = [:]
     private var sectionTitles: [Character] = []
 
@@ -26,6 +28,7 @@ final class FriendsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadDataFromRealm()
         fetchFriends()
     }
 
@@ -44,29 +47,49 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private Methods
 
     private func fetchFriends() {
-        NetworkService().fetchFriends { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case let .success(friend):
-                self.friends = friend.response.items
-                self.setupCellToSections()
-            case let .failure(error):
-                print(error)
+        LocalService().fetchData { [weak self] result in
+            self?.friends = result
+            self?.token = self?.friends?.observe { change in
+                switch change {
+                case .initial:
+                    break
+                case .update:
+                    self?.tableView.reloadData()
+                case let .error(error):
+                    print(error)
+                }
             }
+        }
+        NetworkService().fetchFriends { [weak self] in
+            guard let self = self else { return }
+            self.loadDataFromRealm()
+            self.tableView.reloadData()
+        }
+    }
+
+    private func loadDataFromRealm() {
+        do {
+            let realm = try Realm()
+            let objects = realm.objects(UserItem.self)
+            friends = objects
+            fetchFriends()
+            setupCellToSections()
+        } catch {
+            print(error)
         }
     }
 
     private func setupCellToSections() {
-        for friend in friends {
-            guard let firstCharacter = friend.firstName.first else { return }
+        friends?.forEach {
+            guard let firstCharacter = $0.firstName.first else { return }
             if sections[firstCharacter] != nil {
-                sections[firstCharacter]?.append(friend)
+                sections[firstCharacter]?.append($0)
             } else {
-                sections[firstCharacter] = [friend]
+                sections[firstCharacter] = [$0]
             }
-            sectionTitles = Array(sections.keys).sorted()
-            tableView.reloadData()
         }
+        sectionTitles = Array(sections.keys).sorted()
+        tableView.reloadData()
     }
 }
 
@@ -90,7 +113,6 @@ extension FriendsTableViewController {
             let friend = sections[sectionTitles[indexPath.section]]?[indexPath.row]
         else { return UITableViewCell() }
         cell.configurateCell(friend)
-
         return cell
     }
 }
