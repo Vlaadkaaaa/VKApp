@@ -12,9 +12,6 @@ struct RealmService {
             let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
 
             let realm = try Realm(configuration: config)
-            print(
-                realm.configuration.fileURL
-            )
             try realm.write {
                 realm.add(items, update: .modified)
             }
@@ -27,9 +24,6 @@ struct RealmService {
         do {
             let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
             let realm = try Realm(configuration: config)
-            print(
-                realm.configuration.fileURL
-            )
             try realm.write {
                 realm.add(items)
             }

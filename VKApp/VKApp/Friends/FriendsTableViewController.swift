@@ -11,6 +11,7 @@ final class FriendsTableViewController: UITableViewController {
     private enum Constants {
         static let friendCellIdentifier = "friendCell"
         static let friendDetailSegueIdentifier = "friendDetailSegue"
+        static let titleErrorText = "Ошибка загрузки из БД"
     }
 
     // MARK: - Private IBOutlet
@@ -19,6 +20,8 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
+    private let networkService = NetworkService()
+    private let localService = LocalService()
     private var token: NotificationToken?
     private var friends: Results<UserItem>?
     private var sections: [Character: [UserItem]] = [:]
@@ -47,20 +50,25 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private Methods
 
     private func fetchFriends() {
-        LocalService().fetchData { [weak self] result in
-            self?.friends = result
-            self?.token = self?.friends?.observe { change in
+        localService.fetchData { [weak self] result in
+            guard let self = self else { return }
+            self.friends = result
+            self.token = self.friends?.observe { change in
                 switch change {
                 case .initial:
                     break
                 case .update:
-                    self?.tableView.reloadData()
+                    self.tableView.reloadData()
                 case let .error(error):
-                    print(error)
+                    self.showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
                 }
             }
         }
-        NetworkService().fetchFriends { [weak self] in
+        fetchFriendsFromNetwork()
+    }
+
+    private func fetchFriendsFromNetwork() {
+        networkService.fetchFriends { [weak self] in
             guard let self = self else { return }
             self.loadDataFromRealm()
             self.tableView.reloadData()
@@ -75,7 +83,7 @@ final class FriendsTableViewController: UITableViewController {
             fetchFriends()
             setupCellToSections()
         } catch {
-            print(error)
+            showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
         }
     }
 

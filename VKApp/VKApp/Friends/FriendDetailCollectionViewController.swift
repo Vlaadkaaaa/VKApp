@@ -11,6 +11,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
     private enum Constants {
         static let friendDetailCellIdentifier = "friendDetailCell"
         static let allFriendPhotoSegueIdentifier = "allFriendPhotoSegue"
+        static let titleErrorText = "Ошибка загрузки из БД"
     }
 
     // MARK: - Public Property
@@ -18,7 +19,9 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
     var friendId = Int()
 
     // MARK: - Private Property
-
+    private let networkService = NetworkService()
+    private let localService = LocalService()
+    private let realmService = RealmService()
     private var photos: [PhotoItem] = []
     private var allPhotosImage: [UIImage] = []
 
@@ -50,22 +53,22 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
                 fetchUserPhotos()
             }
         } catch {
-            print(error)
+            showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
         }
     }
 
     private func fetchUserPhotos() {
-        NetworkService().fetchUserPhotos(ownerId: friendId) { [weak self] result in
+        networkService.fetchUserPhotos(ownerId: friendId) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(photo):
                 guard let photos = photo.response?.items else { return }
                 self.photos = photos
                 self.changeDataToImage()
-                RealmService().saveImageToRealm(photos)
+                self.realmService.saveImageToRealm(photos)
                 self.collectionView.reloadData()
             case let .failure(error):
-                print(error)
+                self.showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
             }
         }
     }

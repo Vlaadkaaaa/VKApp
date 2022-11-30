@@ -17,7 +17,7 @@ final class GroupsTableViewController: UITableViewController {
         static let twoGrroupTitleText = "groupTwo"
         static let threeImageName = "people-3"
         static let threeGroupTitleText = "groupThree"
-        static let groupReqestText = "Fifa"
+        static let titleErrorText = "Ошибка загрузки из БД"
     }
 
     // MARK: Life Cycle
@@ -49,7 +49,7 @@ final class GroupsTableViewController: UITableViewController {
             let objects = realm.objects(GroupItem.self)
             groups = Array(objects)
         } catch {
-            print(error)
+            showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
         }
     }
 
