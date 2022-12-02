@@ -12,8 +12,8 @@ final class GroupsDetailViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupUI(_ group: GroupItem?) {
+    func setupUI(_ group: GroupItem?, networkService: NetworkService) {
         groupsNameLabel.text = group?.name
-        groupsDetailImageView.loadURL(group?.photo ?? "")
+        groupsDetailImageView.loadImage(group?.photo ?? "", networkService: networkService)
     }
 }

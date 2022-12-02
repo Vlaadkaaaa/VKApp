@@ -27,6 +27,7 @@ final class GroupsDetailTableViewController: UITableViewController {
 
     // MARK: - Private Property
 
+    let networkService = NetworkService()
     var groupItems: [GroupItem] = []
 }
 
@@ -44,7 +45,7 @@ extension GroupsDetailTableViewController {
         ) as? GroupsDetailViewCell
         else { return UITableViewCell() }
         DispatchQueue.main.async {
-            cell.setupUI(self.groupItems[indexPath.row])
+            cell.setupUI(self.groupItems[indexPath.row], networkService: self.networkService)
         }
         return cell
     }

@@ -1,6 +1,7 @@
 // GroupsTableViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 /// Экран групп пользователя
@@ -16,18 +17,21 @@ final class GroupsTableViewController: UITableViewController {
         static let twoGrroupTitleText = "groupTwo"
         static let threeImageName = "people-3"
         static let threeGroupTitleText = "groupThree"
-        static let groupReqestText = "Fifa"
+        static let titleErrorText = "Ошибка загрузки из БД"
     }
 
     // MARK: Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadData()
         fetchGroups()
     }
 
     // MARK: - Private Property
 
+    private let networkService = NetworkService()
+    private let realmService = RealmService()
     private var groupsResponse: Group?
     private var groups: [GroupItem] = []
 
@@ -38,13 +42,19 @@ final class GroupsTableViewController: UITableViewController {
             guard let self = self else { return }
             switch result {
             case let .success(group):
-                self.groupsResponse = group
-                self.groups = group.response.items
-                self.tableView.reloadData()
+                let groups = group.response.items
+                self.realmService.saveDataToRealm(groups)
             case let .failure(error):
-                print(error)
+                self.showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
             }
+            self.loadData()
+            self.tableView.reloadData()
         }
+    }
+
+    private func loadData() {
+        guard let objects = realmService.loadData(GroupItem.self) else { return }
+        groups = Array(objects)
     }
 
     // MARK: - Private IBAction
@@ -72,7 +82,7 @@ extension GroupsTableViewController {
         ) as? GroupsViewCell
         else { return UITableViewCell() }
         let group = groups[indexPath.row]
-        cell.setupUI(group)
+        cell.setupUI(group, networkService: networkService)
         return cell
     }
 }

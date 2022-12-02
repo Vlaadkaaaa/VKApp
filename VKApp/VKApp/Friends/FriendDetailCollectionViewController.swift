@@ -1,6 +1,7 @@
 // FriendDetailCollectionViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 ///  Экран всех фотографий друга
@@ -10,6 +11,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
     private enum Constants {
         static let friendDetailCellIdentifier = "friendDetailCell"
         static let allFriendPhotoSegueIdentifier = "allFriendPhotoSegue"
+        static let titleErrorText = "Ошибка загрузки из БД"
     }
 
     // MARK: - Public Property
@@ -18,7 +20,9 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
     // MARK: - Private Property
 
-    private var photos: [PhotoItem]? = []
+    private let networkService = NetworkService()
+    private let realmService = RealmService()
+    private var photosItem: [PhotoItem] = []
     private var allPhotosImage: [UIImage] = []
 
     // MARK: - Life Cycle
@@ -26,6 +30,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchUserPhotos()
+        loadData()
     }
 
     // MARK: - Public Methods
@@ -39,29 +44,41 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
     // MARK: - Private Methods
 
+    private func loadData() {
+        guard let friendPhotos = realmService.loadData(PhotoItem.self) else { return }
+        let friendsPhotos = Array(friendPhotos)
+        if photosItem != friendsPhotos {
+            photosItem = friendsPhotos
+        } else {
+            fetchUserPhotos()
+        }
+    }
+
     private func fetchUserPhotos() {
-        NetworkService().fetchUserPhotos(ownerId: friendId) { [weak self] result in
+        networkService.fetchUserPhotos(ownerId: friendId) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(photo):
-                self.photos = photo.response?.items
+                guard let photos = photo.response?.items else { return }
+                self.photosItem = photos
                 self.changeDataToImage()
+                self.realmService.saveImageToRealm(photos)
                 self.collectionView.reloadData()
             case let .failure(error):
-                print(error)
+                self.showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
             }
         }
     }
 
     private func changeDataToImage() {
-        guard let photos = photos else { return }
+        let photos = photosItem
         for photo in photos {
             guard let photo = photo.sizes.last?.url else { return }
             let imageData = UIImageView()
-            imageData.loadURL(photo)
+            imageData.loadImage(photo, networkService: networkService)
             allPhotosImage.append(imageData.image ?? UIImage())
         }
-        self.photos = photos
+        photosItem = photos
     }
 }
 
@@ -69,7 +86,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
 extension FriendDetailCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        photos?.count ?? 0
+        photosItem.count
     }
 
     override func collectionView(
@@ -81,9 +98,9 @@ extension FriendDetailCollectionViewController {
                 withReuseIdentifier: Constants.friendDetailCellIdentifier,
                 for: indexPath
             ) as? FriendDetailViewCell,
-            let photo = photos?[indexPath.row].sizes.last?.url
+            let photo = photosItem[indexPath.row].sizes.last?.url
         else { return UICollectionViewCell() }
-        cell.configurateCell(photo)
+        cell.configurateCell(photo, networkService: networkService)
         return cell
     }
 }

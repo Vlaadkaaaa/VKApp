@@ -1,6 +1,7 @@
 // FriendsTableViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 /// Экран друзей
@@ -10,6 +11,7 @@ final class FriendsTableViewController: UITableViewController {
     private enum Constants {
         static let friendCellIdentifier = "friendCell"
         static let friendDetailSegueIdentifier = "friendDetailSegue"
+        static let titleErrorText = "Ошибка загрузки из БД"
     }
 
     // MARK: - Private IBOutlet
@@ -18,7 +20,10 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
-    private var friends: [UserItem] = []
+    private let networkService = NetworkService()
+    private let realmService = RealmService()
+    private var token: NotificationToken?
+    private var friends: Results<UserItem>?
     private var sections: [Character: [UserItem]] = [:]
     private var sectionTitles: [Character] = []
 
@@ -26,7 +31,8 @@ final class FriendsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchFriends()
+        loadFriends()
+        setupCellToSections()
     }
 
     // MARK: - Public Methods
@@ -43,30 +49,49 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private Methods
 
+    private func loadFriends() {
+        realmService.fetchData { [weak self] result in
+            guard let self = self else { return }
+            self.friends = result
+            self.token = self.friends?.observe { change in
+                switch change {
+                case .initial:
+                    self.tableView.reloadData()
+                case .update:
+                    self.tableView.reloadData()
+                case let .error(error):
+                    self.showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
+                }
+            }
+        }
+        fetchFriends()
+    }
+
     private func fetchFriends() {
-        NetworkService().fetchFriends { [weak self] result in
+        networkService.fetchFriends { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case let .success(friend):
-                self.friends = friend.response.items
-                self.setupCellToSections()
+            case let .success(user):
+                let user = user.response.items
+                self.realmService.saveDataToRealm(user)
+                self.tableView.reloadData()
             case let .failure(error):
-                print(error)
+                self.showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
             }
         }
     }
 
     private func setupCellToSections() {
-        for friend in friends {
-            guard let firstCharacter = friend.firstName.first else { return }
+        friends?.forEach {
+            guard let firstCharacter = $0.firstName.first else { return }
             if sections[firstCharacter] != nil {
-                sections[firstCharacter]?.append(friend)
+                sections[firstCharacter]?.append($0)
             } else {
-                sections[firstCharacter] = [friend]
+                sections[firstCharacter] = [$0]
             }
-            sectionTitles = Array(sections.keys).sorted()
-            tableView.reloadData()
         }
+        sectionTitles = Array(sections.keys).sorted()
+        tableView.reloadData()
     }
 }
 
@@ -89,8 +114,7 @@ extension FriendsTableViewController {
             ) as? FriendViewCell,
             let friend = sections[sectionTitles[indexPath.section]]?[indexPath.row]
         else { return UITableViewCell() }
-        cell.configurateCell(friend)
-
+        cell.configurateCell(friend, networkService: networkService)
         return cell
     }
 }
