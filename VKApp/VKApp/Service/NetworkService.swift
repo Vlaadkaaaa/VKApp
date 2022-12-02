@@ -31,7 +31,10 @@ struct NetworkService {
             guard let data = response.data else { return }
             do {
                 let userResponse = try JSONDecoder().decode(User.self, from: data)
-            } catch {}
+                completion(.success(userResponse))
+            } catch {
+                completion(.failure(error))
+            }
         }
     }
 
@@ -80,6 +83,22 @@ struct NetworkService {
             } catch {
                 completion(.failure(error))
             }
+        }
+    }
+
+    func loadImageData(_ url: String) -> Data? {
+        guard let url = URL(string: url),
+              let data = try? Data(contentsOf: url)
+        else { return nil }
+        return data
+    }
+
+    func loadImageData(_ url: String, completion: @escaping (Data) -> Void) {
+        DispatchQueue.global().async {
+            guard let url = URL(string: url),
+                  let data = try? Data(contentsOf: url)
+            else { return }
+            completion(data)
         }
     }
 

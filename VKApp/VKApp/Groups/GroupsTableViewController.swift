@@ -30,6 +30,7 @@ final class GroupsTableViewController: UITableViewController {
 
     // MARK: - Private Property
 
+    private let networkService = NetworkService()
     private let realmService = RealmService()
     private var groupsResponse: Group?
     private var groups: [GroupItem] = []
@@ -81,7 +82,7 @@ extension GroupsTableViewController {
         ) as? GroupsViewCell
         else { return UITableViewCell() }
         let group = groups[indexPath.row]
-        cell.setupUI(group)
+        cell.setupUI(group, networkService: networkService)
         return cell
     }
 }

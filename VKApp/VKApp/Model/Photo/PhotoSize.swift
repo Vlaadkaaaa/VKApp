@@ -7,5 +7,6 @@ import RealmSwift
 final class Size: Object, Decodable {
     // MARK: - Public Property
 
+    /// путь к фото пользователя
     @Persisted var url: String
 }

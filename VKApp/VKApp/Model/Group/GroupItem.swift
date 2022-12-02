@@ -8,8 +8,11 @@ import RealmSwift
 final class GroupItem: Object, Codable {
     // MARK: - Public Property
 
+    /// id пользователя
     dynamic var id: Int
+    /// имя пользователя
     dynamic var name: String
+    /// путь, по которому хранится фото пользователя
     dynamic var photo: String
 
     // MARK: - Public Method

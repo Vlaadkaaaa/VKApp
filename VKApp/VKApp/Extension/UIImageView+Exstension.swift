@@ -5,15 +5,13 @@ import UIKit
 
 /// Extension UIImageView
 extension UIImageView {
-    func loadURL(_ url: String) {
-        guard let url = URL(string: url) else { return }
-        DispatchQueue.global().async {
-            guard let data = try? Data(contentsOf: url),
-                  let image = UIImage(data: data)
-            else { return }
+    func loadImage(_ url: String, networkService: NetworkService) {
+        networkService.loadImageData(url, completion: { [weak self] result in
             DispatchQueue.main.async {
+                guard let self,
+                      let image = UIImage(data: result) else { return }
                 self.image = image
             }
-        }
+        })
     }
 }

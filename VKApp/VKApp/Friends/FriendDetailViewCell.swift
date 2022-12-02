@@ -11,7 +11,7 @@ final class FriendDetailViewCell: UICollectionViewCell {
 
     // MARK: - Public Methods
 
-    func configurateCell(_ photo: String) {
-        friendImageView.loadURL(photo)
+    func configurateCell(_ photo: String, networkService: NetworkService) {
+        friendImageView.loadImage(photo, networkService: networkService)
     }
 }

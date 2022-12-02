@@ -51,8 +51,8 @@ import UIKit
 
     // MARK: - Public Methods
 
-    func setupAvatarImage(_ image: String) {
-        avatarImageView.loadURL(image)
+    func setupAvatarImage(_ image: String, networkService: NetworkService) {
+        avatarImageView.loadImage(image, networkService: networkService)
     }
 
     // MARK: - Private Methods

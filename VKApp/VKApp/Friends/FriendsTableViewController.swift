@@ -20,6 +20,7 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
+    private let networkService = NetworkService()
     private let realmService = RealmService()
     private var token: NotificationToken?
     private var friends: Results<UserItem>?
@@ -30,8 +31,8 @@ final class FriendsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadData()
         loadFriends()
+        setupCellToSections()
     }
 
     // MARK: - Public Methods
@@ -49,7 +50,7 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private Methods
 
     private func loadFriends() {
-        RealmService().fetchData { [weak self] result in
+        realmService.fetchData { [weak self] result in
             guard let self = self else { return }
             self.friends = result
             self.token = self.friends?.observe { change in
@@ -67,24 +68,17 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     private func fetchFriends() {
-        NetworkService().fetchFriends { [weak self] result in
+        networkService.fetchFriends { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(user):
                 let user = user.response.items
                 self.realmService.saveDataToRealm(user)
-                self.loadData()
                 self.tableView.reloadData()
             case let .failure(error):
                 self.showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
             }
         }
-    }
-
-    private func loadData() {
-        friends = realmService.loadData(UserItem.self)
-        fetchFriends()
-        setupCellToSections()
     }
 
     private func setupCellToSections() {
@@ -120,7 +114,7 @@ extension FriendsTableViewController {
             ) as? FriendViewCell,
             let friend = sections[sectionTitles[indexPath.section]]?[indexPath.row]
         else { return UITableViewCell() }
-        cell.configurateCell(friend)
+        cell.configurateCell(friend, networkService: networkService)
         return cell
     }
 }

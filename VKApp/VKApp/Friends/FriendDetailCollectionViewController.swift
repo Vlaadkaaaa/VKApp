@@ -20,6 +20,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
     // MARK: - Private Property
 
+    private let networkService = NetworkService()
     private let realmService = RealmService()
     private var photosItem: [PhotoItem] = []
     private var allPhotosImage: [UIImage] = []
@@ -54,7 +55,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
     }
 
     private func fetchUserPhotos() {
-        NetworkService().fetchUserPhotos(ownerId: friendId) { [weak self] result in
+        networkService.fetchUserPhotos(ownerId: friendId) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(photo):
@@ -74,7 +75,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
         for photo in photos {
             guard let photo = photo.sizes.last?.url else { return }
             let imageData = UIImageView()
-            imageData.loadURL(photo)
+            imageData.loadImage(photo, networkService: networkService)
             allPhotosImage.append(imageData.image ?? UIImage())
         }
         photosItem = photos
@@ -99,7 +100,7 @@ extension FriendDetailCollectionViewController {
             ) as? FriendDetailViewCell,
             let photo = photosItem[indexPath.row].sizes.last?.url
         else { return UICollectionViewCell() }
-        cell.configurateCell(photo)
+        cell.configurateCell(photo, networkService: networkService)
         return cell
     }
 }
