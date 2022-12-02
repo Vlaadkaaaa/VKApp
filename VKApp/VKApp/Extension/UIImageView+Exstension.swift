@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Extension UIImageView
+/// загрузка изображения
 extension UIImageView {
     func loadImage(_ url: String, networkService: NetworkService) {
         networkService.loadImageData(url, completion: { [weak self] result in
