@@ -41,7 +41,7 @@ struct RealmService {
             let realm = try Realm(configuration: RealmService.deleteIfMigration)
             return realm.objects(type)
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
         return nil
     }

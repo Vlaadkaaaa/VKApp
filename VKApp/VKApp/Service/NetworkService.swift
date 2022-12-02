@@ -3,7 +3,6 @@
 
 import Alamofire
 import Foundation
-import RealmSwift
 
 /// Сетевой слой на Alamofire
 struct NetworkService {
@@ -32,7 +31,6 @@ struct NetworkService {
             guard let data = response.data else { return }
             do {
                 let userResponse = try JSONDecoder().decode(User.self, from: data)
-                RealmService().saveDataToRealm(userResponse.response.items)
             } catch {}
         }
     }
