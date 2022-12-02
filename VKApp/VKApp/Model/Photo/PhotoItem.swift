@@ -5,10 +5,7 @@ import RealmSwift
 
 /// PhotoItem
 final class PhotoItem: Object, Decodable {
-    @Persisted var sizes = List<Size>()
-}
+    // MARK: - Public Property
 
-/// Путь к фотографии пользователя
-final class Size: Object, Decodable {
-    @Persisted var url: String
+    @Persisted var sizes = List<Size>()
 }

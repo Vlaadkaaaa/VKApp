@@ -24,33 +24,36 @@ final class GroupsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadDataFromRealm()
+        loadData()
         fetchGroups()
     }
 
     // MARK: - Private Property
 
+    private let realmService = RealmService()
     private var groupsResponse: Group?
     private var groups: [GroupItem] = []
 
     // MARK: - Private Methods
 
     private func fetchGroups() {
-        NetworkService().fetchGroups { [weak self] _ in
+        NetworkService().fetchGroups { [weak self] result in
             guard let self = self else { return }
-            self.loadDataFromRealm()
+            switch result {
+            case let .success(group):
+                let groups = group.response.items
+                self.realmService.saveDataToRealm(groups)
+            case let .failure(error):
+                self.showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
+            }
+            self.loadData()
             self.tableView.reloadData()
         }
     }
 
-    private func loadDataFromRealm() {
-        do {
-            let realm = try Realm()
-            let objects = realm.objects(GroupItem.self)
-            groups = Array(objects)
-        } catch {
-            showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
-        }
+    private func loadData() {
+        guard let objects = realmService.loadData(GroupItem.self) else { return }
+        groups = Array(objects)
     }
 
     // MARK: - Private IBAction

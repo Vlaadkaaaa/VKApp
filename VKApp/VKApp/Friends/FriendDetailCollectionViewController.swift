@@ -19,17 +19,17 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
     var friendId = Int()
 
     // MARK: - Private Property
-    private let networkService = NetworkService()
-    private let localService = LocalService()
+
     private let realmService = RealmService()
-    private var photos: [PhotoItem] = []
+    private var photosItem: [PhotoItem] = []
     private var allPhotosImage: [UIImage] = []
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadDataFromRealm()
+        fetchUserPhotos()
+        loadData()
     }
 
     // MARK: - Public Methods
@@ -43,27 +43,23 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
     // MARK: - Private Methods
 
-    private func loadDataFromRealm() {
-        do {
-            let realm = try Realm()
-            let friendPhotos = Array(realm.objects(PhotoItem.self))
-            if photos != friendPhotos {
-                photos = friendPhotos
-            } else {
-                fetchUserPhotos()
-            }
-        } catch {
-            showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
+    private func loadData() {
+        guard let friendPhotos = realmService.loadData(PhotoItem.self) else { return }
+        let friendsPhotos = Array(friendPhotos)
+        if photosItem != friendsPhotos {
+            photosItem = friendsPhotos
+        } else {
+            fetchUserPhotos()
         }
     }
 
     private func fetchUserPhotos() {
-        networkService.fetchUserPhotos(ownerId: friendId) { [weak self] result in
+        NetworkService().fetchUserPhotos(ownerId: friendId) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(photo):
                 guard let photos = photo.response?.items else { return }
-                self.photos = photos
+                self.photosItem = photos
                 self.changeDataToImage()
                 self.realmService.saveImageToRealm(photos)
                 self.collectionView.reloadData()
@@ -74,14 +70,14 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
     }
 
     private func changeDataToImage() {
-        let photos = photos
+        let photos = photosItem
         for photo in photos {
             guard let photo = photo.sizes.last?.url else { return }
             let imageData = UIImageView()
             imageData.loadURL(photo)
             allPhotosImage.append(imageData.image ?? UIImage())
         }
-        self.photos = photos
+        photosItem = photos
     }
 }
 
@@ -89,7 +85,7 @@ final class FriendDetailCollectionViewController: UICollectionViewController {
 
 extension FriendDetailCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        photos.count
+        photosItem.count
     }
 
     override func collectionView(
@@ -101,7 +97,7 @@ extension FriendDetailCollectionViewController {
                 withReuseIdentifier: Constants.friendDetailCellIdentifier,
                 for: indexPath
             ) as? FriendDetailViewCell,
-            let photo = photos[indexPath.row].sizes.last?.url
+            let photo = photosItem[indexPath.row].sizes.last?.url
         else { return UICollectionViewCell() }
         cell.configurateCell(photo)
         return cell

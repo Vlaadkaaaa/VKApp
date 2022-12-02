@@ -38,8 +38,8 @@
 		CE3000B629348A7E0076EA12 /* PhotoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3000B529348A7E0076EA12 /* PhotoResponse.swift */; };
 		CE3000B829348AA40076EA12 /* PhotoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3000B729348AA40076EA12 /* PhotoItem.swift */; };
 		CE3000BA29348D270076EA12 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3000B929348D270076EA12 /* RealmService.swift */; };
+		CE7DFC1E29379B06004E9A96 /* PhotoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7DFC1D29379B06004E9A96 /* PhotoSize.swift */; };
 		CE9564C3292BD4070080896A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9564C2292BD4070080896A /* Session.swift */; };
-		CEB6DCD9293630A1000107F9 /* LocalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB6DCD8293630A1000107F9 /* LocalService.swift */; };
 		CEDB3B1C291A3A4D00ED39AC /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB3B1B291A3A4D00ED39AC /* NewsViewController.swift */; };
 		CEE59FA3292CEA080046EAF2 /* LoginWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE59FA2292CEA080046EAF2 /* LoginWebViewController.swift */; };
 		CEE59FA6292CF5680046EAF2 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE59FA5292CF5680046EAF2 /* NetworkService.swift */; };
@@ -85,8 +85,8 @@
 		CE3000B529348A7E0076EA12 /* PhotoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResponse.swift; sourceTree = "<group>"; };
 		CE3000B729348AA40076EA12 /* PhotoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoItem.swift; sourceTree = "<group>"; };
 		CE3000B929348D270076EA12 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
+		CE7DFC1D29379B06004E9A96 /* PhotoSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSize.swift; sourceTree = "<group>"; };
 		CE9564C2292BD4070080896A /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
-		CEB6DCD8293630A1000107F9 /* LocalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalService.swift; sourceTree = "<group>"; };
 		CEDB3B1B291A3A4D00ED39AC /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		CEE59FA2292CEA080046EAF2 /* LoginWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginWebViewController.swift; path = Assets.xcassets/LoginWebViewController.swift; sourceTree = "<group>"; };
 		CEE59FA5292CF5680046EAF2 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -255,6 +255,7 @@
 				CEE59FAE292E45500046EAF2 /* Photo.swift */,
 				CE3000B529348A7E0076EA12 /* PhotoResponse.swift */,
 				CE3000B729348AA40076EA12 /* PhotoItem.swift */,
+				CE7DFC1D29379B06004E9A96 /* PhotoSize.swift */,
 			);
 			path = Photo;
 			sourceTree = "<group>";
@@ -265,7 +266,6 @@
 				CEE59FA5292CF5680046EAF2 /* NetworkService.swift */,
 				CE9564C2292BD4070080896A /* Session.swift */,
 				CE3000B929348D270076EA12 /* RealmService.swift */,
-				CEB6DCD8293630A1000107F9 /* LocalService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -451,10 +451,10 @@
 				CE3000AE29348A110076EA12 /* UserResponse.swift in Sources */,
 				CE1A96BC291D18C000E60A61 /* CustomPopAnimator.swift in Sources */,
 				55D5C5C62912D6A000D075D7 /* GroupsDetailTableViewController.swift in Sources */,
+				CE7DFC1E29379B06004E9A96 /* PhotoSize.swift in Sources */,
 				55A0360C29114E02003F1DB3 /* FriendsTableViewController.swift in Sources */,
 				55D5C5BB2912C75500D075D7 /* FriendDetailViewCell.swift in Sources */,
 				CE3000B629348A7E0076EA12 /* PhotoResponse.swift in Sources */,
-				CEB6DCD9293630A1000107F9 /* LocalService.swift in Sources */,
 				552125E32910EE880058A8F2 /* SceneDelegate.swift in Sources */,
 				55D5C5C82912D6CD00D075D7 /* GroupsDetailViewCell.swift in Sources */,
 				CEDB3B1C291A3A4D00ED39AC /* NewsViewController.swift in Sources */,

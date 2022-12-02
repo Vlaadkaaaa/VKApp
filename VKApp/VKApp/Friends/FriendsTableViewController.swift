@@ -20,8 +20,7 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
-    private let networkService = NetworkService()
-    private let localService = LocalService()
+    private let realmService = RealmService()
     private var token: NotificationToken?
     private var friends: Results<UserItem>?
     private var sections: [Character: [UserItem]] = [:]
@@ -31,8 +30,8 @@ final class FriendsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadDataFromRealm()
-        fetchFriends()
+        loadData()
+        loadFriends()
     }
 
     // MARK: - Public Methods
@@ -49,14 +48,14 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private Methods
 
-    private func fetchFriends() {
-        localService.fetchData { [weak self] result in
+    private func loadFriends() {
+        RealmService().fetchData { [weak self] result in
             guard let self = self else { return }
             self.friends = result
             self.token = self.friends?.observe { change in
                 switch change {
                 case .initial:
-                    break
+                    self.tableView.reloadData()
                 case .update:
                     self.tableView.reloadData()
                 case let .error(error):
@@ -64,27 +63,28 @@ final class FriendsTableViewController: UITableViewController {
                 }
             }
         }
-        fetchFriendsFromNetwork()
+        fetchFriends()
     }
 
-    private func fetchFriendsFromNetwork() {
-        networkService.fetchFriends { [weak self] in
+    private func fetchFriends() {
+        NetworkService().fetchFriends { [weak self] result in
             guard let self = self else { return }
-            self.loadDataFromRealm()
-            self.tableView.reloadData()
+            switch result {
+            case let .success(user):
+                let user = user.response.items
+                self.realmService.saveDataToRealm(user)
+                self.loadData()
+                self.tableView.reloadData()
+            case let .failure(error):
+                self.showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
+            }
         }
     }
 
-    private func loadDataFromRealm() {
-        do {
-            let realm = try Realm()
-            let objects = realm.objects(UserItem.self)
-            friends = objects
-            fetchFriends()
-            setupCellToSections()
-        } catch {
-            showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
-        }
+    private func loadData() {
+        friends = realmService.loadData(UserItem.self)
+        fetchFriends()
+        setupCellToSections()
     }
 
     private func setupCellToSections() {
