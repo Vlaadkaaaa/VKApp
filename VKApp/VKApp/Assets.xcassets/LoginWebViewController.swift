@@ -24,7 +24,7 @@ final class LoginWebViewController: UIViewController {
         static let redirectUriText = "redirect_uri"
         static let httpsText = "https://oauth.vk.com/blank.html"
         static let scopeText = "scope"
-        static let numberText = "262150"
+        static let numberText = "wall,friends"
         static let responseTypeText = "response_type"
         static let tokenText = "token"
         static let vText = "v"

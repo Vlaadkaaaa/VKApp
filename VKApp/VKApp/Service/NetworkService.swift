@@ -14,8 +14,10 @@ struct NetworkService {
         static let friendFields = "&fields=photo_100"
         static let getFriendText = "friends.get"
         static let getUserPhotoText = "photos.getAll"
+        static let getPostText = "newsfeed.get"
         static let getGroupsText = "groups.get"
         static let getSearchGroupText = "groups.search"
+        static let filtersPostText = "&filters=post"
         static let searchQueryText = "&q="
         static let ownerIdText = "&owner_id="
         static let extendedText = "&extended=1"
@@ -80,6 +82,21 @@ struct NetworkService {
             do {
                 let groupResponse = try JSONDecoder().decode(Group.self, from: data)
                 completion(.success(groupResponse))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func fetchPosts(completion: @escaping (Result<News, Error>) -> ()) {
+        let path = "\(Constants.getPostText)\(Constants.acessToken)\(Constants.version)\(Constants.filtersPostText)"
+        let url = "\(Constants.baseURL)\(path)"
+        AF.request(url).responseData { response in
+            guard let data = response.data else { return }
+            print(data)
+            do {
+                let postResponse = try JSONDecoder().decode(News.self, from: data)
+                completion(.success(postResponse))
             } catch {
                 completion(.failure(error))
             }
