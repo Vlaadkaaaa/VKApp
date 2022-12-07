@@ -3,15 +3,27 @@
 
 import UIKit
 
+typealias NewsCell = NewsConfigurable & UITableViewCell
+
+protocol NewsConfigurable {
+    func configure(news: NewsResponseItem, networkService: NetworkService?)
+}
+
 ///  Экран новостей
 final class NewsTableViewController: UITableViewController {
     // MARK: - Private Constants
 
     private enum Constants {
         static let newsCellIdentifier = "newsCell"
+        static let headerCellIdentifier = "HeaderCell"
+        static let postCellIdentifier = "PostCell"
+        static let photoCellIdentifier = "PhotoCell"
+        static let footerCellIdentifier = "FooterCell"
     }
 
-    private enum NewsCellType: Int {
+    // MARK: - Типы ячеек для NewsTableVC
+
+    private enum NewsCellType: Int, CaseIterable {
         case header
         case content
         case footer
@@ -20,58 +32,78 @@ final class NewsTableViewController: UITableViewController {
     // MARK: - Private Property
 
     private let networkService = NetworkService()
+    private var news: NewsResponse?
+
+    // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        networkService.fetchPosts { result in
+        fetchNews()
+    }
+
+    // MARK: - Private Methods
+
+    private func fetchNews() {
+        networkService.fetchPosts { [weak self] result in
+            guard let self = self else { return }
             switch result {
-            case let .success(welcome):
-                print(welcome.response.items)
+            case let .success(news):
+                let news = news.response
+                self.fetchNewsData(data: news)
             case let .failure(error):
-                print(error)
+                print(error.localizedDescription)
             }
         }
     }
 
-    private func contentCellIdentifier(_ item: NewsItemType) -> String {
-        switch item {
-        case .post:
-            return "PostCell"
-        case .image:
-            return "PhotoCell"
+    private func fetchNewsData(data: NewsResponse) {
+        data.items.forEach { item in
+            if item.sourceID < 0 {
+                guard let group = data.groups.filter({ group in
+                    group.id == item.sourceID * -1
+                }).first else { return }
+                item.authorName = group.name
+                item.avatarPath = group.photo
+            } else {
+                guard let friend = data.profiles.filter({ friend in
+                    friend.id == item.sourceID
+                }).first else { return }
+                item.authorName = "\(friend.firstName) \(friend.lastName)"
+                item.avatarPath = friend.friendPhotoImageName ?? ""
+            }
+        }
+        DispatchQueue.main.async {
+            self.news = data
+            self.tableView.reloadData()
         }
     }
-
-    // MARK: - Private Property
-
-    private let news = NewsPosts.getNews()
 
     // MARK: - UITableViewDataSource
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        news.count
+        news?.items.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        NewsCellType.allCases.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = news[indexPath.section]
         let cellType = NewsCellType(rawValue: indexPath.row) ?? .content
         var cellIdentifier = ""
         switch cellType {
         case .header:
-            cellIdentifier = "HeaderCell"
+            cellIdentifier = Constants.headerCellIdentifier
         case .content:
-            cellIdentifier = contentCellIdentifier(item.type)
+            cellIdentifier = Constants.postCellIdentifier
         case .footer:
-            cellIdentifier = "FooterCell"
+            cellIdentifier = Constants.footerCellIdentifier
         }
-        guard let cell = tableView
-            .dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsCell
+        guard let item = news?.items[indexPath.section],
+              let cell = tableView
+              .dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsCell
         else { return UITableViewCell() }
-        cell.configure(news: item)
+        cell.configure(news: item, networkService: networkService)
         return cell
     }
 }

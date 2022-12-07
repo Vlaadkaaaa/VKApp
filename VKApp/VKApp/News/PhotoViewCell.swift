@@ -3,7 +3,7 @@
 
 import UIKit
 
-///  Настройка ячейки новостей
+/// Ячейка с фото поста
 final class PhotoViewCell: UITableViewCell, NewsConfigurable {
     // MARK: - Private IBOutlet
 
@@ -11,7 +11,5 @@ final class PhotoViewCell: UITableViewCell, NewsConfigurable {
 
     // MARK: - Public Methods
 
-    func configure(news: NewsBase) {
-        postImageView.image = UIImage(named: news.postImageName ?? "")
-    }
+    func configure(news: NewsResponseItem, networkService: NetworkService?) {}
 }

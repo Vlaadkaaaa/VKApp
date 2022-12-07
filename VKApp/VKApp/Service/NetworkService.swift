@@ -103,13 +103,6 @@ struct NetworkService {
         }
     }
 
-    func loadImageData(_ url: String) -> Data? {
-        guard let url = URL(string: url),
-              let data = try? Data(contentsOf: url)
-        else { return nil }
-        return data
-    }
-
     func loadImageData(_ url: String, completion: @escaping (Data) -> Void) {
         DispatchQueue.global().async {
             guard let url = URL(string: url),

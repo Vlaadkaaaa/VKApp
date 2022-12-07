@@ -3,13 +3,15 @@
 
 import UIKit
 
-///
+/// Ячейка с текстом поста
 final class PostViewCell: UITableViewCell, NewsConfigurable {
+    // MARK: - Private IBOutlet
+
     @IBOutlet private var postLabel: UILabel!
 
     // MARK: - Public Methods
 
-    func configure(news: NewsBase) {
-        postLabel.text = news.description
+    func configure(news: NewsResponseItem, networkService: NetworkService?) {
+        postLabel.text = news.text
     }
 }
