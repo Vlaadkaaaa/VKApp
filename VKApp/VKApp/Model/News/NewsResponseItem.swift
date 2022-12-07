@@ -28,7 +28,9 @@ final class NewsResponseItem: Decodable {
     /// количество просмотров
     var views: Views
 
-    enum CodingKeys: String, CodingKey {
+    // MARK: - CodingKeys
+
+    private enum CodingKeys: String, CodingKey {
         case sourceID = "source_id"
         case date
         case ownerID = "owner_id"

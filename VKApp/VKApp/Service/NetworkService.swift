@@ -93,7 +93,6 @@ struct NetworkService {
         let url = "\(Constants.baseURL)\(path)"
         AF.request(url).responseData { response in
             guard let data = response.data else { return }
-            print(data)
             do {
                 let postResponse = try JSONDecoder().decode(News.self, from: data)
                 completion(.success(postResponse))
