@@ -5,12 +5,22 @@ import Alamofire
 
 /// AsyncOperation
 class AsyncOperation: Operation {
+    // MARK: - Private Constants
+
+    private enum Constants {
+        static let isKeyPathText = "is"
+    }
+
+    // MARK: - State
+
     enum State: String {
         case ready, executing, finished
         fileprivate var keyPath: String {
-            "is" + rawValue.capitalized
+            Constants.isKeyPathText + rawValue.capitalized
         }
     }
+
+    // MARK: - Public property
 
     var state = State.ready {
         willSet {
@@ -38,6 +48,8 @@ class AsyncOperation: Operation {
     override var isFinished: Bool {
         state == .finished
     }
+
+    // MARK: - Public Methods
 
     override func start() {
         if isCancelled {

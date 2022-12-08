@@ -49,9 +49,10 @@
 		CE358D3A2940A29200F7A86A /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358D392940A29200F7A86A /* Views.swift */; };
 		CE358D3C2941C64B00F7A86A /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358D3B2941C64B00F7A86A /* AsyncOperation.swift */; };
 		CE358D622941F87000F7A86A /* GetDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358D612941F87000F7A86A /* GetDataOperation.swift */; };
-		CE358D652941F92300F7A86A /* ParseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358D642941F92300F7A86A /* ParseData.swift */; };
+		CE358D652941F92300F7A86A /* ParseDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358D642941F92300F7A86A /* ParseDataOperation.swift */; };
 		CE358D672941F96100F7A86A /* SaveDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358D662941F96100F7A86A /* SaveDataOperation.swift */; };
 		CE358D682942019000F7A86A /* GroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A0360D29114E1F003F1DB3 /* GroupsTableViewController.swift */; };
+		CE358D6C2942124000F7A86A /* PromiseNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358D6B2942124000F7A86A /* PromiseNetworkService.swift */; };
 		CE7DFC1E29379B06004E9A96 /* PhotoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7DFC1D29379B06004E9A96 /* PhotoSize.swift */; };
 		CE9564C3292BD4070080896A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9564C2292BD4070080896A /* Session.swift */; };
 		CEDB3B1C291A3A4D00ED39AC /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDB3B1B291A3A4D00ED39AC /* NewsTableViewController.swift */; };
@@ -111,8 +112,9 @@
 		CE358D392940A29200F7A86A /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		CE358D3B2941C64B00F7A86A /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		CE358D612941F87000F7A86A /* GetDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDataOperation.swift; sourceTree = "<group>"; };
-		CE358D642941F92300F7A86A /* ParseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseData.swift; sourceTree = "<group>"; };
+		CE358D642941F92300F7A86A /* ParseDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseDataOperation.swift; sourceTree = "<group>"; };
 		CE358D662941F96100F7A86A /* SaveDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDataOperation.swift; sourceTree = "<group>"; };
+		CE358D6B2942124000F7A86A /* PromiseNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseNetworkService.swift; sourceTree = "<group>"; };
 		CE7DFC1D29379B06004E9A96 /* PhotoSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSize.swift; sourceTree = "<group>"; };
 		CE9564C2292BD4070080896A /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		CEDB3B1B291A3A4D00ED39AC /* NewsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
@@ -280,7 +282,7 @@
 			children = (
 				CE358D3B2941C64B00F7A86A /* AsyncOperation.swift */,
 				CE358D612941F87000F7A86A /* GetDataOperation.swift */,
-				CE358D642941F92300F7A86A /* ParseData.swift */,
+				CE358D642941F92300F7A86A /* ParseDataOperation.swift */,
 				CE358D662941F96100F7A86A /* SaveDataOperation.swift */,
 			);
 			path = Operation;
@@ -321,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				CEE59FA5292CF5680046EAF2 /* NetworkService.swift */,
+				CE358D6B2942124000F7A86A /* PromiseNetworkService.swift */,
 				CE9564C2292BD4070080896A /* Session.swift */,
 				CE3000B929348D270076EA12 /* RealmService.swift */,
 				CE358D632941F90400F7A86A /* Operation */,
@@ -508,7 +511,7 @@
 				555276FE2913DB7E009504C0 /* LikeViewControl.swift in Sources */,
 				CE9564C3292BD4070080896A /* Session.swift in Sources */,
 				55D5C5C12912D38900D075D7 /* GroupsViewCell.swift in Sources */,
-				CE358D652941F92300F7A86A /* ParseData.swift in Sources */,
+				CE358D652941F92300F7A86A /* ParseDataOperation.swift in Sources */,
 				552125E12910EE880058A8F2 /* AppDelegate.swift in Sources */,
 				55D5C5BD2912C88900D075D7 /* FriendDetailCollectionViewController.swift in Sources */,
 				CE358D622941F87000F7A86A /* GetDataOperation.swift in Sources */,
@@ -529,6 +532,7 @@
 				55D5C5C82912D6CD00D075D7 /* GroupsDetailViewCell.swift in Sources */,
 				CE18DB60293E29F300DD045B /* FooterViewCell.swift in Sources */,
 				CEDB3B1C291A3A4D00ED39AC /* NewsTableViewController.swift in Sources */,
+				CE358D6C2942124000F7A86A /* PromiseNetworkService.swift in Sources */,
 				55D5C5C32912D40400D075D7 /* Group.swift in Sources */,
 				CE358D382940A28900F7A86A /* Reposts.swift in Sources */,
 				CEE59FA3292CEA080046EAF2 /* LoginWebViewController.swift in Sources */,

@@ -1,10 +1,10 @@
-// ParseData.swift
+// ParseDataOperation.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
-/// ParseData
-final class ParseData: Operation {
+/// Парсинг данных
+final class ParseDataOperation: Operation {
     var outputData: Group?
 
     override func main() {

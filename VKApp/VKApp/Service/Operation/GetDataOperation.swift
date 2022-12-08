@@ -3,7 +3,7 @@
 
 import Alamofire
 
-/// GetDataOperation
+/// Получение данных из сети
 final class GetDataOperation: AsyncOperation {
     var data: Data?
     private var request: DataRequest

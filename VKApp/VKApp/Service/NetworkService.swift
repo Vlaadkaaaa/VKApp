@@ -2,7 +2,6 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Alamofire
-import Foundation
 
 /// Сетевой слой на Alamofire
 struct NetworkService {
@@ -136,7 +135,7 @@ struct NetworkService {
         let getDataOperation = GetDataOperation(request: request)
         opq.addOperation(getDataOperation)
 
-        let parseData = ParseData()
+        let parseData = ParseDataOperation()
         parseData.addDependency(getDataOperation)
         opq.addOperation(parseData)
 

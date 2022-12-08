@@ -8,7 +8,7 @@ final class SaveDataOperation: Operation {
     var realmService = RealmService()
 
     override func main() {
-        guard let getParseData = dependencies.first as? ParseData else { return }
+        guard let getParseData = dependencies.first as? ParseDataOperation else { return }
         let parseData = getParseData.outputData
         guard let groups = parseData?.response.items as? [GroupItem] else { return }
         realmService.saveDataToRealm(groups)
