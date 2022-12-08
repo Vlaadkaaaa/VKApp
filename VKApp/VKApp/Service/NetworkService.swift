@@ -125,4 +125,23 @@ struct NetworkService {
             }
         }
     }
+
+    func getGroups() {
+        let opq = OperationQueue()
+        let path = "\(Constants.getGroupsText)\(Constants.acessToken)\(Constants.friendFields)" +
+            "\(Constants.extendedText)\(Constants.version)"
+        let url = "\(Constants.baseURL)\(path)"
+
+        let request = AF.request(url)
+        let getDataOperation = GetDataOperation(request: request)
+        opq.addOperation(getDataOperation)
+
+        let parseData = ParseData()
+        parseData.addDependency(getDataOperation)
+        opq.addOperation(parseData)
+
+        let saveToRealm = SaveDataOperation()
+        saveToRealm.addDependency(parseData)
+        OperationQueue.main.addOperation(saveToRealm)
+    }
 }

@@ -4,16 +4,16 @@
 import RealmSwift
 
 /// GroupItem
-@objcMembers
+
 final class GroupItem: Object, Codable {
     // MARK: - Public Property
 
     /// id пользователя
-    dynamic var id: Int
+    @Persisted var id: Int
     /// имя пользователя
-    dynamic var name: String
+    @Persisted var name: String
     /// путь, по которому хранится фото пользователя
-    dynamic var photo: String
+    @Persisted var photo: String
 
     // MARK: - Public Method
 

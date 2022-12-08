@@ -4,7 +4,7 @@
 import RealmSwift
 
 /// GroupResponse
-struct GroupResponse: Codable {
+struct GroupResponse: Decodable {
     let count: Int
     let items: [GroupItem]
 }
