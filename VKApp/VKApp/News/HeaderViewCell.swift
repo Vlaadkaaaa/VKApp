@@ -11,6 +11,10 @@ final class HeaderViewCell: UITableViewCell, NewsConfigurable {
         static let dateFormatText = "MM-dd-yyyy HH:mm"
     }
 
+    // MARK: - Private Property
+
+    let networkService = NetworkService()
+
     // MARK: - Private IBOutlet
 
     @IBOutlet private var authorImageView: UIImageView! {
@@ -24,15 +28,15 @@ final class HeaderViewCell: UITableViewCell, NewsConfigurable {
 
     // MARK: - Public Methods
 
-    func configure(news: NewsResponseItem, networkService: NetworkService?) {
-        authorImageView.loadImage(news.avatarPath ?? "", networkService: NetworkService())
+    func configure(news: NewsResponseItem) {
+        authorImageView.loadImage(news.avatarPath ?? "", networkService: networkService)
         authorLabel.text = news.authorName
-        dateLabel.text = convertDate(date: news.date)
+        dateLabel.text = convert(date: news.date)
     }
 
     // MARK: - Private Methods
 
-    private func convertDate(date: Int) -> String {
+    private func convert(date: Int) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(date))
         let formatter = DateFormatter()
         formatter.dateFormat = Constants.dateFormatText

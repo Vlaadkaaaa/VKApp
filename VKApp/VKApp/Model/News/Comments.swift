@@ -5,5 +5,6 @@ import Foundation
 
 /// Количество комментов на новости
 struct Comments: Decodable {
+    /// Сomments count
     var count: Int
 }

@@ -11,7 +11,7 @@ final class PostViewCell: UITableViewCell, NewsConfigurable {
 
     // MARK: - Public Methods
 
-    func configure(news: NewsResponseItem, networkService: NetworkService?) {
+    func configure(news: NewsResponseItem) {
         postLabel.text = news.text
     }
 }

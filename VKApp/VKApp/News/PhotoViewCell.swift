@@ -11,5 +11,5 @@ final class PhotoViewCell: UITableViewCell, NewsConfigurable {
 
     // MARK: - Public Methods
 
-    func configure(news: NewsResponseItem, networkService: NetworkService?) {}
+    func configure(news: NewsResponseItem) {}
 }

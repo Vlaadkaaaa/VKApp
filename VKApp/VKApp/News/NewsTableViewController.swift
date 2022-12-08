@@ -6,7 +6,7 @@ import UIKit
 typealias NewsCell = NewsConfigurable & UITableViewCell
 /// NewsConfigurable
 protocol NewsConfigurable {
-    func configure(news: NewsResponseItem, networkService: NetworkService?)
+    func configure(news: NewsResponseItem)
 }
 
 ///  Экран новостей
@@ -38,34 +38,34 @@ final class NewsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchNews()
+        fetchPosts()
     }
 
     // MARK: - Private Methods
 
-    private func fetchNews() {
+    private func fetchPosts() {
         networkService.fetchPosts { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(news):
                 let news = news.response
-                self.fetchNewsData(data: news)
+                self.fetchNews(newsResponse: news)
             case let .failure(error):
                 print(error.localizedDescription)
             }
         }
     }
 
-    private func fetchNewsData(data: NewsResponse) {
-        data.items.forEach { item in
+    private func fetchNews(newsResponse: NewsResponse) {
+        newsResponse.items.forEach { item in
             if item.sourceID < 0 {
-                guard let group = data.groups.filter({ group in
+                guard let group = newsResponse.groups.filter({ group in
                     group.id == item.sourceID * -1
                 }).first else { return }
                 item.authorName = group.name
                 item.avatarPath = group.photo
             } else {
-                guard let friend = data.profiles.filter({ friend in
+                guard let friend = newsResponse.profiles.filter({ friend in
                     friend.id == item.sourceID
                 }).first else { return }
                 item.authorName = "\(friend.firstName) \(friend.lastName)"
@@ -73,7 +73,7 @@ final class NewsTableViewController: UITableViewController {
             }
         }
         DispatchQueue.main.async {
-            self.news = data
+            self.news = newsResponse
             self.tableView.reloadData()
         }
     }
@@ -99,11 +99,11 @@ final class NewsTableViewController: UITableViewController {
         case .footer:
             cellIdentifier = Constants.footerCellIdentifier
         }
-        guard let item = news?.items[indexPath.section],
+        guard let news = news?.items[indexPath.section],
               let cell = tableView
               .dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsCell
         else { return UITableViewCell() }
-        cell.configure(news: item, networkService: networkService)
+        cell.configure(news: news)
         return cell
     }
 }
