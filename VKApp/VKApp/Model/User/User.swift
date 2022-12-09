@@ -2,7 +2,8 @@
 // Copyright © RoadMap. All rights reserved.
 
 import RealmSwift
-/// User
+/// Пользователь
 struct User: Codable {
+    /// Ответ на получение пользователя
     let response: UserResponse
 }

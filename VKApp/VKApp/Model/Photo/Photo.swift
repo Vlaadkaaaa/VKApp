@@ -3,7 +3,8 @@
 
 import RealmSwift
 
-/// Photo
+/// Фото
 struct Photo: Decodable {
+    /// Ответ на получение фото
     let response: PhotoResponse?
 }

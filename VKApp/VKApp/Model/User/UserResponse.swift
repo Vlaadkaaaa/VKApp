@@ -3,8 +3,10 @@
 
 import RealmSwift
 
-/// UserResponse
+/// Ответ сервера для друга
 struct UserResponse: Codable {
+    /// Количество друзей
     let count: Int
+    /// Список друзей
     let items: [UserItem]
 }

@@ -3,7 +3,7 @@
 
 import RealmSwift
 
-/// PhotoItem
+/// Фото
 final class PhotoItem: Object, Decodable {
     // MARK: - Public Property
 

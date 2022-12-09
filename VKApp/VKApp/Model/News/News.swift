@@ -3,8 +3,8 @@
 
 import Foundation
 
-/// News
+/// Новости
 struct News: Decodable {
-    /// ответ на получение новостей
+    /// Ответ на получение новостей
     var response: NewsResponse
 }

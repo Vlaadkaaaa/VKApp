@@ -2,9 +2,8 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Alamofire
-import Foundation
 
-/// Сетевой слой на Alamofire
+/// Сервис сети
 struct NetworkService {
     // MARK: - Private Constants
 
@@ -124,5 +123,24 @@ struct NetworkService {
                 completion(.failure(error))
             }
         }
+    }
+
+    func getGroups() {
+        let opq = OperationQueue()
+        let path = "\(Constants.getGroupsText)\(Constants.acessToken)\(Constants.friendFields)" +
+            "\(Constants.extendedText)\(Constants.version)"
+        let url = "\(Constants.baseURL)\(path)"
+
+        let request = AF.request(url)
+        let getDataOperation = GetDataOperation(request: request)
+        opq.addOperation(getDataOperation)
+
+        let parseData = ParseDataOperation()
+        parseData.addDependency(getDataOperation)
+        opq.addOperation(parseData)
+
+        let saveToRealm = SaveDataOperation()
+        saveToRealm.addDependency(parseData)
+        OperationQueue.main.addOperation(saveToRealm)
     }
 }

@@ -3,8 +3,10 @@
 
 import RealmSwift
 
-/// GroupResponse
-struct GroupResponse: Codable {
+/// Ответ сервера для группы
+struct GroupResponse: Decodable {
+    /// Количество групп
     let count: Int
+    /// Список групп
     let items: [GroupItem]
 }
