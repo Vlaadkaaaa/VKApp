@@ -3,8 +3,8 @@
 
 import RealmSwift
 
-/// Группы
+/// Группа
 struct Group: Decodable {
-    /// ответ на получение групп
+    /// Ответ на получение группы
     var response: GroupResponse
 }

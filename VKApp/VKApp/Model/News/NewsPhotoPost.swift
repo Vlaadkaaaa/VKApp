@@ -5,6 +5,6 @@ import Foundation
 
 /// Фото новости
 struct NewsPhotoPost: Decodable {
-    /// фото новости
+    /// Фото новости
     var photo: PhotoItem?
 }

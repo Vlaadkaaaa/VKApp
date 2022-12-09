@@ -5,6 +5,6 @@ import Foundation
 
 /// Количество лайков на новости
 struct Likes: Decodable {
-    /// Likes count
+    /// Количество лайков
     var count: Int
 }

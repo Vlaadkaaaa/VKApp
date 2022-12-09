@@ -3,16 +3,16 @@
 
 import RealmSwift
 
-/// GroupItem
+/// Информация о группе
 
 final class GroupItem: Object, Codable {
     // MARK: - Public Property
 
-    /// id пользователя
+    /// ID пользователя
     @Persisted var id: Int
-    /// имя пользователя
+    /// Имя пользователя
     @Persisted var name: String
-    /// путь, по которому хранится фото пользователя
+    /// Путь, по которому хранится фото пользователя
     @Persisted var photo: String
 
     // MARK: - Public Method

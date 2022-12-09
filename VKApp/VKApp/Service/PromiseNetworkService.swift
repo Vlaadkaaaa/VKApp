@@ -4,7 +4,7 @@
 import Alamofire
 import PromiseKit
 
-/// Сетевой слой с использованеим PromiseKit
+/// Сетевой сервис с PromiseKit
 final class PromiseNetworkService {
     // MARK: - Constants
 

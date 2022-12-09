@@ -3,7 +3,7 @@
 
 import Alamofire
 
-/// Сетевой слой на Alamofire
+/// Сервис сети
 struct NetworkService {
     // MARK: - Private Constants
 

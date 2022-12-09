@@ -3,8 +3,10 @@
 
 import RealmSwift
 
-/// PhotoResponse
+/// Ответ сервера для фото
 struct PhotoResponse: Decodable {
+    /// Количество фото
     let count: Int
+    /// Список фото
     let items: [PhotoItem]
 }

@@ -3,7 +3,7 @@
 
 import Alamofire
 
-/// AsyncOperation
+/// Асинхронная операция
 class AsyncOperation: Operation {
     // MARK: - State
 
