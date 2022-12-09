@@ -6,6 +6,8 @@ import PromiseKit
 
 /// Сетевой слой с использованеим PromiseKit
 final class PromiseNetworkService {
+    // MARK: - Constants
+
     private enum Constants {
         static let baseURL = "https://api.vk.com/method/"
         static let acessToken = "?&access_token=\(Session.shared.token)"

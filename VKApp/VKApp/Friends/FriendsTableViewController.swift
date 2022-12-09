@@ -73,9 +73,9 @@ final class FriendsTableViewController: UITableViewController {
     private func fetchFriends() {
         firstly {
             promiseNetworkService.fetchFriends()
-        }.done { [weak self] user in
-            guard let self = self else { return }
+        }.done { user in
             self.allFriends = user.response.items
+            self.realmService.saveDataToRealm(user.response.items)
         }.catch { error in
             self.showAlertError(title: Constants.titleErrorText, message: error.localizedDescription)
         }

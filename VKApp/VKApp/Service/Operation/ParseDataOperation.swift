@@ -5,7 +5,11 @@ import Foundation
 
 /// Парсинг данных
 final class ParseDataOperation: Operation {
+    // MARK: Public Property
+
     var outputData: Group?
+
+    // MARK: - Public Method
 
     override func main() {
         guard let getDataOperation = dependencies.first as? GetDataOperation,

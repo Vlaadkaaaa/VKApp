@@ -5,18 +5,12 @@ import Alamofire
 
 /// AsyncOperation
 class AsyncOperation: Operation {
-    // MARK: - Private Constants
-
-    private enum Constants {
-        static let isKeyPathText = "is"
-    }
-
     // MARK: - State
 
     enum State: String {
         case ready, executing, finished
         fileprivate var keyPath: String {
-            Constants.isKeyPathText + rawValue.capitalized
+            "is" + rawValue.capitalized
         }
     }
 
