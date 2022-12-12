@@ -115,9 +115,9 @@ extension FriendsTableViewController {
                 for: indexPath
             ) as? FriendViewCell,
             let friend = sections[sectionTitles[indexPath.section]]?[indexPath.row],
-            let photoSerivce = photoService
+            let photoService = photoService
         else { return UITableViewCell() }
-        cell.configurateCell(friend, photoService: photoSerivce)
+        cell.configurateCell(friend, photoService: photoService)
         return cell
     }
 }
