@@ -12,8 +12,8 @@ final class FriendViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configurateCell(_ friend: UserItem, networkService: NetworkService) {
+    func configurateCell(_ friend: UserItem, image: UIImage) {
         nameFriendLabel.text = "\(friend.firstName) \(friend.lastName)"
-        friendImageView.setupAvatarImage(friend.friendPhotoImageName ?? "", networkService: networkService)
+        friendImageView.setupAvatarImage(image)
     }
 }
