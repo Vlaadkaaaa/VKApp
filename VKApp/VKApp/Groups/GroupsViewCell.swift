@@ -23,9 +23,10 @@ final class GroupsViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func configurateCell(_ group: GroupItem?, image: UIImage) {
+    func configurateCell(_ group: GroupItem?, photoService: PhotoService) {
         nameGroupLabel.text = group?.name
-        groupImageView.image = image
+        guard let photoUrl = group?.photo else { return }
+        groupImageView.image = photoService.photo(url: photoUrl)
     }
 
     // MARK: - Private Methods

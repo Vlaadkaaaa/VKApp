@@ -53,7 +53,7 @@
 		CE358D672941F96100F7A86A /* SaveDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358D662941F96100F7A86A /* SaveDataOperation.swift */; };
 		CE358D682942019000F7A86A /* GroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A0360D29114E1F003F1DB3 /* GroupsTableViewController.swift */; };
 		CE358D6C2942124000F7A86A /* PromiseNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358D6B2942124000F7A86A /* PromiseNetworkService.swift */; };
-		CE358D7529434F4200F7A86A /* PhotoSevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358D7429434F4200F7A86A /* PhotoSevice.swift */; };
+		CE358D7529434F4200F7A86A /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE358D7429434F4200F7A86A /* PhotoService.swift */; };
 		CE7DFC1E29379B06004E9A96 /* PhotoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7DFC1D29379B06004E9A96 /* PhotoSize.swift */; };
 		CE9564C3292BD4070080896A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9564C2292BD4070080896A /* Session.swift */; };
 		CECD48A5294702510098753D /* PhotoService+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECD48A4294702510098753D /* PhotoService+Extension.swift */; };
@@ -117,7 +117,7 @@
 		CE358D642941F92300F7A86A /* ParseDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseDataOperation.swift; sourceTree = "<group>"; };
 		CE358D662941F96100F7A86A /* SaveDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDataOperation.swift; sourceTree = "<group>"; };
 		CE358D6B2942124000F7A86A /* PromiseNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseNetworkService.swift; sourceTree = "<group>"; };
-		CE358D7429434F4200F7A86A /* PhotoSevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSevice.swift; sourceTree = "<group>"; };
+		CE358D7429434F4200F7A86A /* PhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
 		CE7DFC1D29379B06004E9A96 /* PhotoSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSize.swift; sourceTree = "<group>"; };
 		CE9564C2292BD4070080896A /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		CECD48A4294702510098753D /* PhotoService+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoService+Extension.swift"; sourceTree = "<group>"; };
@@ -331,7 +331,7 @@
 				CE358D6B2942124000F7A86A /* PromiseNetworkService.swift */,
 				CE9564C2292BD4070080896A /* Session.swift */,
 				CE3000B929348D270076EA12 /* RealmService.swift */,
-				CE358D7429434F4200F7A86A /* PhotoSevice.swift */,
+				CE358D7429434F4200F7A86A /* PhotoService.swift */,
 				CE358D632941F90400F7A86A /* Operation */,
 			);
 			path = Service;
@@ -517,7 +517,7 @@
 				555276FE2913DB7E009504C0 /* LikeViewControl.swift in Sources */,
 				CE9564C3292BD4070080896A /* Session.swift in Sources */,
 				55D5C5C12912D38900D075D7 /* GroupsViewCell.swift in Sources */,
-				CE358D7529434F4200F7A86A /* PhotoSevice.swift in Sources */,
+				CE358D7529434F4200F7A86A /* PhotoService.swift in Sources */,
 				CE358D652941F92300F7A86A /* ParseDataOperation.swift in Sources */,
 				552125E12910EE880058A8F2 /* AppDelegate.swift in Sources */,
 				55D5C5BD2912C88900D075D7 /* FriendDetailCollectionViewController.swift in Sources */,

@@ -24,7 +24,7 @@ final class FriendsTableViewController: UITableViewController {
     private let networkService = NetworkService()
     private let realmService = RealmService()
     private let promiseNetworkService = PromiseNetworkService()
-    private var photoSerivce: PhotoSevice?
+    private var photoService: PhotoService?
     private var token: NotificationToken?
     private var friends: Results<UserItem>?
     private var allFriends: [UserItem] = []
@@ -54,7 +54,7 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private Methods
 
     private func loadFriends() {
-        photoSerivce = PhotoSevice(container: self)
+        photoService = PhotoService(container: self)
         realmService.fetchData { [weak self] result in
             guard let self = self else { return }
             self.friends = result
@@ -115,10 +115,9 @@ extension FriendsTableViewController {
                 for: indexPath
             ) as? FriendViewCell,
             let friend = sections[sectionTitles[indexPath.section]]?[indexPath.row],
-            let photoUrl = friend.friendPhotoImageName,
-            let image = photoSerivce?.photo(url: photoUrl, indexPath: indexPath)
+            let photoSerivce = photoService
         else { return UITableViewCell() }
-        cell.configurateCell(friend, image: image)
+        cell.configurateCell(friend, photoService: photoSerivce)
         return cell
     }
 }

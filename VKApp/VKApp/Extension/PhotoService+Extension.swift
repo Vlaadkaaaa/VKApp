@@ -4,7 +4,7 @@
 import UIKit
 
 /// Контейнер для таблиц и коллекций
-extension PhotoSevice {
+extension PhotoService {
     class TableViewController: DataReloadable {
         // MARK: - Private Property
 

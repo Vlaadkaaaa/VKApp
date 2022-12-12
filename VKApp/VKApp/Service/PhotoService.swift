@@ -1,4 +1,4 @@
-// PhotoSevice.swift
+// PhotoService.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Alamofire
@@ -10,7 +10,7 @@ protocol DataReloadable {
 }
 
 /// Кэширование фото
-final class PhotoSevice {
+final class PhotoService {
     // MARK: - Private Constants
 
     private enum Constants {
@@ -36,13 +36,13 @@ final class PhotoSevice {
 
     // MARK: - Public Methods
 
-    func photo(url: String, indexPath: IndexPath) -> UIImage? {
+    func photo(url: String) -> UIImage? {
         if let image = imagesMap[url] {
             return image
         } else if let image = getImageFromDisk(url: url) {
             return image
         } else {
-            loadPhoto(url: url, at: indexPath)
+            loadPhoto(url: url)
             return UIImage()
         }
     }
@@ -58,15 +58,13 @@ final class PhotoSevice {
         return image
     }
 
-    private func loadPhoto(url: String, at indexPath: IndexPath) {
-        AF.request(url).responseData { [weak self] response in
+    private func loadPhoto(url: String) {
+        AF.request(url).responseData { response in
             guard let data = response.data,
-                  let image = UIImage(data: data),
-                  let self = self
+                  let image = UIImage(data: data)
             else { return }
             self.imagesMap[url] = image
             self.saveImageToDisk(url: url, image: image)
-            self.container.reloadRow(at: indexPath)
         }
     }
 
