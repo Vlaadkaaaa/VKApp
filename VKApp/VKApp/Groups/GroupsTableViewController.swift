@@ -31,11 +31,13 @@ final class GroupsTableViewController: UITableViewController {
 
     private let networkService = NetworkService()
     private let realmService = RealmService()
+    private var photoSerivce: PhotoService?
     private var groups: [GroupItem] = []
 
     // MARK: - Private Methods
 
     private func loadData() {
+        photoSerivce = PhotoService(container: self)
         if groups.isEmpty {
             networkService.getGroups()
         }
@@ -65,10 +67,11 @@ extension GroupsTableViewController {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: Constants.groupCellIdentifier,
             for: indexPath
-        ) as? GroupsViewCell
+        ) as? GroupsViewCell,
+            let photoSerivce = photoSerivce
         else { return UITableViewCell() }
         let group = groups[indexPath.row]
-        cell.setupUI(group, networkService: networkService)
+        cell.configurateCell(group, photoService: photoSerivce)
         return cell
     }
 }

@@ -12,7 +12,7 @@ final class GroupsDetailViewCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupUI(_ group: GroupItem?, networkService: NetworkService) {
+    func configurateCell(_ group: GroupItem?, networkService: NetworkService) {
         groupsNameLabel.text = group?.name
         groupsDetailImageView.loadImage(group?.photo ?? "", networkService: networkService)
     }
