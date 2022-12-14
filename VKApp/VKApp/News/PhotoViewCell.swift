@@ -12,4 +12,10 @@ final class PhotoViewCell: UITableViewCell, NewsConfigurable {
     // MARK: - Public Methods
 
     func configure(news: NewsResponseItem) {}
+    func configure(news: NewsResponseItem, photoService: PhotoService) {
+        guard let photoItem = news.attachments?.first?.photo,
+              let photoUrl = photoItem.sizes.last?.url
+        else { return }
+        postImageView.image = photoService.photo(url: photoUrl)
+    }
 }
