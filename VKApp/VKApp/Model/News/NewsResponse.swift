@@ -11,4 +11,13 @@ struct NewsResponse: Decodable {
     var profiles: [UserItem]
     /// Группы
     var groups: [GroupItem]
+    /// Следующая страница новостей
+    var nextPage: String
+
+    private enum CodingKeys: String, CodingKey {
+        case items
+        case profiles
+        case groups
+        case nextPage = "next_from"
+    }
 }

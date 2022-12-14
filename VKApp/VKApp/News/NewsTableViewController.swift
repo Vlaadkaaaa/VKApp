@@ -9,8 +9,13 @@ protocol NewsConfigurable {
     func configure(news: NewsResponseItem)
 }
 
+/// Показ полного текста новостей
+protocol PostNewsTableCellDelegate: AnyObject {
+    func didTappedTextButton(cell: PostViewCell)
+}
+
 ///  Экран новостей
-final class NewsTableViewController: UITableViewController {
+final class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefetching {
     // MARK: - Private Constants
 
     private enum Constants {
@@ -19,13 +24,16 @@ final class NewsTableViewController: UITableViewController {
         static let postCellIdentifier = "PostCell"
         static let photoCellIdentifier = "PhotoCell"
         static let footerCellIdentifier = "FooterCell"
+        static let loadingText = "Loading..."
+        static let countCellNumber = 3
     }
 
     // MARK: - Типы ячеек для NewsTableVC
 
     private enum NewsCellType: Int, CaseIterable {
         case header
-        case content
+        case photo
+        case text
         case footer
     }
 
@@ -33,25 +41,29 @@ final class NewsTableViewController: UITableViewController {
 
     private let networkService = NetworkService()
     private var news: NewsResponse?
+    private var isLoading = false
+    private var nextPage = ""
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchPosts()
+        setupPullToRefresh()
     }
 
     // MARK: - Private Methods
 
-    private func fetchPosts() {
+    private func fetchPosts(date: Double?) {
         networkService.fetchPosts { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             switch result {
             case let .success(news):
                 let news = news.response
                 self.fetchNews(newsResponse: news)
+                self.nextPage = news.nextPage
+                self.refreshControl?.endRefreshing()
             case let .failure(error):
-                print(error.localizedDescription)
+                self.tableView.showEmptyMessage(error.localizedDescription)
             }
         }
     }
@@ -78,10 +90,35 @@ final class NewsTableViewController: UITableViewController {
         }
     }
 
+    // MARK: - Pull to refresh
+
+    private func setupPullToRefresh() {
+        tableView.prefetchDataSource = self
+        let color = UIColor.red
+        refreshControl = UIRefreshControl()
+        refreshControl?.tintColor = color
+        let attrs: [NSAttributedString.Key: Any] = [.foregroundColor: color]
+        refreshControl?.attributedTitle = NSAttributedString(string: Constants.loadingText, attributes: attrs)
+        refreshControl?.addTarget(self, action: #selector(refreshNewsAction), for: .valueChanged)
+    }
+
+    @objc private func refreshNewsAction() {
+        var mostFreshDate: TimeInterval?
+        if let firstItem = news?.items.first {
+            mostFreshDate = firstItem.date + 1
+        }
+        fetchPosts(date: mostFreshDate)
+    }
+
     // MARK: - UITableViewDataSource
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        news?.items.count ?? 0
+        if news?.items == nil {
+            tableView.showEmptyMessage("No news loaded")
+        } else {
+            tableView.hideEmptyMessage()
+        }
+        return news?.items.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -89,13 +126,15 @@ final class NewsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellType = NewsCellType(rawValue: indexPath.row) ?? .content
+        let cellType = NewsCellType(rawValue: indexPath.row) ?? .text
         var cellIdentifier = ""
         switch cellType {
         case .header:
             cellIdentifier = Constants.headerCellIdentifier
-        case .content:
+        case .text:
             cellIdentifier = Constants.postCellIdentifier
+        case .photo:
+            cellIdentifier = Constants.photoCellIdentifier
         case .footer:
             cellIdentifier = Constants.footerCellIdentifier
         }
@@ -104,6 +143,67 @@ final class NewsTableViewController: UITableViewController {
               .dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsCell
         else { return UITableViewCell() }
         cell.configure(news: news)
+        if let cell = cell as? PostViewCell {
+            cell.delegate = self
+        }
+
         return cell
+    }
+
+    // MARK: - UITableViewDataSourcePrefetching
+
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard let maxRow = indexPaths.map(\.section).max(),
+              let news = news?.items,
+              maxRow > news.count - Constants.countCellNumber,
+              isLoading == false
+        else { return }
+        isLoading = true
+
+        networkService.fetchPosts(startFrom: nextPage) { [weak self] result in
+            guard let self,
+                  let news = self.news?.items
+            else { return }
+            let oldNewsCount = news.count
+            let newSections = (oldNewsCount ..< (oldNewsCount + news.count)).map { $0 }
+            switch result {
+            case let .success(news):
+                self.news?.items.append(contentsOf: news.response.items)
+                self.tableView.insertSections(IndexSet(newSections), with: .automatic)
+                self.isLoading = false
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+// MARK: - PostNewsTableCellDelegate
+
+extension NewsTableViewController: PostNewsTableCellDelegate {
+    func didTappedTextButton(cell: PostViewCell) {
+        tableView.beginUpdates()
+        cell.isTapped.toggle()
+        tableView.endUpdates()
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension NewsTableViewController {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let news = news?.items
+        switch indexPath.row {
+        case 1:
+            let tableWidth = tableView.bounds.width
+            let aspectRation = CGFloat(
+                news?[indexPath.section].attachments?.first?.photo?.sizes.first?
+                    .aspectRatio ?? Float(0)
+            )
+            let cellHeight = tableWidth * aspectRation
+            return cellHeight
+        default:
+            return UITableView.automaticDimension
+        }
     }
 }

@@ -6,7 +6,7 @@ import Foundation
 /// Данные о новости
 final class NewsResponseItem: Decodable {
     /// дата публикации новости
-    var date: Int
+    var date: Double
     /// sourceID новости
     var sourceID: Int
     /// ownerID

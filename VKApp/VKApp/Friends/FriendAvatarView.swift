@@ -13,7 +13,6 @@ import UIKit
         image.layer.masksToBounds = true
         image.frame = bounds
         image.contentMode = .scaleAspectFill
-        image.backgroundColor = .white
         image.layer.cornerRadius = bounds.width / 2
         return image
     }()

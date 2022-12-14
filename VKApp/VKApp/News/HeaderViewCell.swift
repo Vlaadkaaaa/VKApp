@@ -13,7 +13,8 @@ final class HeaderViewCell: UITableViewCell, NewsConfigurable {
 
     // MARK: - Private Property
 
-    let networkService = NetworkService()
+    private let networkService = NetworkService()
+    private var dateFormatter = DateFormatter()
 
     // MARK: - Private IBOutlet
 
@@ -31,15 +32,6 @@ final class HeaderViewCell: UITableViewCell, NewsConfigurable {
     func configure(news: NewsResponseItem) {
         authorImageView.loadImage(news.avatarPath ?? "", networkService: networkService)
         authorLabel.text = news.authorName
-        dateLabel.text = convert(date: news.date)
-    }
-
-    // MARK: - Private Methods
-
-    private func convert(date: Int) -> String {
-        let date = Date(timeIntervalSince1970: TimeInterval(date))
-        let formatter = DateFormatter()
-        formatter.dateFormat = Constants.dateFormatText
-        return formatter.string(from: date)
+        dateLabel.text = dateFormatter.convert(date: news.date)
     }
 }

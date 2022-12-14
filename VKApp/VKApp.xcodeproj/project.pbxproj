@@ -63,6 +63,8 @@
 		CEE59FAD292E453A0046EAF2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE59FAC292E453A0046EAF2 /* User.swift */; };
 		CEE59FAF292E45500046EAF2 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE59FAE292E45500046EAF2 /* Photo.swift */; };
 		CEE59FB1292F63B30046EAF2 /* UIImageView+Exstension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE59FB0292F63B30046EAF2 /* UIImageView+Exstension.swift */; };
+		CEE70D3F29485EF400988C4C /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE70D3E29485EF400988C4C /* DateFormatter+Extension.swift */; };
+		CEE70D412948770F00988C4C /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE70D402948770F00988C4C /* UITableView+Extension.swift */; };
 		CEEC3159291A353C00B91C89 /* PhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC3158291A353C00B91C89 /* PhotoViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -127,6 +129,8 @@
 		CEE59FAC292E453A0046EAF2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CEE59FAE292E45500046EAF2 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		CEE59FB0292F63B30046EAF2 /* UIImageView+Exstension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Exstension.swift"; sourceTree = "<group>"; };
+		CEE70D3E29485EF400988C4C /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
+		CEE70D402948770F00988C4C /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		CEEC3158291A353C00B91C89 /* PhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -195,6 +199,8 @@
 				55C652F4291246A40058ADFB /* UIViewController+Extension.swift */,
 				CEE59FB0292F63B30046EAF2 /* UIImageView+Exstension.swift */,
 				CECD48A4294702510098753D /* PhotoService+Extension.swift */,
+				CEE70D3E29485EF400988C4C /* DateFormatter+Extension.swift */,
+				CEE70D402948770F00988C4C /* UITableView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -506,6 +512,7 @@
 				CE3000B029348A320076EA12 /* UserItem.swift in Sources */,
 				CE18DB69293F58E300DD045B /* News.swift in Sources */,
 				CE242105291C191B00281C4C /* FriendPhotosViewController.swift in Sources */,
+				CEE70D3F29485EF400988C4C /* DateFormatter+Extension.swift in Sources */,
 				CEEC3159291A353C00B91C89 /* PhotoViewCell.swift in Sources */,
 				CE3000BA29348D270076EA12 /* RealmService.swift in Sources */,
 				CE358D362940A27F00F7A86A /* Comments.swift in Sources */,
@@ -532,6 +539,7 @@
 				CE7DFC1E29379B06004E9A96 /* PhotoSize.swift in Sources */,
 				55A0360C29114E02003F1DB3 /* FriendsTableViewController.swift in Sources */,
 				CE358D342940A27500F7A86A /* Likes.swift in Sources */,
+				CEE70D412948770F00988C4C /* UITableView+Extension.swift in Sources */,
 				55D5C5BB2912C75500D075D7 /* FriendDetailViewCell.swift in Sources */,
 				CE3000B629348A7E0076EA12 /* PhotoResponse.swift in Sources */,
 				CE358D682942019000F7A86A /* GroupsTableViewController.swift in Sources */,

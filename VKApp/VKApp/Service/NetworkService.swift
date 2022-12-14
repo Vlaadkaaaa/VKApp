@@ -20,6 +20,8 @@ struct NetworkService {
         static let searchQueryText = "&q="
         static let ownerIdText = "&owner_id="
         static let extendedText = "&extended=1"
+        static let startTimeText = "&start_time="
+        static let startFromText = "&start_from"
         static let version = "&v=5.81"
     }
 
@@ -87,8 +89,16 @@ struct NetworkService {
         }
     }
 
-    func fetchPosts(completion: @escaping (Result<News, Error>) -> ()) {
-        let path = "\(Constants.getPostText)\(Constants.acessToken)\(Constants.version)\(Constants.filtersPostText)"
+    func fetchPosts(
+        startTime: TimeInterval? = nil,
+        startFrom: String? = nil,
+        completion: @escaping (Result<News, Error>) -> ()
+    ) {
+        var path = "\(Constants.getPostText)\(Constants.acessToken)\(Constants.version)\(Constants.filtersPostText)"
+
+        if let startFrom {
+            path += "\(Constants.startFromText)\(startFrom)"
+        }
         let url = "\(Constants.baseURL)\(path)"
         AF.request(url).responseData { response in
             guard let data = response.data else { return }

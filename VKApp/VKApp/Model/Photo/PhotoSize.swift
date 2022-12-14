@@ -7,6 +7,18 @@ import RealmSwift
 final class Size: Object, Decodable {
     // MARK: - Public Property
 
-    /// путь к фото пользователя
+    /// Путь к фото пользователя
     @Persisted var url: String
+    /// Ширина фотографии
+    let width: Int
+    /// Высота фотографии
+    let height: Int
+    /// Соотношение сторон у фотографии
+    var aspectRatio: Float {
+        Float(height) / Float(width)
+    }
+
+    override class func ignoredProperties() -> [String] {
+        ["width", "height", "aspectRatio"]
+    }
 }
