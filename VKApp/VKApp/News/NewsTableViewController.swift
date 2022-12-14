@@ -33,7 +33,7 @@ final class NewsTableViewController: UITableViewController, UITableViewDataSourc
     private enum NewsCellType: Int, CaseIterable {
         case header
         case photo
-        case text
+        case post
         case footer
     }
 
@@ -126,12 +126,12 @@ final class NewsTableViewController: UITableViewController, UITableViewDataSourc
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellType = NewsCellType(rawValue: indexPath.row) ?? .text
+        let cellType = NewsCellType(rawValue: indexPath.row) ?? .post
         var cellIdentifier = ""
         switch cellType {
         case .header:
             cellIdentifier = Constants.headerCellIdentifier
-        case .text:
+        case .post:
             cellIdentifier = Constants.postCellIdentifier
         case .photo:
             cellIdentifier = Constants.photoCellIdentifier
@@ -192,9 +192,11 @@ extension NewsTableViewController: PostNewsTableCellDelegate {
 
 extension NewsTableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let cellType = NewsCellType(rawValue: indexPath.row),
+              cellType == .photo else { return UITableView.automaticDimension }
         let news = news?.items
-        switch indexPath.row {
-        case 1:
+        switch cellType {
+        case .photo:
             let tableWidth = tableView.bounds.width
             let aspectRation = CGFloat(
                 news?[indexPath.section].attachments?.first?.photo?.sizes.first?
