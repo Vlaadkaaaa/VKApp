@@ -6,27 +6,27 @@ import Foundation
 /// Данные о новости
 final class NewsResponseItem: Decodable {
     /// Дата публикации новости
-    var date: Double
+    let date: Double
     /// SourceID новости
-    var sourceID: Int
+    let sourceID: Int
     /// OwnerID
-    var ownerID: Int
+    let ownerID: Int
     /// Текст новости
-    var text: String
+    let text: String
     /// Имя автора новости
     var authorName: String?
     /// Ссылка на автар автора новости
     var avatarPath: String?
     /// Ссылка на изображения к новости
-    var attachments: [NewsPhotoPost]?
+    let attachments: [NewsPhotoPost]?
     /// Количество лайков
-    var likes: Likes
+    let likes: Likes
     /// Количество комментариев
-    var comments: Comments
+    let comments: Comments
     /// Количество репостов
-    var reposts: Reposts
+    let reposts: Reposts
     /// Количество просмотров
-    var views: Views
+    let views: Views
 
     // MARK: - CodingKeys
 

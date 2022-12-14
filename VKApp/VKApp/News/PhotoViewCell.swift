@@ -9,16 +9,13 @@ final class PhotoViewCell: UITableViewCell, NewsConfigurable {
 
     @IBOutlet private var postImageView: UIImageView!
 
-    // MARK: - Private Property
-
-    private var networkService = NetworkService()
-
     // MARK: - Public Methods
 
-    func configure(news: NewsResponseItem) {
+    func configure(news: NewsResponseItem) {}
+    func configure(news: NewsResponseItem, photoService: PhotoService) {
         guard let photoItem = news.attachments?.first?.photo,
               let photoUrl = photoItem.sizes.last?.url
         else { return }
-        postImageView.loadImage(photoUrl, networkService: networkService)
+        postImageView.image = photoService.photo(url: photoUrl)
     }
 }

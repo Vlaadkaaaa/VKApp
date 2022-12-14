@@ -14,7 +14,7 @@ final class HeaderViewCell: UITableViewCell, NewsConfigurable {
     // MARK: - Private Property
 
     private let networkService = NetworkService()
-    private var dateFormatter = DateFormatter()
+    private let dateFormatter = DateFormatter()
 
     // MARK: - Private IBOutlet
 

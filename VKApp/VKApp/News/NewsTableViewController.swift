@@ -4,18 +4,9 @@
 import UIKit
 
 typealias NewsCell = NewsConfigurable & UITableViewCell
-/// NewsConfigurable
-protocol NewsConfigurable {
-    func configure(news: NewsResponseItem)
-}
-
-/// Показ полного текста новостей
-protocol PostNewsTableCellDelegate: AnyObject {
-    func didTappedTextButton(cell: PostViewCell)
-}
 
 ///  Экран новостей
-final class NewsTableViewController: UITableViewController, UITableViewDataSourcePrefetching {
+final class NewsTableViewController: UITableViewController {
     // MARK: - Private Constants
 
     private enum Constants {
@@ -25,6 +16,7 @@ final class NewsTableViewController: UITableViewController, UITableViewDataSourc
         static let photoCellIdentifier = "PhotoCell"
         static let footerCellIdentifier = "FooterCell"
         static let loadingText = "Loading..."
+        static let noNewsLoadedText = "No news loaded"
         static let countCellNumber = 3
     }
 
@@ -40,6 +32,7 @@ final class NewsTableViewController: UITableViewController, UITableViewDataSourc
     // MARK: - Private Property
 
     private let networkService = NetworkService()
+    private var photoService: PhotoService?
     private var news: NewsResponse?
     private var isLoading = false
     private var nextPage = ""
@@ -90,9 +83,8 @@ final class NewsTableViewController: UITableViewController, UITableViewDataSourc
         }
     }
 
-    // MARK: - Pull to refresh
-
     private func setupPullToRefresh() {
+        photoService = PhotoService(container: self)
         tableView.prefetchDataSource = self
         let color = UIColor.red
         refreshControl = UIRefreshControl()
@@ -100,6 +92,24 @@ final class NewsTableViewController: UITableViewController, UITableViewDataSourc
         let attrs: [NSAttributedString.Key: Any] = [.foregroundColor: color]
         refreshControl?.attributedTitle = NSAttributedString(string: Constants.loadingText, attributes: attrs)
         refreshControl?.addTarget(self, action: #selector(refreshNewsAction), for: .valueChanged)
+    }
+
+    private func fetchPosts() {
+        networkService.fetchPosts(startFrom: nextPage) { [weak self] result in
+            guard let self,
+                  let news = self.news?.items
+            else { return }
+            let oldNewsCount = news.count
+            let newSections = (oldNewsCount ..< (oldNewsCount + news.count)).map { $0 }
+            switch result {
+            case let .success(news):
+                self.news?.items.append(contentsOf: news.response.items)
+                self.tableView.insertSections(IndexSet(newSections), with: .automatic)
+                self.isLoading = false
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
     @objc private func refreshNewsAction() {
@@ -113,12 +123,12 @@ final class NewsTableViewController: UITableViewController, UITableViewDataSourc
     // MARK: - UITableViewDataSource
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if news?.items == nil {
-            tableView.showEmptyMessage("No news loaded")
-        } else {
-            tableView.hideEmptyMessage()
+        guard let newsItems = news?.items else {
+            tableView.showEmptyMessage(Constants.noNewsLoadedText)
+            return 0
         }
-        return news?.items.count ?? 0
+        tableView.hideEmptyMessage()
+        return newsItems.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -140,18 +150,25 @@ final class NewsTableViewController: UITableViewController, UITableViewDataSourc
         }
         guard let news = news?.items[indexPath.section],
               let cell = tableView
-              .dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsCell
+              .dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsCell,
+              let photoService
         else { return UITableViewCell() }
-        cell.configure(news: news)
         if let cell = cell as? PostViewCell {
             cell.delegate = self
+        }
+        if let cell = cell as? PhotoViewCell {
+            cell.configure(news: news, photoService: photoService)
+        } else {
+            cell.configure(news: news)
         }
 
         return cell
     }
+}
 
-    // MARK: - UITableViewDataSourcePrefetching
+// MARK: - UITableViewDataSourcePrefetching
 
+extension NewsTableViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         guard let maxRow = indexPaths.map(\.section).max(),
               let news = news?.items,
@@ -159,22 +176,7 @@ final class NewsTableViewController: UITableViewController, UITableViewDataSourc
               isLoading == false
         else { return }
         isLoading = true
-
-        networkService.fetchPosts(startFrom: nextPage) { [weak self] result in
-            guard let self,
-                  let news = self.news?.items
-            else { return }
-            let oldNewsCount = news.count
-            let newSections = (oldNewsCount ..< (oldNewsCount + news.count)).map { $0 }
-            switch result {
-            case let .success(news):
-                self.news?.items.append(contentsOf: news.response.items)
-                self.tableView.insertSections(IndexSet(newSections), with: .automatic)
-                self.isLoading = false
-            case let .failure(error):
-                print(error.localizedDescription)
-            }
-        }
+        fetchPosts()
     }
 }
 
